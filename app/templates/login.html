@@ -4,7 +4,7 @@
 {% block title %}{{ APP_NAME }}{% endblock %}
 
 {% block styles %}
-  {{ super() }}
+    {{ super() }}
     <link rel="stylesheet" href="/static/styles/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
 
@@ -22,18 +22,18 @@
 
 {% block content %}
     <h2>Login Form</h2>
-	
-	<form action="{{ url_for('login') }}" method="post">
-	    <div class="imgcontainer">
+
+    <form action="{{ url_for('login') }}" method="post">
+        <div class="imgcontainer">
             <img src="" alt="Logo" class="Logo">
         </div>
-		
+
         <label for="username"></label>
         <input type="text" name="username" placeholder="Username" id="username" required>
         <label for="password"></label>
         <input type="password" name="password" placeholder="Password" id="password" required>
         <div class="msg">{{ msg }}</div>
-		
+
         <input type="submit" value="Login">
     </form>
 {% endblock %}

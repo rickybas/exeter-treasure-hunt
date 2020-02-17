@@ -1,5 +1,3 @@
-import os
-
 from flask import Flask, render_template, request, session, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_mysqldb import MySQL
@@ -13,8 +11,8 @@ app = Flask(__name__)
 app.secret_key = 'your secret key'
 
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = os.environ.get('ETH_PASSWORD')
+app.config['MYSQL_USER'] = 'eth_user'
+app.config['MYSQL_PASSWORD'] = "Eth_pass124." # Todo: don't hard code passwords
 app.config['MYSQL_DB'] = 'USERS_DATABASE'
 
 Bootstrap(app)
