@@ -17,7 +17,7 @@ Install dependencies (make sure [system dependencies](#system-dependencies) are 
 
 Set up MySQL database, enter password for user root@localhost:
 
-`mysql -u root -p < app/init.sql`
+`mysql -u root -p < db/init.sql`
 
 ## Running Locally
 
