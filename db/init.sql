@@ -6,14 +6,6 @@ DELIMITER //
 CREATE PROCEDURE init()
     LANGUAGE SQL
 BEGIN
-    DECLARE user_exist INT;
-    SET user_exist = (SELECT EXISTS(SELECT DISTINCT user FROM mysql.user WHERE user = "eth_user"));
-    IF user_exist = 0 THEN
-        CREATE USER 'eth_user'@'localhost' IDENTIFIED BY 'Eth_pass124.';
-        GRANT ALL PRIVILEGES ON USERS_DATABASE.* TO 'eth_user'@'localhost';
-        FLUSH PRIVILEGES;
-    END IF;
-
     CREATE TABLE IF NOT EXISTS `users`
     (
         `username` VARCHAR(50)  NOT NULL,
