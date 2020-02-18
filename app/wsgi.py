@@ -8,9 +8,9 @@ from exeter_treasure_hunt import app
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("-d", "--dbhost", type=str,
-                        help="mysql host name e.g db or localhost", required = False, default = "localhost")
+                        help="mysql host name e.g db or localhost", required=False, default="localhost")
     parser.add_argument("-p", "--dbpassword", type=str,
-                        help="root password for db", required = False, default = "")
+                        help="root password for db", required=False, default="")
 
     args = parser.parse_args()
 

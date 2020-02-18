@@ -1,5 +1,3 @@
-from getpass import getpass
-
 from flask import Flask, render_template, request, session, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_mysqldb import MySQL
