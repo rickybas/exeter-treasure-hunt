@@ -81,6 +81,10 @@ def cards():
 
     return redirect(url_for('login')), 401
 
+@app.route('/map', methods=["GET"])
+def map():
+    return render_template("player.html")
+
 @app.route('/isAnswerCorrect', methods=["POST"])
 def is_answer_correct():
     if 'loggedin' in session:

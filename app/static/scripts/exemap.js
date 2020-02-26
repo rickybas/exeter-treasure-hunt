@@ -78,7 +78,7 @@ map.on('load', function(){
         }
         
     });
-    var jsonURL = "../playerlocations.geojson";
+    var jsonURL = "/static/scripts/playerlocations.geojson";
     map.addSource('others', {
 
         'type': 'geojson',
