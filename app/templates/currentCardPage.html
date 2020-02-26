@@ -1,0 +1,31 @@
+<div id="quiz"></div>
+
+
+{{ location }}
+<br></br>
+{{ question }}
+<br>
+
+<form method="get"></form>
+<input onclick="check(this.id)" type="button" id="a" value="{{ answers['a'] }}" ><br>
+<input onclick="check(this.id)" type="button" id="b" value="{{ answers['b'] }}" ><br>
+<input onclick="check(this.id)"type="button" id="c" value="{{ answers['c'] }}" ><br>
+<input onclick="check(this.id)" type="button" id="d" value="{{ answers['d'] }}" ><br>
+</form>
+
+
+
+<script type="text/javascript">
+function check(clicked_id) {
+    {#var x = document.getElementById(this.id).value;#}
+    var answer = '{{ correctAnswer }}'
+    if(clicked_id == answer){
+        alert("Correct! Well done, click to get your next card.")
+        location.reload();
+    }
+    else{
+        alert("Wrong! Click close to try again.")
+    }
+}
+
+</script>

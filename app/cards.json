@@ -1,157 +1,233 @@
-{
-	"cards": [{
-		"Location": "The Library",
-		"text": "How many entry gates into the library?",
-		"options": ["2","1","3","4"],
-		"answer": "2",
-		"points": 1,
+[
+    {
+      "location": "The Library",
+      "question": "How many entry gates into the library?",
+      "answers": {
+      "a":"1",
+      "b":"2",
+      "c":"3",
+      "d":"4"
+      },
+	  "correctAnswer": "b"
     },
     {
-		"Location": "Harrison",
-		"text": "Whats the name of the coffee shop in the Harrison?",
-		"options":["The Engine room","Exeter Coffee","Harrison cafe","Harrison hub"],
-		"answer": "The Engine room",
-		"points": 1,
+      "location": "Harrison",
+      "question": "Whats the name of the coffee shop in the Harrison?",
+      "answers": {
+        "a": "The Engine room",
+        "b": "Exeter Coffee",
+        "c": "Harrison cafe",
+        "d": "Harrison hub"
+      },
+	  "correctAnswer": "a"
     },
     {
-		"Location": "The Ram",
-		"text": "How much is 'The Ram Classic' burger in the ram?",
-		"options": ["£5.75","£4.55","£6.25","£6.99"],
-		"answer": "£5.75",
-		"points": 1,
+      "location": "The Ram",
+      "question": "How much is 'The Ram Classic' burger in the ram?",
+      "answers": {
+        "a":"£4.55",
+        "b": "£5.75",
+        "c": "£4.55",
+        "d": "£6.99"
+      },
+    "correctAnswer": "b"
     },
     {
-		"Location": "Marketplace",
-		"text": "How many self-check outs are there in the marketplace?",
-		"options": ["2","1","3","4"],
-		"answer": "2",
-		"points": 1,
+      "location": "Marketplace",
+      "question": "How many self-check outs are there in the marketplace?",
+      "answers": {
+        "a": "1",
+        "b": "2",
+        "c": "3",
+        "d": "4"
+      },
+    "correctAnswer": "b"
     },
     {
-		"Location": "Cornwall House Swimming Pool",
-		"text": "What is the constant temp of the pool? ",
-		"options": ["29 C","25 C","32 C","34 C"],
-		"answer": "29 C",
-		"points": 1,
+      "location": "Cornwall House Swimming Pool",
+      "question": "What is the constant temp of the pool?",
+      "answers": {
+        "a": "25 C",
+        "b": "27 C",
+        "c": "29 C",
+        "d": "31 C"
+      },
+    "correctAnswer": "c"
     },
     {
-		"Location": "Innovation Centre",
-		"text": "What colour are the chairs in the innovation centre café?",
-		"options": ["red","blue","green","yellow"],
-		"answer": "red",
-		"points": 1,
+      "location": "Innovation Centre",
+      "question": "What colour are the chairs in the innovation centre café?",
+      "answers": {
+        "a": "Yellow",
+        "b": "Green",
+        "c": "Blue",
+        "d": "Red"
+      },
+    "correctAnswer": "d"
     },
     {
-		"Location": "Russell Seal Fitness Centre",
-		"text": "What is the colour scheme for the gym?",
-		"options": ["green","yellow","blue","red"],
-		"answer": "green",
-		"points": 1,
+      "location": "Russell Seal Fitness Centre",
+      "question": "What is the colour scheme for the gym?",
+      "answers": {
+        "a": "Yellow",
+        "b": "Green",
+        "c": "Blue",
+        "d": "Red"
+      },
+    "correctAnswer": "b"
     },
     {
-		"Location": "Peter Chalk Centre",
-		"text": "What’s the largest lecture theatre in the peter chalk?",
-		"options":["Newman Blue", "Newman Red", "Newman Green","Newman Purple"],
-		"answer": "Newman Blue",
-		"points": 1,
+      "location": "Peter Chalk Centre",
+      "question": "What’s the largest lecture theatre in the peter chalk?",
+      "answers": {
+        "a": "Newman Purple",
+        "b": "Newman Green",
+        "c": "Newman Red",
+        "d": "Newman Blue"
+      },
+    "correctAnswer": "d"
     },
     {
-		"Location": "Queens Building",
-		"text": "What is the post code of the building?",
-		"options":["EX44QH","EX44SA","EX43LK","EX4 8FG"],
-		"answer":"EX44QH",
-		"points": 1,
+      "location": "Queens Building",
+      "question": "What is the post code of the building?",
+      "answers": {
+        "a": "EX44SA",
+        "b": "EX43LK",
+        "c": "EX44QH",
+        "d": "EX48FG"
+      },
+    "correctAnswer": "c"
     },
     {
-		"Location": "Physics Building",
-		"text": "How many steps at front door?",
-		"options": ["8 steps","5steps","10 steps","3 steps"],
-		"answer": "8 steps",
-		"points": 1,
+      "location": "Physics Building",
+      "question": "How many steps at front door?",
+      "answers": {
+        "a": "8",
+        "b": "9",
+        "c": "10",
+        "d": "3"
+      },
+    "correctAnswer": "a"
     },
-	{
-		"Location": "The Amory",
-		"text": "What is the name of lecture hall outside the entrance of Amory?",
-		"options": ["Park Moot room LT","Amory A128","Amory C501","Amory C417"],
-		"answer": "Park Moot room LT",
-		"points": 1,
+    {
+      "location": "The Business School",
+      "question": "Whats the name of the business building?",
+      "answers": {
+        "a": "Business One",
+        "b": "Exeter Business School",
+        "c": "Business Building",
+        "d": "Business Exeter"
+      },
+    "correctAnswer": "a"
     },
-	{
-		"Location": "The Business School",
-		"text": "Whats the name of the business building?",
-		"options": ["Business One","Exeter Business School","Business Building", "Business Exeter"],
-		"answer": "Business One",
-		"points": 1,
+    {
+      "location": "The Amory",
+      "question": "What is the name of lecture hall outside the entrance of Amory?",
+      "answers": {
+        "a": "Park Moot room LT",
+        "b": "Amory A128",
+        "c": "Amory C501",
+        "d": "Amory C417"
+      },
+    "correctAnswer": "a"
     },
-	{
-		"Location": "The Old Library",
-		"text": "Name of the cinema museum in the library?",
-		"options": ["Bill Douglas", "Library museum", "Cinema Museum","Spielberg museum"],
-		"answer": "Bill Douglas",
-		"points": 1,
+    {
+      "location": "The Old Library",
+      "question": "Name of the cinema museum in the library?",
+      "answers": {
+        "a": "Cinema Museum",
+        "b": "Library museum",
+        "c": "Bill Douglas",
+        "d": "Spielberg museum"
+      },
+    "correctAnswer": "c"
     },
-	{
-		"Location": "Northcourt Theatre",
-		"text": "Where is the sign located on the building?",
-		"options": ["Top","bottom"],
-		"answer": "Top",
-		"points": 1,
+    {
+      "location": "Northcourt Theatre",
+      "question": "Where is the sign located on the building?",
+      "answers": {
+        "a": "Top",
+        "b": "Bottom",
+        "c": "Left",
+        "d": "Right"
+      },
+    "correctAnswer": "a"
     },
-	{
-		"Location": "Washington Singer Building",
-		"text": "What side is the Washington singer reception sign on of the reception archway?",
-		"options": ["Left","Right"],
-		"answer": "Left",
-		"points": 1,
+    {
+      "location": "Washington Singer Building",
+      "question": "What side is the Washington singer reception sign on of the reception archway?",
+      "answers": {
+        "a": "Top",
+        "b": "Bottom",
+        "c": "Left",
+        "d": "Right"
+      },
+    "correctAnswer": "c"
     },
-	{
-		"Location": "Baroness Floella Benjamin Statue",
-		"text": "Who designed the sculpture?",
-		"options":["Luke Shepard","Henry Moore","Barbara Hepworth","Antony Gormley"],
-		"answer": "Luke Shepard",
-		"points": 1,
+    {
+      "location": "Baroness Floella Benjamin Statue",
+      "question": "Who designed the sculpture?",
+      "answers": {
+        "a": "Luke Shepard",
+        "b": "Henry Moore",
+        "c": "Barbara Hepworth",
+        "d": "Antony Gormley"
+      },
+    "correctAnswer": "a"
     },
-	{
-		"Location": "Student Health Centre",
-		"text": "What is the colour of the reception door?",
-		"options": ["Green","Black","White","Brown"],
-		"answer": "Green",
-		"points": 1,
+    {
+      "location": "Student Health Centre",
+      "question": "What is the colour of the reception door?",
+      "answers": {
+        "a": "Brown",
+        "b": "Black",
+        "c": "White",
+        "d": "Green"
+      },
+    "correctAnswer": "d"
     },
-	{
-		"Location": "University of Exeter sign",
-		"text": "What year did the University of Exeter open?",
-		"options":["1855","1820","1904","1867"],
-		"answer": "1855",
-		"points": 1,
+    {
+      "location": "University of Exeter sign",
+      "question": "What year did the University of Exeter open?",
+      "answers": {
+        "a": "1867",
+        "b": "1855",
+        "c": "1820",
+        "d": "1904"
+      },
+    "correctAnswer": "b"
     },
-	{
-		"Location": "Devonshire House",
-		"text": "Which one of these isn’t in Devonshire house?",
-		"options": ["Marketplace","Comida","Devonshire House","Student Guild Shop"],
-		"answer": "Marketplace",
-		"points": 1,
+    {
+      "location": "Devonshire House",
+      "question": "Which one of these isn’t in Devonshire house?",
+      "answers": {
+        "a": "Comida",
+        "b": "Marketplace",
+        "c": "The Ram",
+        "d": "Student Guild Shop"
+      },
+    "correctAnswer": "b"
     },
-	{
-		"Location": "The Chapel",
-		"text": "Full name of the chapel?",
-		"options": ["Mary Harris Memorial Chapel","Exeter Chapel","St. Peter's Chapel","The Chapel"],
-		"answer": "Mary Harris Memorial Chapel",
-		"points": 1,
+    {
+      "location": "The Chapel",
+      "question": "Full name of the chapel?",
+      "answers": {
+        "a": "Mary Harris Memorial Chapel",
+        "b": "St. Peter's Chapel",
+        "c": "Exeter Chapel",
+        "d": "The Chapel"
+      },
+    "correctAnswer": "a"
     },
-	{
-		"Location": "Alumni auditorium",
-		"text": "Capacity of the room?",
-		"options": ["400 seats","360 seats","500 seats","455 seats"],
-		"answer":"400 seats",
-		"points": 1,
-    },
-	{
-		"Location": "Great Hall",
-		"text": "Start of Game",
-		"answer": "NULL",
-		"points": 0,
-    },
-	
-  ]
-}
+    {
+      "location": "Alumni auditorium",
+      "question": "Capacity of the room?",
+      "answers": {
+        "a": "455",
+        "b": "500",
+        "c": "360",
+        "d": "400"
+      },
+    "correctAnswer": "d"
+    }
+]
