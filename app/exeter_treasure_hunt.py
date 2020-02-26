@@ -23,7 +23,6 @@ bcrypt = Bcrypt()
 with open('db/cards.json', 'r') as f:
     cards_dict = json.load(f)
 
-cards_dict = cards_dict[:2]
 
 @app.route('/', methods=['GET'])
 def index():
