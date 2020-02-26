@@ -1,8 +1,9 @@
+/*jslint es60*/
 mapboxgl.accessToken = "pk.eyJ1IjoibGNyZXNkZWUiLCJhIjoiY2s3MTNnbXU3MDJycjNkczF1OHR2YjdmNCJ9.6eD1kNQOyOGLeiGr6udiZw";
 
 var bounds = [
     [-3.540540, 50.730483],     //SW coords
-    [-3.528915, 50.742147]      //NE coords
+    [-3.528044, 50.741516]//NE coords
 ];
 
 var mapcontainer = document.getElementById("game-map");
@@ -76,6 +77,20 @@ map.on('load', function(){
             'icon-size': 2.0
         }
         
+    });
+    var jsonURL = "../playerlocations.geojson";
+    map.addSource('others', {
+
+        'type': 'geojson',
+        'data': jsonURL
+    });
+    map.addLayer({
+        'id': 'others',
+        'type': 'circle',
+        'source': 'others',
+        'paint': {
+            'circle-radius': 6    
+        }
     });
 });
 
