@@ -147,10 +147,10 @@
 		"points": 1,
     },
 	{
-      "Location": "Great Hall",
-      "text": "Start of Game",
-	  "answer": "NULL",
-      "points": 0,
+		"Location": "Great Hall",
+		"text": "Start of Game",
+		"answer": "NULL",
+		"points": 0,
     },
 	
   ]
