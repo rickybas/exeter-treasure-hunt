@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
     {{ super() }}
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
 {% endblock %}
 
 {% block scripts %}
@@ -15,17 +15,36 @@
 {% endblock %}
 
 {% block navbar %}
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="./">{{ APP_NAME }}</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="./">ExePlore</a>
+        <!-- Navbar Mobile View Expander -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="width:60px;">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+
+        <!-- Navbar Items -->
+        <div class="collapse navbar-collapse" id="navbarColor01">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Get Help</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Something Else</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">About</a>
+                    </li>
+                  </ul>
+        </div>
     </nav>
 {% endblock %}
 
 {% block content %}
-    <h2>Login Form</h2>
+    <h2>Log in to ExePlore</h2>
 
     <form action="{{ url_for('login') }}" method="post">
         <div class="imgcontainer">
-            <img src="" alt="Logo" class="Logo">
+            <img src="https://cdn4.iconfinder.com/data/icons/web-pack/64/compass-512.png" alt="Logo" class="Logo" style="width:100px;">
         </div>
 
         <label for="username"></label>
@@ -33,8 +52,9 @@
         <label for="password"></label>
         <input type="password" name="password" placeholder="Password" id="password" required>
         <div class="msg">{{ msg }}</div>
-
-        <input type="submit" value="Login">
+        <div class="text-center">
+            <input type="submit" value="Login">
+        </div>
     </form>
 {% endblock %}
     
