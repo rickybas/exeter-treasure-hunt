@@ -74,6 +74,7 @@ def cards():
         current_card = get_new_card()
         return render_template('currentCardPage.html', APP_NAME=APP_NAME, VERSION=VERSION,
                                location=current_card['location'],
+                               image=current_card['image'],
                                question=current_card['question'],
                                answers=current_card['answers'],
                                correctAnswer=current_card['correctAnswer'])
