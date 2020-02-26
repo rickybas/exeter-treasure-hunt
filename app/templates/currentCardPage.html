@@ -1,31 +1,65 @@
-<div id="quiz"></div>
+{% extends "bootstrap/base.html" %}
+
+<!-- {% block html_attribs %} lang="en"{% endblock %} -->
+{% block title %}{{ APP_NAME }}{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="./">{{ APP_NAME }}</a>
+        <a class="float-right" href="/logout" style="margin-left: auto">Logout</a>
+    </nav>
+{% endblock %}
 
 
-{{ location }}
-<br></br>
-{{ question }}
-<br>
+{% block content %}
+    <div class="container">
 
-<form method="get"></form>
-<input onclick="check(this.id)" type="button" id="a" value="{{ answers['a'] }}" ><br>
-<input onclick="check(this.id)" type="button" id="b" value="{{ answers['b'] }}" ><br>
-<input onclick="check(this.id)"type="button" id="c" value="{{ answers['c'] }}" ><br>
-<input onclick="check(this.id)" type="button" id="d" value="{{ answers['d'] }}" ><br>
-</form>
+        {{ location }}
+        <br>
+        <br>
+        {{ question }}
+        <br>
+
+        <form method="get">
+            <input onclick="check(this.id)" type="button" id="a" value="{{ answers['a'] }}"><br>
+            <input onclick="check(this.id)" type="button" id="b" value="{{ answers['b'] }}"><br>
+            <input onclick="check(this.id)" type="button" id="c" value="{{ answers['c'] }}"><br>
+            <input onclick="check(this.id)" type="button" id="d" value="{{ answers['d'] }}"><br>
+        </form>
 
 
+        <script type="text/javascript">
+            function check(clicked_id) {
+                $.post("/isAnswerCorrect",
+                    {
+                        answer: clicked_id,
+                        location: "{{ location }}"
+                    },
+                    function(data, status){
+                        if(data === "correct") {
+                            alert("Correct!");
+                            location.reload();
+                        }else {
+                            alert("Incorrect");
+                        }
+                    });
+            }
 
-<script type="text/javascript">
-function check(clicked_id) {
-    {#var x = document.getElementById(this.id).value;#}
-    var answer = '{{ correctAnswer }}'
-    if(clicked_id == answer){
-        alert("Correct! Well done, click to get your next card.")
-        location.reload();
-    }
-    else{
-        alert("Wrong! Click close to try again.")
-    }
-}
+        </script>
+    </div>
 
-</script>
+    <footer class="footer">
+        <div class="container text-center">
+            <span class="text-muted">{{ APP_NAME }} - {{ VERSION }}</span>
+        </div>
+    </footer>
+{% endblock %}

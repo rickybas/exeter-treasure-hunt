@@ -1,3 +1,6 @@
+import json
+import random
+
 from flask import Flask, render_template, request, session, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_mysqldb import MySQL
@@ -17,6 +20,10 @@ mysql.init_app(app)
 
 bcrypt = Bcrypt()
 
+with open('db/cards.json', 'r') as f:
+    cards_dict = json.load(f)
+
+cards_dict = cards_dict[:2]
 
 @app.route('/', methods=['GET'])
 def index():
@@ -45,6 +52,7 @@ def login():
             # Create session data, we can access this data in other routes
             session['loggedin'] = True
             session['username'] = username
+            session['cards'] = cards_dict
             # Redirect to home page
             return redirect(url_for('index'))
         else:
@@ -53,6 +61,48 @@ def login():
 
     return render_template('login.html', msg=msg)
 
+@app.route('/cards', methods=["GET"])
+def cards():
+    if 'loggedin' in session:
+        def get_new_card():
+            card = session['cards'][(int(random.randint(0, len(session['cards'])-1)))]
+            return card
+
+        if len(session['cards']) == 0:
+            return "you have won"
+
+        current_card = get_new_card()
+        return render_template('currentCardPage.html', APP_NAME=APP_NAME, VERSION=VERSION,
+                               location=current_card['location'],
+                               question=current_card['question'],
+                               answers=current_card['answers'],
+                               correctAnswer=current_card['correctAnswer'])
+
+    return redirect(url_for('login')), 401
+
+@app.route('/isAnswerCorrect', methods=["POST"])
+def is_answer_correct():
+    if 'loggedin' in session:
+        location = request.form['location']
+        answer = request.form['answer']
+
+        card = next(item for item in cards_dict if item["location"] == location)
+
+        if card["correctAnswer"] == answer:
+            session['cards'].remove(card)
+            session.modified = True
+            return "correct"
+        else:
+            return "incorrect"
+
+    return redirect(url_for('login')), 401
+
+@app.route('/reset')
+def reset():
+    session['cards'] = cards_dict
+
+    # Redirect to login page
+    return redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():
