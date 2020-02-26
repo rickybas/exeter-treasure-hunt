@@ -23,9 +23,12 @@
 {% block content %}
     <div class="container">
 
+        <br>
+        <br>
+
         {{ location }}
         <br>
-        {{image}}
+        <img src="{{ image }}" alt="location image"/>
         <br>
         {{ question }}
         <br>
@@ -45,11 +48,11 @@
                         answer: clicked_id,
                         location: "{{ location }}"
                     },
-                    function(data, status){
-                        if(data === "correct") {
+                    function (data, status) {
+                        if (data === "correct") {
                             alert("Correct!");
                             location.reload();
-                        }else {
+                        } else {
                             alert("Incorrect");
                         }
                     });

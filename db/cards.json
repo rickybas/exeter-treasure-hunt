@@ -13,7 +13,7 @@
     },
     {
       "location": "Harrison",
-      "image": "/static/card_images/Harrison.jpg",
+      "image": "/static/card_images/Harrison_building.jpg",
       "question": "Whats the name of the coffee shop in the Harrison?",
       "answers": {
         "a": "The Engine room",
@@ -109,7 +109,7 @@
     },
     {
       "location": "Physics Building",
-      "image": "/static/card_images/Physics_building.jpg",
+      "image": "/static/card_images/Physics building.jpg",
       "question": "How many steps at front door?",
       "answers": {
         "a": "8",
