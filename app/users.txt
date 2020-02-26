@@ -1,4 +1,3 @@
-,349
 William,William494
 John,John300
 George,George308
