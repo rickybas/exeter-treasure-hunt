@@ -10,10 +10,6 @@ app = Flask(__name__)
 
 app.secret_key = 'your secret key'
 
-app.config['MYSQL_PORT'] = 3306
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_DB'] = 'USERS_DATABASE'
-
 Bootstrap(app)
 mysql = MySQL()
 mysql.init_app(app)
