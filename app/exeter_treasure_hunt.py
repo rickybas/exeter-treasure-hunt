@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_mysqldb import MySQL
+from flask_bcrypt import Bcrypt
 import MySQLdb.cursors
 
 APP_NAME = "ExePlore"
@@ -13,6 +14,8 @@ app.secret_key = 'your secret key'
 Bootstrap(app)
 mysql = MySQL()
 mysql.init_app(app)
+
+bcrypt = Bcrypt()
 
 
 @app.route('/', methods=['GET'])
@@ -33,15 +36,15 @@ def login():
 
         # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, password))
+        cursor.execute('SELECT password FROM users WHERE username = %s', (username,))
         # Fetch one record and return result
-        account = cursor.fetchone()
+        password_hash = cursor.fetchone()['password']
 
-        # If account exists in accounts table in out database
-        if account:
+        authenticated_user = bcrypt.check_password_hash(password_hash, password)
+        if authenticated_user:
             # Create session data, we can access this data in other routes
             session['loggedin'] = True
-            session['username'] = account['username']
+            session['username'] = username
             # Redirect to home page
             return redirect(url_for('index'))
         else:

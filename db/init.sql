@@ -12,10 +12,6 @@ BEGIN
         `password` VARCHAR(255) NOT NULL,
         PRIMARY KEY (`username`)
     );
-
-    INSERT INTO users
-    VALUES ('lsnb201', 'football'),
-           ('ricky', 'tennis');
 END;
 //
 DELIMITER ;

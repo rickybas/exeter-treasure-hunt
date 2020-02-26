@@ -19,6 +19,10 @@ Set up MySQL database, enter password for user root@localhost:
 
 `mysql -u root -p < db/init.sql`
 
+Then populate the database with initial hashed and salted passwords and usernames, enter password for user root@localhost
+
+`python3 db/populate_users_database.py`
+
 ## Running Locally
 
 `python3 app/wsgi.py`
