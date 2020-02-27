@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 import MySQLdb.cursors
 
 APP_NAME = "ExePlore"
-VERSION = "0.1"
+VERSION = "0.2"
 
 app = Flask(__name__)
 
@@ -36,15 +36,27 @@ def index():
 def login():
     # For reference: https://codeshack.io/login-system-python-flask-mysql/
     msg = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+    if request.method == 'POST' and \
+            'username' in request.form and \
+            'password' in request.form and \
+            'consent' in request.form:
         username = request.form['username']
         password = request.form['password']
+        gdpr_consent = request.form['consent']
+
+        if gdpr_consent != 'consent':
+            msg = "Check GDPR consent to continue"
+            render_template('login.html', msg=msg)
 
         # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT password FROM users WHERE username = %s', (username,))
-        # Fetch one record and return result
-        password_hash = cursor.fetchone()['password']
+        # If command fails, don't bother with the rest. Clearly no username %s match
+        if cursor.execute('SELECT password FROM users WHERE username = %s', (username,)):
+            # Fetch one record and return result
+            password_hash = cursor.fetchone()['password']
+        else:
+            msg = "User account does not exist"
+            return render_template('login.html', msg=msg)
 
         authenticated_user = bcrypt.check_password_hash(password_hash, password)
         if authenticated_user:
@@ -79,6 +91,10 @@ def cards():
                                correctAnswer=current_card['correctAnswer'])
 
     return redirect(url_for('login')), 401
+
+@app.route('/gdprPolicy', methods=['GET', 'POST'])
+def gdprPolicy():
+    return render_template('gdprPolicy.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
 @app.route('/map', methods=["GET"])
 def map():

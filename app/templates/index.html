@@ -4,7 +4,7 @@
 {% block title %}{{ APP_NAME }}{% endblock %}
 
 {% block styles %}
-    {{ super() }}
+    <link rel="stylesheet" type='text/css' href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
 {% endblock %}
@@ -45,9 +45,11 @@
 {% block content %}
     <div class="container">
         <h1>Exeplore</h1>
-        <a href="/map">Go to map</a>
-        <br/>
-        <a href="/cards">Go to cards</a>
+        <button class="btn btn-success" onclick="location.href='/map';">Go to map</button>
+        <br/><br/>
+        <button class="btn btn-success" onclick="location.href='/cards';">View your Cards</button>
+        <br/><br/>
+        <button class="btn btn-warning" onclick="location.href='/reset';">Reset</button>
     </div>
 
     <footer class="footer">
