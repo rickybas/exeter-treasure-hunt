@@ -4,8 +4,9 @@
 {% block title %}{{ APP_NAME }}{% endblock %}
 
 {% block styles %}
-    {{ super() }}
+    <link rel="stylesheet" type='text/css' href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
 {% endblock %}
 
 {% block scripts %}
@@ -15,13 +16,15 @@
 {% block navbar %}
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="./">{{ APP_NAME }}</a>
-        <a class="float-right" href="/login" style="margin-left: auto">Login page</a>
+        <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='/';"
+                style="margin-left: auto;width:100px;">Close
+        </button>
     </nav>
 {% endblock %}
 
 
 {% block content %}
-    <div class="container">
+    <div class="container" style="padding:50px;padding-bottom:150px">
         <br/><br/>
 
         <h2>Privacy Policy</h2>
@@ -64,5 +67,4 @@
             <span class="text-muted">{{ APP_NAME }} - {{ VERSION }}</span>
         </div>
     </footer>
-{% endblock %}
 {% endblock %}

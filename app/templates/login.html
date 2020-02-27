@@ -6,7 +6,6 @@
 {% block styles %}
     <link rel="stylesheet" type='text/css' href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
-
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
 {% endblock %}
 
@@ -31,7 +30,7 @@
                       <a class="nav-link" href="#">Get Help</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">GDPR and Data Privacy</a>
+                      <a class="nav-link" href="{{ url_for('gdprPolicy') }}">GDPR and Data Privacy</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#">About</a>
@@ -69,5 +68,13 @@
             <button class="btn btn-success" type="submit" value="Login" style="width:150px">Login</button>
         </div>
     </form>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <span class="text-muted">ExePlore | </span><span><a style="text-decoration: none;color:#868e96;" href="{{ url_for('gdprPolicy') }}">Terms and Conditions</a></span>
+            <br><br>
+            <img src="http://www.exeter.ac.uk/departments/communication/mark-ops/design/visualidentity/logos2/white_logo_vector.png" style="width:100px;filter:invert(100%)">
+        </div>
+    </footer>
 {% endblock %}
     

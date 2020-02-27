@@ -94,6 +94,41 @@ span.psw {
     border-radius: 10%;
 }
 
-input[type="checkbox"] {
-    margin-left: 30px;
+a:hover {
+  text-decoration: underline !important;
+  color: #000 !important;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 2%;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+}
+
+@keyframes spinCard {
+  0% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+
+.card-container {
+  position: relative;
+  perspective:80rem;
+}
+
+.card {
+  animation: spinCard 2s;
+  position:absolute;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  position:absolute;
 }
