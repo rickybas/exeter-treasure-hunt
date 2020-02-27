@@ -119,16 +119,16 @@ a:hover {
 
 
 .card-container {
-  position: relative;
   perspective:80rem;
 }
 
 .card {
   animation: spinCard 2s;
-  position:absolute;
+  max-width:600px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 .card-back {
   transform: rotateY(180deg);
-  position:absolute;
 }
