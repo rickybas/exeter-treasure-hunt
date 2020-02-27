@@ -36,9 +36,17 @@ def index():
 def login():
     # For reference: https://codeshack.io/login-system-python-flask-mysql/
     msg = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+    if request.method == 'POST' and \
+            'username' in request.form and \
+            'password' in request.form and \
+            'consent' in request.form:
         username = request.form['username']
         password = request.form['password']
+        gdpr_consent = request.form['consent']
+
+        if gdpr_consent != 'consent':
+            msg = "Check GDPR consent to continue"
+            render_template('login.html', msg=msg)
 
         # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -100,6 +108,10 @@ def is_answer_correct():
             return "incorrect"
 
     return redirect(url_for('login')), 401
+
+@app.route('/gdprPolicy', methods=['GET', 'POST'])
+def gdprPolicy():
+    return render_template('gdprPolicy.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
 @app.route('/reset')
 def reset():

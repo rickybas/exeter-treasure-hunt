@@ -53,6 +53,11 @@
         <input type="text" name="username" placeholder="Username" id="username" required>
         <label for="password"></label>
         <input type="password" name="password" placeholder="Password" id="password" required>
+
+        <label for="consent">GDPR consent, <a href="{{ url_for('gdprPolicy') }}">read our policy</a></label>
+        <input name="consent" type="checkbox" class="form-check-input" id="consent" value="consent" required>
+
+        <br>
         <div class="msg">{{ msg }}</div>
         <div class="text-center">
             <input type="submit" value="Login">
