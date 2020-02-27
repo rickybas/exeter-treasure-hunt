@@ -1,4 +1,4 @@
-{% extends "bootstrap/base.html" %}
+               {% extends "bootstrap/base.html" %}
 
 <!-- {% block html_attribs %} lang="en"{% endblock %} -->
 {% block title %}{{ APP_NAME }}{% endblock %}
@@ -27,19 +27,19 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Get Help</a>
+                    <a class="nav-link" onclick="alert('FAQ and Help not yet implemented.');">Get Help</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('gdprPolicy') }}">GDPR and Privacy</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" onclick="alert('Team: \n- Anthony Bennett \n- Ricky Bassom\n- Adam Fitzgerald\n- Leon Cresdee\n- Louis Beresford\n- Tom Gates.\nStack:\n- Python Flask\n- Jaws MariaDB\n- Heroku\n- Docker\nInfo:\n- Produced for the University of Exeter Year 2 Group Software Engineering Project as Group M.');">About</a>
+                </li>
+                <li class="nav-item">
+                    <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='/logout';" style="margin-left: auto;width:100px;">Logout</button>
                 </li>
             </ul>
         </div>
-        <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='/logout';"
-                style="margin-left: auto;width:100px;">Logout
-        </button>
     </nav>
 {% endblock %}
 

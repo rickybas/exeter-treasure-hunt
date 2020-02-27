@@ -27,39 +27,39 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
                   <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                      <a class="nav-link" href="#">Get Help</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{ url_for('gdprPolicy') }}">GDPR and Data Privacy</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">About</a>
-                    </li>
+                    <a class="nav-link" onclick="alert('FAQ and Help not yet implemented.');">Get Help</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('gdprPolicy') }}">GDPR and Privacy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="alert('Team: \n- Anthony Bennett \n- Ricky Bassom\n- Adam Fitzgerald\n- Leon Cresdee\n- Louis Beresford\n- Tom Gates.\nStack:\n- Python Flask\n- Jaws MariaDB\n- Heroku\n- Docker\nInfo:\n- Produced for the University of Exeter Year 2 Group Software Engineering Project as Group M.');">About</a>
+                </li>
                   </ul>
         </div>
     </nav>
 {% endblock %}
 
 {% block content %}
-    <h2>Log in to ExePlore</h2>
 
-    <form action="{{ url_for('login') }}" method="post">
+    <form action="{{ url_for('login') }}" method="post" style="padding:10%;border:none">
+        <h2 style="text-align:center;">Log in to ExePlore</h2>
         <div class="imgcontainer">
             <img src="https://cdn4.iconfinder.com/data/icons/web-pack/64/compass-512.png" alt="Logo" class="Logo" style="width:100px;">
         </div>
 
-        <label for="username"></label>
+        <!-- <label for="username"></label> -->
         <div class="text-center">
         <div class="inputWithIcon">
             <input type="text" name="username" placeholder="Username" id="username" required>
             <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
         </div>
-        <label for="password"></label>
+        <!-- <label for="password"></label> -->
         <div class="inputWithIcon">
             <input type="password" name="password" placeholder="Password" id="password" required>
             <i class="fa fa-key fa-lg fa-fw" aria-hidden="true"></i>
         </div>
-        <label for="consent">GDPR consent, <a href="{{ url_for('gdprPolicy') }}">read our policy</a></label>
+        <label for="consent" style="padding:10px 0px 10px 10px">GDPR consent, <a href="{{ url_for('gdprPolicy') }}">read our policy</a></label>
         <input name="consent" type="checkbox" class="form-check-input" id="consent" value="consent" required>
 
         <br>

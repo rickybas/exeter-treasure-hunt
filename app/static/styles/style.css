@@ -102,7 +102,7 @@ a:hover {
 .footer {
   position: fixed;
   left: 0;
-  bottom: 2%;
+  bottom: 0;
   width: 100%;
   background-color: white;
   text-align: center;
@@ -131,4 +131,13 @@ a:hover {
 
 .card-back {
   transform: rotateY(180deg);
+}
+
+.iframe-container iframe {
+  margin:0;
+  border:none;
+  left:0;
+  top:0;
+  height:70vh;
+  width:100vw;
 }
