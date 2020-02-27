@@ -117,6 +117,10 @@ def is_answer_correct():
 
     return redirect(url_for('login')), 401
 
+@app.route('/gdprPolicy', methods=['GET', 'POST'])
+def gdprPolicy():
+    return render_template('gdprPolicy.html', APP_NAME=APP_NAME, VERSION=VERSION)
+
 @app.route('/reset')
 def reset():
     session['cards'] = cards_dict
