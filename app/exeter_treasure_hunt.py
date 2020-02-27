@@ -92,10 +92,6 @@ def cards():
 
     return redirect(url_for('login')), 401
 
-@app.route('/gdprPolicy', methods=['GET', 'POST'])
-def gdprPolicy():
-    return render_template('gdprPolicy.html', APP_NAME=APP_NAME, VERSION=VERSION)
-
 @app.route('/map', methods=["GET"])
 def map():
     return render_template("player.html")
