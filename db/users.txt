@@ -111,7 +111,6 @@ Roberts,Roberts465
 Rowland,Rowland156
 Wallace,Wallace120
 Bert,Bert382
-Anthony,Anthony143
 Oswald,Oswald292
 Frederic,Frederic143
 Archie,Archie390
