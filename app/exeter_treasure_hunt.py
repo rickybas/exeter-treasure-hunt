@@ -92,10 +92,6 @@ def cards():
 
     return redirect(url_for('login')), 401
 
-@app.route('/map', methods=["GET"])
-def map():
-    return render_template("map.html")
-
 @app.route('/is-answer-correct', methods=["POST"])
 def is_answer_correct():
     if 'loggedin' in session:
@@ -113,8 +109,12 @@ def is_answer_correct():
 
     return redirect(url_for('login')), 401
 
+@app.route('/scores', methods=['GET', 'POST'])
+def scores():
+    return render_template('scores.html', APP_NAME=APP_NAME, VERSION=VERSION)
+
 @app.route('/gdpr-policy', methods=['GET', 'POST'])
-def gdprPolicy():
+def gdpr_policy():
     return render_template('gdpr_policy.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
 @app.route('/landing-page', methods=['GET', 'POST'])

@@ -141,3 +141,9 @@ a:hover {
     height: 70vh;
     width: 100vw;
 }
+
+.footer-btn {
+    display: inline-block;
+    width: auto;
+    margin: 0 auto;
+}

@@ -1,24 +1,23 @@
 {% extends "bootstrap/base.html" %}
 
 <!-- {% block html_attribs %} lang="en"{% endblock %} -->
-{% block title %}{{ APP_NAME }} - Map{% endblock %}
+{% block title %}{{ APP_NAME }} - Scores{% endblock %}
 
 {% block styles %}
     <link rel="stylesheet" type='text/css'
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
-    <script src="https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css" rel="stylesheet"/>
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
 {% endblock %}
+
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="navbar-brand"><i class="fa fa-compass" style="color:white;"></i>
-            <a class="navbar-brand" href="./">ExePlore</a>
+        <div class="navbar-brand" style="font-size:30px"><i class="fa fa-compass" style="color:white;"></i>
+            <a class="navbar-brand" href="./" style="font-size:35px">ExePlore</a>
         </div>
         <!-- Navbar Mobile View Expander -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
@@ -30,13 +29,13 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="alert('FAQ and Help not yet implemented.');">Get Help</a>
+                    <a class="nav-link" onclick="alert('FAQ and Help not yet implemented.');">Get Help</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('gdprPolicy') }}">GDPR and Privacy</a>
+                    <a class="nav-link" href="{{ url_for('gdpr_policy') }}">GDPR and Privacy</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"
+                    <a class="nav-link"
                        onclick="alert('Team: \n- Anthony Bennett \n- Ricky Bassom\n- Adam Fitzgerald\n- Leon Cresdee\n- Louis Beresford\n- Tom Gates.\nStack:\n- Python Flask\n- Jaws MariaDB\n- Heroku\n- Docker\nInfo:\n- Produced for the University of Exeter Year 2 Group Software Engineering Project as Group M.');">About</a>
                 </li>
             </ul>
@@ -44,6 +43,9 @@
                 <li class="nav-item">
                     <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='/logout';"
                             style="margin-left: auto;width:100px;">Logout
+                    </button>
+                    <button class="float-right btn btn-warning my-2 my-lg-0" onclick="location.href='/reset';"
+                            style="margin-left: auto;width: 120px; margin-right: 20px;">Reset my cards
                     </button>
                 </li>
             </ul>
@@ -53,17 +55,16 @@
 
 
 {% block content %}
-    <div id='map'></div>
+    Scores ....
 
     <footer class="footer">
         <div class="container text-center">
-            <span class="text-muted">ExePlore | </span><span><a style="text-decoration: none;color:#868e96;"
-                                                                href="{{ url_for('gdprPolicy') }}">Terms and Conditions</a></span>
-            <br><br>
-            <img src="http://www.exeter.ac.uk/departments/communication/mark-ops/design/visualidentity/logos2/white_logo_vector.png"
-                 style="width:100px;filter:invert(100%)" alt="Ts and Cs image">
+            <button class="btn btn-success footer-btn" onclick="location.href='/cards';">Cards
+            </button>
+            <button class="btn btn-success footer-btn" onclick="location.href='/';">Map
+            </button>
+            <button class="btn btn-success footer-btn" onclick="location.href='/scores';">Scores
+            </button>
         </div>
     </footer>
-
-    <script src="{{ url_for('static', filename = 'scripts/exemap.js') }}"></script>
 {% endblock %}
