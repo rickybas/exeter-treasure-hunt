@@ -134,4 +134,29 @@ def logout():
     session.pop('loggedin', None)
     session.pop('username', None)
     # Redirect to login page
-    return redirect(url_for('login'))
+    return redirect(url_for('landing_page'))
+
+
+# ADMIN SECTION
+# !SECURE # TREAT WITH CAUTION
+
+@app.route('/adminIndex', methods=['GET'])
+def adminIndex():
+    if (True): # admin sesh check eventually
+        return render_template("adminIndex.html", APP_NAME=APP_NAME, VERSION=VERSION)
+
+    return render_template("adminIndex.html", APP_NAME=APP_NAME, VERSION=VERSION)
+
+@app.route('/adminMap', methods=['GET'])
+def adminMap():
+    if (True): # admin sesh check eventually
+        return render_template("mapView.html", APP_NAME=APP_NAME, VERSION=VERSION)
+
+    return render_template("mapView.html", APP_NAME=APP_NAME, VERSION=VERSION)
+
+@app.route('/adminUsers', methods=['GET'])
+def adminUsers():
+    if (True): # admin sesh check eventually
+        return render_template("userList.html", APP_NAME=APP_NAME, VERSION=VERSION)
+
+    return render_template("userList.html", APP_NAME=APP_NAME, VERSION=VERSION)
