@@ -1,0 +1,42 @@
+{% extends "bootstrap/base.html" %}
+
+<!-- {% block html_attribs %} lang="en"{% endblock %} -->
+{% block title %}{{ APP_NAME }} - Landing page{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type='text/css'
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="navbar-brand"><i class="fa fa-compass" style="color:white;"></i>
+            <a class="navbar-brand" href="./">ExePlore</a>
+        </div>
+        <!-- Navbar Mobile View Expander -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="width:60px;">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    </nav>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <h1>Exeplore... landing page.....</h1>
+        <a href="{{ url_for('login') }}">Play</a>
+    </div>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <span class="text-muted">{{ APP_NAME }} - {{ VERSION }} | </span>
+        </div>
+    </footer>
+{% endblock %}

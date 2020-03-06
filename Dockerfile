@@ -2,13 +2,10 @@ FROM python:3.7
 
 EXPOSE 5000
 
+ADD app /app
+COPY app /app
+
 WORKDIR /app
-
-ADD ./ /app
-COPY ./ /app
-
-ADD ./ /db
-COPY ./ /db
 
 RUN pip install -r requirements.txt
 

@@ -17,11 +17,11 @@ Install dependencies (make sure [system dependencies](#system-dependencies) are 
 
 Set up MySQL database, enter password for user root@localhost:
 
-`mysql -u root -p < db/init.sql`
+`mysql -u root -p < app/db/init.sql`
 
 Then populate the database with initial hashed and salted passwords and usernames, enter password for user root@localhost
 
-`python3 db/populate_users_database.py`
+`python3 app/db/populate_users_database.py`
 
 ## Running Locally
 
@@ -30,19 +30,10 @@ Then populate the database with initial hashed and salted passwords and username
 *optionally use -p to enter password for user root@localhost*
 
 ## Or run using docker
-`docker-compose up`
-
-To make changes and rerun:
 
 ```
-docker-compose build
-docker-compose up
-```
-When making changes may need to use this to reset:
-
-```
-docker-compose down
-docker system prune --force --volumes
+docker build -t eth . 
+docker run -p 5000:5000 eth
 ```
 
 ## System dependencies

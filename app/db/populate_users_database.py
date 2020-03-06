@@ -37,7 +37,7 @@ if __name__ == "__main__":
         auth_plugin='mysql_native_password'
     )
 
-    with open('db/users.txt', newline='') as csvfile:
+    with open('app/db/users.txt', newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
         for row in spamreader:
             username = row[0]

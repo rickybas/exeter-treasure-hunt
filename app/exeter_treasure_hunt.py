@@ -20,7 +20,7 @@ mysql.init_app(app)
 
 bcrypt = Bcrypt()
 
-with open('db/cards.json', 'r') as f:
+with open('app/db/cards.json', 'r') as f:
     cards_dict = json.load(f)
 
 
@@ -29,7 +29,7 @@ def index():
     if 'loggedin' in session:
         return render_template("index.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
-    return redirect(url_for('login'))
+    return redirect(url_for('landing_page'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -83,7 +83,7 @@ def cards():
             return "you have won"
 
         current_card = get_new_card()
-        return render_template('currentCardPage.html', APP_NAME=APP_NAME, VERSION=VERSION,
+        return render_template('current_card_page.html', APP_NAME=APP_NAME, VERSION=VERSION,
                                location=current_card['location'],
                                image=current_card['image'],
                                question=current_card['question'],
@@ -94,9 +94,9 @@ def cards():
 
 @app.route('/map', methods=["GET"])
 def map():
-    return render_template("player.html")
+    return render_template("map.html")
 
-@app.route('/isAnswerCorrect', methods=["POST"])
+@app.route('/is-answer-correct', methods=["POST"])
 def is_answer_correct():
     if 'loggedin' in session:
         location = request.form['location']
@@ -113,9 +113,13 @@ def is_answer_correct():
 
     return redirect(url_for('login')), 401
 
-@app.route('/gdprPolicy', methods=['GET', 'POST'])
+@app.route('/gdpr-policy', methods=['GET', 'POST'])
 def gdprPolicy():
-    return render_template('gdprPolicy.html', APP_NAME=APP_NAME, VERSION=VERSION)
+    return render_template('gdpr_policy.html', APP_NAME=APP_NAME, VERSION=VERSION)
+
+@app.route('/landing-page', methods=['GET', 'POST'])
+def landing_page():
+    return render_template('landing_page.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
 @app.route('/reset')
 def reset():
