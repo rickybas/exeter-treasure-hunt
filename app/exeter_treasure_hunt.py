@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 import MySQLdb.cursors
 
 APP_NAME = "ExePlore"
-VERSION = "0.2"
+VERSION = "0.3-beta"
 
 app = Flask(__name__)
 
