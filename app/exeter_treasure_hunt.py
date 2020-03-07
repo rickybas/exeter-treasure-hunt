@@ -143,20 +143,20 @@ def logout():
 @app.route('/adminIndex', methods=['GET'])
 def adminIndex():
     if (True): # admin sesh check eventually
-        return render_template("adminIndex.html", APP_NAME=APP_NAME, VERSION=VERSION)
+        return render_template("admin_index.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
-    return render_template("adminIndex.html", APP_NAME=APP_NAME, VERSION=VERSION)
+    return render_template("admin_index.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
 @app.route('/adminMap', methods=['GET'])
 def adminMap():
     if (True): # admin sesh check eventually
-        return render_template("mapView.html", APP_NAME=APP_NAME, VERSION=VERSION)
+        return render_template("map_view.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
-    return render_template("mapView.html", APP_NAME=APP_NAME, VERSION=VERSION)
+    return render_template("map_view.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
 @app.route('/adminUsers', methods=['GET'])
 def adminUsers():
     if (True): # admin sesh check eventually
-        return render_template("userList.html", APP_NAME=APP_NAME, VERSION=VERSION)
+        return render_template("user_list.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
-    return render_template("userList.html", APP_NAME=APP_NAME, VERSION=VERSION)
+    return render_template("user_list.html", APP_NAME=APP_NAME, VERSION=VERSION)

@@ -17,7 +17,7 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--dbpassword", type=str,
                         help="root password for db", required=False, default="")
     parser.add_argument("-n", "--dbname", type=str,
-                        help="mysql database name, ie USERS_DATABASE", required=False, default="USERS_DATABASE")
+                        help="mysql database name, ie ETH_DATABASE", required=False, default="ETH_DATABASE")
 
     args = parser.parse_args()
 
@@ -37,8 +37,16 @@ if __name__ == "__main__":
         auth_plugin='mysql_native_password'
     )
 
+    admin_password = getpass("Enter admin password: ").encode('utf-8')
+    hashed_password = bcrypt.hashpw(admin_password, bcrypt.gensalt())
+
+    mycursor = mydb.cursor()
+
+    mycursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", ("admin", hashed_password))
+
     with open('app/db/users.txt', newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+
         for row in spamreader:
             username = row[0]
             password = row[1].encode('utf-8')
@@ -52,3 +60,4 @@ if __name__ == "__main__":
             mycursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
 
         mydb.commit()
+
