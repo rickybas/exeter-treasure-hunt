@@ -34,43 +34,18 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # For reference: https://codeshack.io/login-system-python-flask-mysql/
-    msg = ''
     if request.method == 'POST' and \
             'username' in request.form and \
             'password' in request.form and \
             'consent' in request.form:
-        username = request.form['username']
-        password = request.form['password']
-        gdpr_consent = request.form['consent']
 
-        if gdpr_consent != 'consent':
-            msg = "Check GDPR consent to continue"
-            render_template('login.html', msg=msg)
-
-        # Check if account exists using MySQL
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        # If command fails, don't bother with the rest. Clearly no username %s match
-        if cursor.execute('SELECT password FROM users WHERE username = %s', (username,)):
-            # Fetch one record and return result
-            password_hash = cursor.fetchone()['password']
-        else:
-            msg = "User account does not exist"
-            return render_template('login.html', msg=msg)
-
-        authenticated_user = bcrypt.check_password_hash(password_hash, password)
-        if authenticated_user:
-            # Create session data, we can access this data in other routes
-            session['loggedin'] = True
-            session['username'] = username
-            session['cards'] = cards_dict
-            # Redirect to home page
+        msg = successful_login(request.form['username'], request.form['password'], request.form['consent'])
+        if msg is None:
             return redirect(url_for('index'))
         else:
-            # Account doesnt exist or username/password incorrect
-            msg = 'Incorrect username/password!'
+            return render_template('login.html', msg=msg)
 
-    return render_template('login.html', msg=msg)
+    return render_template('login.html')
 
 @app.route('/cards', methods=["GET"])
 def cards():
@@ -140,23 +115,76 @@ def logout():
 # ADMIN SECTION
 # !SECURE # TREAT WITH CAUTION
 
-@app.route('/adminIndex', methods=['GET'])
-def adminIndex():
-    if (True): # admin sesh check eventually
+@app.route('/admin-login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST' and \
+            'username' in request.form and \
+            'password' in request.form and \
+            request.form['username'] == "admin":
+
+        msg = successful_login(request.form['username'], request.form['password'])
+
+        if msg is None:
+            return redirect(url_for('admin_index'))
+        else:
+            return render_template('admin_login.html', msg=msg)
+
+    return render_template('admin_login.html')
+
+@app.route('/admin-index', methods=['GET'])
+def admin_index():
+    if 'loggedin' in session and session['username'] == "admin":
         return render_template("admin_index.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
     return render_template("admin_index.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
-@app.route('/adminMap', methods=['GET'])
-def adminMap():
-    if (True): # admin sesh check eventually
+@app.route('/admin-map', methods=['GET'])
+def admin_map():
+    if 'loggedin' in session and session['username'] == "admin":
         return render_template("map_view.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
     return render_template("map_view.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
-@app.route('/adminUsers', methods=['GET'])
-def adminUsers():
-    if (True): # admin sesh check eventually
+@app.route('/admin-users', methods=['GET'])
+def admin_users():
+    if 'loggedin' in session and session['username'] == "admin":
         return render_template("user_list.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
     return render_template("user_list.html", APP_NAME=APP_NAME, VERSION=VERSION)
+
+def successful_login(username, password, gdpr_consent = None):
+    """
+    Can user login. If possible login using session variables
+
+    :param username: username string
+    :param password: plain text password
+    :param gdpr_consent: "concent" or anything else
+    :return: None if successful else a message
+    """
+    # For reference: https://codeshack.io/login-system-python-flask-mysql/
+    if gdpr_consent != 'consent' and gdpr_consent != None:
+        msg = "Check GDPR consent to continue"
+        return msg
+
+    # Check if account exists using MySQL
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    # If command fails, don't bother with the rest. Clearly no username %s match
+    if cursor.execute('SELECT password FROM users WHERE username = %s', (username,)):
+        # Fetch one record and return result
+        password_hash = cursor.fetchone()['password']
+    else:
+        msg = "User account does not exist"
+        return msg
+
+    authenticated_user = bcrypt.check_password_hash(password_hash, password)
+    if authenticated_user:
+        # Create session data, we can access this data in other routes
+        session['loggedin'] = True
+        session['username'] = username
+        session['cards'] = cards_dict
+        # Redirect to home page
+        return None
+    else:
+        # Account doesnt exist or username/password incorrect
+        msg = 'Incorrect username/password!'
+        return msg

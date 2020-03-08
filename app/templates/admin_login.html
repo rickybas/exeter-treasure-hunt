@@ -1,18 +1,24 @@
 {% extends "bootstrap/base.html" %}
 
-<!-- {% block html_attribs %} lang="en"{% endblock %} -->
-{% block title %}{{ APP_NAME }} - Landing page{% endblock %}
+{% block html_attribs %} lang="en"{% endblock %}
+{% block title %}{{ APP_NAME }}Admin Login{% endblock %}
 
 {% block styles %}
     <link rel="stylesheet" type='text/css'
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
+    <style>
+    body {
+        background-color: #bccad7;
+    }
+    </style>
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
 {% endblock %}
+
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="navbar-brand"><i class="fa fa-compass" style="color:white;"></i>
@@ -42,30 +48,24 @@
     </nav>
 {% endblock %}
 
-
 {% block content %}
-    <div class="container text-center">
-        <hr>
-        <h1>ExePlore Landing Page</h1>
-        <hr>
-        <p>This is a placeholder, as the landing page will simply contain advertising and flashy promo images, and as such is lowest priority for our SDLC.</p>
-        <button class="btn btn-success footer-btn" onclick="location.href='{{ url_for('login') }}';" style="width:65%;padding:30px;font-size:30px;">Play
-            </button>
+    <form action="{{ url_for('admin_login') }}" method="post" style="padding:10%;border:none">
+        <h2 style="text-align:center;">Admin login</h2>
 
-            <!-- TEMP TEMP TEMP -->
-            <br><br><br><br><br><br>
-            <button class="btn btn-warning footer-btn" onclick="location.href='{{ url_for('admin_login') }}';">Admin WIP
-            </button>
-            <!-- end -->
-    </div>
+        <!-- <label for="username"></label> -->
+        <div class="text-center">
+            <input name="username" type="hidden" placeholder="Username" id="username" value="admin" required>
 
-    <footer class="footer">
-        <div class="container text-center" style="padding:5px">
-            <span class="text-muted">ExePlore {{VERSION}} | </span><span><a style="text-decoration: none;color:#868e96;"
-                                                                href="{{ url_for('gdpr_policy') }}">Terms and Conditions</a></span>
-            <br><br>
-            <img src="http://www.exeter.ac.uk/departments/communication/mark-ops/design/visualidentity/logos2/white_logo_vector.png"
-                 style="width:100px;filter:invert(100%)" alt="Ts and Cs image">
+            <!-- <label for="password"></label> -->
+            <div class="inputWithIcon">
+                <label for="password"></label><input type="password" name="password" placeholder="Password" id="password" required>
+                <i class="fa fa-key fa-lg fa-fw" aria-hidden="true"></i>
+            </div>
+            <br>
+            <div class="msg">{{ msg }}</div>
+
+            <button class="btn btn-success" type="submit" value="Login" style="width:150px">Login</button>
         </div>
-    </footer>
+    </form>
 {% endblock %}
+    
