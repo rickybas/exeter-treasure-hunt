@@ -1,12 +1,13 @@
+import csv
 import json
-import random
+import MySQLdb.cursors
 from datetime import datetime
 
 from flask import Flask, render_template, request, session, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_mysqldb import MySQL
 from flask_bcrypt import Bcrypt
-import MySQLdb.cursors
+from flask_apscheduler import APScheduler
 
 APP_NAME = "ExePlore"
 VERSION = "0.3-beta"
@@ -21,24 +22,51 @@ mysql.init_app(app)
 
 bcrypt = Bcrypt()
 
+
+class Config(object):
+    SCHEDULER_API_ENABLED = True
+
+
+scheduler = APScheduler()
+app.config.from_object(Config())
+
+# it is also possible to enable the API directly
+# scheduler.api_enabled = True
+scheduler.init_app(app)
+scheduler.start()
+
 with open('app/db/cards.json', 'r') as f:
     cards_dict = json.load(f)
 
+
+# Tasks ----------------------------------------------------------------------------------------------------------------
+
+@scheduler.task('interval', id='do_save_progress', seconds=3600, misfire_grace_time=5)
+def do_save_progress_job():
+    with app.app_context():
+        progress = get_overall_progress()
+        with open("app/db/progress.csv", 'a') as f:
+            f.write(str(progress) + ',' + datetime.now().strftime('%Y-%m-%d %H:%M:%S') + '\n')
+
+
+# Static pages ---------------------------------------------------------------------------------------------------------
 
 @app.route('/landing-page', methods=['GET', 'POST'])
 def landing_page():
     return render_template('landing_page.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
+
 @app.route('/gdpr-policy', methods=['GET', 'POST'])
 def gdpr_policy():
     return render_template('gdpr_policy.html', APP_NAME=APP_NAME, VERSION=VERSION)
+
 
 # Player auth section --------------------------------------------------------------------------------------------------
 
 @app.route('/', methods=['GET'])
 def index():
     if 'loggedin' in session:
-        return render_template("index.html", APP_NAME=APP_NAME, VERSION=VERSION)
+        return render_template("index.html", APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'])
 
     return redirect(url_for('landing_page'))
 
@@ -61,20 +89,22 @@ def login():
 
     return render_template('login.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
+
 @app.route('/cards', methods=["GET"])
 def cards():
     if 'loggedin' in session:
-        return render_template('cards.html', APP_NAME=APP_NAME, VERSION=VERSION,
-                               cards=cards_dict, won_cards=get_won_cards(session['username']))
+        return render_template('cards.html', APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'],
+                               cards=cards_dict, won_cards=get_won_cards_by_user(session['username']))
 
     return redirect(url_for('login')), 401
+
 
 @app.route('/card/<location>', methods=["GET"])
 def single_card(location):
     if 'loggedin' in session:
-
         card = next(item for item in cards_dict if item["location"] == location)
         return render_template('current_card_page.html', APP_NAME=APP_NAME, VERSION=VERSION,
+                               username=session['username'],
                                location=card['location'],
                                image=card['image'],
                                question=card['question'],
@@ -83,12 +113,14 @@ def single_card(location):
 
     return redirect(url_for('login')), 401
 
+
 @app.route('/scores', methods=['GET', 'POST'])
 def scores():
     if 'loggedin' in session:
-        return render_template('scores.html', APP_NAME=APP_NAME, VERSION=VERSION)
+        return render_template('scores.html', APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'])
 
     return redirect(url_for('login')), 401
+
 
 @app.route('/is-answer-correct', methods=["POST"])
 def is_answer_correct():
@@ -107,12 +139,14 @@ def is_answer_correct():
 
     return redirect(url_for('login')), 401
 
+
 @app.route('/reset')
 def reset():
     reset_my_cards(session['username'])
 
     # Redirect to login page
     return redirect(url_for('index'))
+
 
 @app.route('/logout')
 def logout():
@@ -121,6 +155,7 @@ def logout():
     session.pop('username', None)
     # Redirect to login page
     return redirect(url_for('landing_page'))
+
 
 # Admin section --------------------------------------------------------------------------------------------------------
 
@@ -144,12 +179,25 @@ def admin_login():
 
     return render_template('admin_login.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
+
 @app.route('/admin-index', methods=['GET'])
 def admin_index():
     if 'loggedin' in session and session['username'] == "admin":
-        return render_template("admin_index.html", APP_NAME=APP_NAME, VERSION=VERSION)
+        won_cards = get_all_won_cards()
+        users = get_all_users()
+
+        return render_template("admin_index.html", APP_NAME=APP_NAME, VERSION=VERSION,
+                               cards_dict=cards_dict,
+                               num_won_cards=len(won_cards),
+                               num_users=len(users),
+                               num_active_users=get_num_of_active_players(),
+                               overall_progress=round(get_overall_progress(), 2),
+                               overall_progress_over_time=get_overall_progress_over_time(),
+                               won_card_distribution=won_card_distribution(),
+                               top_locations_by_playerbase_ownership=top_locations_by_playerbase_ownership())
 
     return redirect(url_for('admin_login')), 401
+
 
 @app.route('/admin-map', methods=['GET'])
 def admin_map():
@@ -158,6 +206,7 @@ def admin_map():
 
     return redirect(url_for('admin_login')), 401
 
+
 @app.route('/admin-users', methods=['GET'])
 def admin_users():
     if 'loggedin' in session and session['username'] == "admin":
@@ -165,9 +214,10 @@ def admin_users():
 
     return redirect(url_for('admin_login')), 401
 
+
 #  Aux functions -------------------------------------------------------------------------------------------------------
 
-def successful_login(username, password, gdpr_consent = None):
+def successful_login(username, password, gdpr_consent=None):
     """
     Can user login
 
@@ -201,19 +251,117 @@ def successful_login(username, password, gdpr_consent = None):
         msg = 'Incorrect username/password!'
         return msg
 
-def get_won_cards(username):
+
+def get_all_users():
+    """
+    Get all users
+    :return: list of users. [] if nothing found
+    """
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    # If command fails, don't bother with the rest. Clearly no username %s match
+    if cursor.execute('SELECT * FROM users'):
+        # Fetch one record and return result
+        users = cursor.fetchall()
+        return users
+    else:
+        return []
+
+
+def get_num_of_active_players():
+    """
+    Get number of players that have won a card
+    :return: int
+    """
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    # If command fails, don't bother with the rest. Clearly no username %s match
+    if cursor.execute('SELECT COUNT(username) FROM won'):
+        # Fetch one record and return result
+        num_users = cursor.fetchall()
+        return num_users[0]['COUNT(username)']
+    else:
+        return 0
+
+
+def get_all_won_cards():
+    """
+    Get completed cards
+    :return: list of cards. [] if nothing found
+    """
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    # If command fails, don't bother with the rest. Clearly no username %s match
+    if cursor.execute('SELECT * FROM won'):
+        # Fetch one record and return result
+        wons = cursor.fetchall()
+        return wons
+    else:
+        return []
+
+
+def get_overall_progress():
+    """
+    Get overall progress
+    :return: num between 0 and 100%
+    """
+
+    won_cards = get_all_won_cards()
+    users = get_all_users()
+
+    return (len(won_cards) * 100) / (len(users) * len(cards_dict))
+
+
+def get_overall_progress_over_time():
+    """
+    Get overall progress over time.
+    :return: list of tuples. (progress score, timestamp)
+    """
+    progress = [tuple(row) for row in csv.reader(open("app/db/progress.csv", 'rU'))]
+
+    return progress
+
+
+def won_card_distribution():
+    """
+    Get num of won cards by location
+    :return: list of cardLocation, COUNT(*)
+    """
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if cursor.execute('SELECT cardLocation, COUNT(*) FROM won GROUP BY cardLocation'):
+        distribution = list(cursor.fetchall())
+        return distribution
+    else:
+        return []
+
+
+def top_locations_by_playerbase_ownership():
+    """
+    Get location by completeness of users
+    :return: dict. location : %
+    """
+
+    won_cards = won_card_distribution()
+    percentage_complete = {}
+    for card in won_cards:
+        percentage_complete[card['cardLocation']] = (card['COUNT(*)'] * 100) / len(get_all_users())
+
+    return sorted(percentage_complete.items(), key=lambda x: x[1], reverse=True)
+
+
+def get_won_cards_by_user(username):
     """
     Get locations of completed cards by session user
     :return: list of locations. [] if nothing found
     """
+
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    # If command fails, don't bother with the rest. Clearly no username %s match
     if cursor.execute('SELECT cardLocation FROM won WHERE username = %s', (username,)):
-        # Fetch one record and return result
         locations = [item['cardLocation'] for item in cursor.fetchall()]
         return locations
     else:
         return []
+
 
 def add_won_card(username, location):
     """
@@ -229,12 +377,14 @@ def add_won_card(username, location):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     try:
-        cursor.execute('INSERT INTO won (username, cardLocation, timeStamp) VALUES (%s, %s, %s)', (username, location, timestamp))
+        cursor.execute('INSERT INTO won (username, cardLocation, timeStamp) VALUES (%s, %s, %s)',
+                       (username, location, timestamp))
     except:
         return False
 
     mysql.connection.commit()
     return True
+
 
 def reset_my_cards(username):
     """
@@ -247,7 +397,7 @@ def reset_my_cards(username):
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
     try:
-        cursor.execute('DELETE FROM won WHERE username=%s', (username, ))
+        cursor.execute('DELETE FROM won WHERE username=%s', (username,))
     except:
         return False
 
