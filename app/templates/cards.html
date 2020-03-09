@@ -2,12 +2,16 @@
     <div class="card-container" style="padding:10%;padding-top:2%">
 
         {% for card in cards %}
-            <button class="card" style="margin-bottom: 10px" onclick="$('#content').load('/card/' + encodeURI('{{ card['location'] }}'));">
+            <button class="card" style="margin-bottom: 10px;background:linear-gradient(45deg, rgb(56, 120, 78),rgb(175, 255, 102))" onclick="$('#content').load('/card/' + encodeURI('{{ card['location'] }}'));">
 
                 {% if card['location'] in won_cards %}
-                    <h2 style="color: green"><img class="thumbnail" width="100" height="100" src="{{ card['image'] }}" alt="{{ card['location'] }} image"/> {{ card['location'] }}</h2>
+                    <img class="thumbnail" style="border: 2px solid #ddd;" width="100" height="100" src="{{ card['image'] }}" alt="{{ card['location'] }} image"/>
+                    <h4 style="color: green; text-align:left; position:absolute; left:130px;top:15px;padding-right:10px;">{{ card['location'] }}</h4>
                 {% else %}
-                    <h2 style="color: red"><img class="thumbnail" width="100" height="100" src="{{ card['image'] }}" alt="{{ card['location'] }} image" style="filter: grayscale(100%);"/> {{ card['location'] }}</h2>
+                <div>
+                    <img class="thumbnail" width="100" height="100" src="{{ card['image'] }}" alt="{{ card['location'] }} image" style="filter: grayscale(1) !important;"/> 
+                    <h4 style="color: #FFF; text-align:left; position:absolute; left:130px;top:15px;padding-right:10px">{{ card['location'] }}</h4>
+                </div>
                 {% endif %}
             </button>
         {% endfor %}
