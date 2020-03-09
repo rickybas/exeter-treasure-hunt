@@ -13,7 +13,7 @@ Clone repo:
 
 Install dependencies (make sure [system dependencies](#system-dependencies) are installed before this):
 
-`pip3 install -r app/requirements.txt`
+`pip3 install -r requirements.txt`
 
 Set up MySQL database, enter password for user root@localhost:
 
