@@ -8,6 +8,8 @@ from flask_bootstrap import Bootstrap
 from flask_mysqldb import MySQL
 from flask_bcrypt import Bcrypt
 from flask_apscheduler import APScheduler
+from flask_mail import Mail, Message
+from flask_debugtoolbar import DebugToolbarExtension
 
 APP_NAME = "ExePlore"
 VERSION = "0.3-beta"
@@ -15,6 +17,23 @@ VERSION = "0.3-beta"
 app = Flask(__name__)
 
 app.secret_key = 'your secret key'
+app.debug= True
+
+# Mail stuff
+app.config.update(
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=587,
+    MAIL_USE_TLS=True,
+    MAIL_USERNAME="info@exeter.me",
+    SECURITY_EMAIL_SENDER="info@exeter.me",
+    MAIL_PASSWORD="1xtb7lfmuzss1y6kvuhz749r"
+)
+
+mail = Mail(app);
+
+toolbar = DebugToolbarExtension(app)
+# Consider disabling this in production. Should do it automatically but never know 😕
+
 
 Bootstrap(app)
 mysql = MySQL()
@@ -221,6 +240,18 @@ def admin_users():
 
     return redirect(url_for('admin_login')), 401
 
+
+# Mail stuff ------------------------------------------------------------------
+
+@app.route('/testMail', methods=['GET'])
+def testMail():
+    msg = mail.send_message(
+        subject='Anthony Test Mail Thingy',
+        sender="info@exeter.me",
+        recipients=["arb239@exeter.ac.uk"],
+        html="Congratulations Anthony! You have sent an email from our Flask server."
+    )
+    return "<h1>Sent mail</h1>"
 
 #  Aux functions -------------------------------------------------------------------------------------------------------
 

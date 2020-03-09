@@ -5,3 +5,5 @@ flask-mysqldb
 bcrypt
 flask-bcrypt
 Flask-APScheduler
+flask-mail
+flask-debugtoolbar
