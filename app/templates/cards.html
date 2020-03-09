@@ -47,7 +47,6 @@
                     <button class="float-right btn btn-warning my-2 my-lg-0" onclick="location.href='/reset';"
                             style="margin-left: auto;width: 120px; margin-right: 20px;">Reset my cards
                     </button>
-
                 </li>
             </ul>
         </div>
@@ -56,49 +55,25 @@
 
 
 {% block content %}
-    <div class="card-container text-center" style="padding:10%;padding-top:2%">
-        <div class="text-center card"
-             style="border-radius: 10px !important; background:repeating-linear-gradient(45deg, rgba(112, 112, 112, 0.12) 0px, rgba(112, 112, 112, 0.12) 42px,rgba(105, 105, 105, 0.12) 42px, rgba(105, 105, 105, 0.12) 83px,rgba(206, 206, 206, 0.12) 83px, rgba(206, 206, 206, 0.12) 103px,rgba(130, 130, 130, 0.12) 103px, rgba(130, 130, 130, 0.12) 125px,rgba(51, 51, 51, 0.12) 125px, rgba(51, 51, 51, 0.12) 174px,rgba(220, 220, 220, 0.12) 174px, rgba(220, 220, 220, 0.12) 199px),repeating-linear-gradient(45deg, rgba(192, 192, 192, 0.12) 0px, rgba(192, 192, 192, 0.12) 13px,rgba(119, 119, 119, 0.12) 13px, rgba(119, 119, 119, 0.12) 29px,rgba(157, 157, 157, 0.12) 29px, rgba(157, 157, 157, 0.12) 75px,rgba(223, 223, 223, 0.12) 75px, rgba(223, 223, 223, 0.12) 121px,rgba(80, 80, 80, 0.12) 121px, rgba(80, 80, 80, 0.12) 169px,rgba(208, 208, 208, 0.12) 169px, rgba(208, 208, 208, 0.12) 194px),repeating-linear-gradient(45deg, rgba(44, 44, 44, 0.1) 0px, rgba(44, 44, 44, 0.1) 147px,rgba(38, 38, 38, 0.1) 147px, rgba(38, 38, 38, 0.1) 248px,rgba(1, 1, 1, 0.1) 248px, rgba(1, 1, 1, 0.1) 325px,rgba(34, 34, 34, 0.1) 325px, rgba(34, 34, 34, 0.1) 434px,rgba(98, 98, 98, 0.1) 434px, rgba(98, 98, 98, 0.1) 534px,rgba(79, 79, 79, 0.1) 534px, rgba(79, 79, 79, 0.1) 630px),linear-gradient(90deg, rgb(153, 255, 73),rgb(51, 204, 35));">
-            <div style="padding:3%;">
-                <h3>{{ location }}</h3>
-                <img src="{{ image }}" alt="location image" style="width:80%; margin-bottom:20px;">
-                <br>
-                {{ question }}
-                <br>
+    <div class="card-container" style="padding:10%;padding-top:2%">
 
-                <button onclick="check(this.id)" class="btn btn-success" style="margin:2px" id="a"
-                        value="{{ answers['a'] }}">{{ answers['a'] }}</button>
-                <br>
-                <button onclick="check(this.id)" class="btn btn-success" style="margin:2px" id="b"
-                        value="{{ answers['b'] }}">{{ answers['b'] }}</button>
-                <br>
-                <button onclick="check(this.id)" class="btn btn-success" style="margin:2px" id="c"
-                        value="{{ answers['c'] }}">{{ answers['c'] }}</button>
-                <br>
-                <button onclick="check(this.id)" class="btn btn-success" style="margin:2px" id="d"
-                        value="{{ answers['d'] }}">{{ answers['d'] }}</button>
-                <br>
-            </div>
-        </div>
+        {% for card in cards %}
+            <a href="/card/{{ card['location'] }}">
+                <img width="100" height="100" src="{{ card['image'] }}" alt="{{ card['location'] }} image"/>
 
+                {% if card['location'] in won_cards %}
+                    <h2 style="background-color: green">{{ card['location'] }}</h2>
+                {% else %}
+                    <h2 style="background-color: red">{{ card['location'] }}</h2>
+                {% endif %}
+            </a>
+            <br><br>
+        {% endfor %}
 
     </div>
 
 
     <script type="text/javascript">
-        function check(clicked_id) {
-            $.post("/is-answer-correct",
-                {
-                    answer: clicked_id,
-                    location: "{{ location }}"
-                },
-                function (data, status) {
-                    alert(data);
-                    if(data === "Correct") {
-                        location.href = "/cards";
-                    }
-                });
-        }
 
     </script>
 

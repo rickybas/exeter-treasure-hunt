@@ -15,7 +15,7 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--dbpassword", type=str,
                         help="root password for db", required=False, default="")
     parser.add_argument("-n", "--dbname", type=str,
-                        help="mysql database name, ie USERS_DATABASE", required=False, default="USERS_DATABASE")
+                        help="mysql database name, ie ETH_DATABASE", required=False, default="ETH_DATABASE")
 
     args = parser.parse_args()
 

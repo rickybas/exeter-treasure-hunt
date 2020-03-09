@@ -17,7 +17,7 @@
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="navbar-brand" style="font-size:30px"><i class="fa fa-compass" style="color:white;"></i>
-            <a class="navbar-brand" href="./" style="font-size:35px">ExePlore</a>
+            <a class="navbar-brand" href="/" style="font-size:35px">ExePlore</a>
         </div>
         <!-- Navbar Mobile View Expander -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
@@ -42,7 +42,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='/logout';"
-                            style="margin-left: auto;width:100px;">Logout
+                            style="margin-left: auto;width:150px;">{{ username }} - Logout
                     </button>
                     <button class="float-right btn btn-warning my-2 my-lg-0" onclick="location.href='/reset';"
                             style="margin-left: auto;width: 120px; margin-right: 20px;">Reset my cards
