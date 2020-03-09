@@ -90,15 +90,6 @@ def login():
     return render_template('login.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
 
-@app.route('/cards', methods=["GET"])
-def cards():
-    if 'loggedin' in session:
-        return render_template('cards.html', APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'],
-                               cards=cards_dict, won_cards=get_won_cards_by_user(session['username']))
-
-    return redirect(url_for('login')), 401
-
-
 @app.route('/card/<location>', methods=["GET"])
 def single_card(location):
     if 'loggedin' in session:
@@ -110,14 +101,6 @@ def single_card(location):
                                question=card['question'],
                                answers=card['answers'],
                                correctAnswer=card['correctAnswer'])
-
-    return redirect(url_for('login')), 401
-
-
-@app.route('/scores', methods=['GET', 'POST'])
-def scores():
-    if 'loggedin' in session:
-        return render_template('scores.html', APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'])
 
     return redirect(url_for('login')), 401
 
@@ -156,6 +139,30 @@ def logout():
     # Redirect to login page
     return redirect(url_for('landing_page'))
 
+
+# AJAX -------------------------------------------------------------------------
+
+@app.route('/scores')
+def scores():
+    if 'loggedin' in session:        
+        return render_template('scores.html', APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'])
+
+    return redirect(url_for('login')), 401
+
+@app.route('/map')
+def map():
+    if 'loggedin' in session:        
+        return render_template('map.html', APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'])
+
+    return redirect(url_for('login')), 401
+
+@app.route('/cards')
+def cards():
+    if 'loggedin' in session:        
+        return render_template('cards.html', APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'],
+                               cards=cards_dict, won_cards=get_won_cards_by_user(session['username']))
+
+    return redirect(url_for('login')), 401
 
 # Admin section --------------------------------------------------------------------------------------------------------
 

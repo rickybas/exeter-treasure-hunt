@@ -97,4 +97,3 @@ map.on('load', function(){
 map.flyTo({
     center: playerpos
 });
-
