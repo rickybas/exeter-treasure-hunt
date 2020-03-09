@@ -46,4 +46,24 @@
 
     </script>
 
+
+<!-- Card 3D Effect -->
+
+<script>
+var card   = document.querySelector('.card');
+
+// Event handler
+function handleOrientation(event) {
+    var x = event.beta; // In degree in the range [-90,90]
+    var y = event.alpha;  // In degree in the range [-180,180]
+    var z = event.gamma;
+
+    card.style.transform = "rotateX(" + ((x-50))/4 + "deg) rotateY(" + ((y)*-1)/3 + "deg)";
+
+}
+
+// Event listener
+window.addEventListener('deviceorientation', handleOrientation);
+</script>
+
 {% endblock %}
