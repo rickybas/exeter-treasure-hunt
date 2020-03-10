@@ -179,18 +179,20 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-xl-3 mb-4">
-                        <div class="card shadow border-left-warning py-2">
-                            <div class="card-body">
-                                <div class="row align-items-center no-gutters">
-                                    <div class="col mr-2">
-                                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Help Requests</span>
+                        <a href="{{ url_for('admin_help_requests') }}">
+                            <div class="card shadow border-left-warning py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col mr-2">
+                                            <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Help Requests</span>
+                                            </div>
+                                            <div class="text-dark font-weight-bold h5 mb-0"><span>{{ num_of_open_help_requests }}</span></div>
                                         </div>
-                                        <div class="text-dark font-weight-bold h5 mb-0"><span>0</span></div>
+                                        <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                                     </div>
-                                    <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 <div class="row">

@@ -1,0 +1,49 @@
+{% extends "bootstrap/base.html" %}
+
+<!-- {% block html_attribs %} lang="en"{% endblock %} -->
+{% block title %}{{ APP_NAME }} - Help Requests{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type='text/css'
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/">{{ APP_NAME }}</a>
+        <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='{{ url_for('my_help_requests') }}';"
+                style="margin-left: auto;width:100px;">Close
+        </button>
+    </nav>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container" style="padding:50px;padding-bottom:150px">
+        <form action="{{ url_for('add_help_request') }}" id="reqform" method="post" style="padding:10%;border:none">
+            <h2 style="text-align:center;">Add Help Request</h2>
+
+            <div class="text-center">
+                <label>
+                    <textarea name="description" rows="10" cols="30">Enter request description...</textarea>
+                </label>
+                <br>
+                <div class="msg">{{ msg }}</div>
+
+                <button class="btn btn-success" type="submit" value="Login" style="width:150px">Login</button>
+            </div>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <span class="text-muted">{{ APP_NAME }} - {{ VERSION }}</span>
+        </div>
+    </footer>
+{% endblock %}

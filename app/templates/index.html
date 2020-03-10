@@ -43,11 +43,14 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='/logout';"
+                    <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='{{ url_for('logout') }}';"
                             style="margin-left: auto;width:150px;">{{ username }} - Logout
                     </button>
-                    <button class="float-right btn btn-warning my-2 my-lg-0" onclick="location.href='/reset';"
+                    <button class="float-right btn btn-warning my-2 my-lg-0" onclick="location.href='{{ url_for('reset') }}';"
                             style="margin-left: auto;width: 120px; margin-right: 20px;">Reset my cards
+                    </button>
+                    <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='{{ url_for('my_help_requests') }}'"
+                            style="margin-left: auto;width: 150px; margin-right: 20px;">My help requests
                     </button>
                 </li>
             </ul>
