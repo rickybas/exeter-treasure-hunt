@@ -143,8 +143,7 @@ $(document).ready(function(){
             var cardobj = json[i];
             new mapboxgl.Marker({anchor: 'bottom', offset: [0, (map.getZoom() * mul) + 20 ]}).setLngLat([cardobj.coordinates[1], cardobj.coordinates[0]])
                 .setPopup(new mapboxgl.Popup({offset: [0, 30]})
-                .setHTML('<h3>'+cardobj.location+'</h3><button type="button"
-                         onClick="location.href = \'/card/' + encodeURIComponent(cardobj.location)+'\'"> </button>'))
+                .setHTML('<h3>'+cardobj.location+'</h3><button type="button" onClick="location.href = \'/card/' + encodeURIComponent(cardobj.location)+'\'"> </button>'))
                 .addTo(map);
         }
         window.cardsjson = [json];
