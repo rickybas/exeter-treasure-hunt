@@ -21,6 +21,16 @@ BEGIN
         `timeStamp` TIMESTAMP,
         PRIMARY KEY (`username`, `cardLocation`)
     );
+
+    CREATE TABLE IF NOT EXISTS `helpRequests`
+    (
+        `id` int NOT NULL AUTO_INCREMENT,
+        `username` VARCHAR(50) NOT NULL,
+        `open` BOOL NOT NULL,
+        `description` TEXT NOT NULL,
+        `timeStamp` TIMESTAMP NOT NULL,
+        PRIMARY KEY (`id`)
+    );
 END;
 //
 DELIMITER ;

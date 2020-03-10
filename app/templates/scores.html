@@ -1,7 +1,11 @@
+{% block styles %}
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/animate.css') }}">
+{% endblock %}
+
 {% block content %}
     
 <!-- placeholder -->
-<div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+<div class="table-responsive table mt-2 animated zoomIn" id="dataTable" role="grid" aria-describedby="dataTable_info">
                                 <table class="table dataTable my-0" id="dataTable">
                                     <thead>
                                         <tr>

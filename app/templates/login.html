@@ -8,6 +8,8 @@
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/animate.css') }}">
 {% endblock %}
 
 {% block scripts %}
@@ -16,7 +18,7 @@
 
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="navbar-brand"><i class="fa fa-compass" style="color:white;"></i>
+        <div class="navbar-brand animated bounceIn"><i class="fa fa-compass animated bounceIn" style="color:white;"></i>
             <a class="navbar-brand" href="/">ExePlore</a>
         </div>
         <!-- Navbar Mobile View Expander -->
@@ -26,7 +28,7 @@
         </button>
 
         <!-- Navbar Items -->
-        <div class="collapse navbar-collapse" id="navbarColor01">
+        <div class="collapse navbar-collapse animated bounceIn" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" onclick="alert('FAQ and Help not yet implemented.');">Get Help</a>
@@ -48,18 +50,21 @@
     <form action="{{ url_for('login') }}" method="post" style="padding:10%;border:none;margin-bottom:80px">
         <h2 style="text-align:center;">Log in to ExePlore</h2>
         <div class="imgcontainer">
+    <form action="{{ url_for('login') }}" method="post" style="padding:10%;border:none">
+        <h2 class="animated zoomIn"style="text-align:center;">Log in to ExePlore</h2>
+        <div class="imgcontainer animated rotateIn">
             <img src="https://cdn4.iconfinder.com/data/icons/web-pack/64/compass-512.png" alt="Logo" class="Logo"
                  style="width:100px;">
         </div>
 
         <!-- <label for="username"></label> -->
         <div class="text-center">
-            <div class="inputWithIcon">
+            <div class="inputWithIcon animated slideInRight">
                 <input type="text" name="username" placeholder="Username" id="username" required>
                 <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
             </div>
             <!-- <label for="password"></label> -->
-            <div class="inputWithIcon">
+            <div class="inputWithIcon animated slideInLeft">
                 <input type="password" name="password" placeholder="Password" id="password" required>
                 <i class="fa fa-key fa-lg fa-fw" aria-hidden="true"></i>
             </div>
@@ -70,7 +75,7 @@
             <br>
             <div class="msg">{{ msg }}</div>
 
-            <button class="btn btn-success" type="submit" value="Login" style="width:150px">Login</button>
+            <button class="btn btn-success animated zoomIn" type="submit" value="Login" style="width:150px">Login</button>
         </div>
     </form>
 
