@@ -7,3 +7,4 @@ flask-bcrypt
 Flask-APScheduler
 flask-mail
 flask-debugtoolbar
+flask-talisman

@@ -1,0 +1,65 @@
+{% extends "bootstrap/base.html" %}
+
+<!-- {% block html_attribs %} lang="en"{% endblock %} -->
+{% block title %}{{ APP_NAME }} - My Help Requests{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type='text/css'
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}"/>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/">{{ APP_NAME }}</a>
+        <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='/';"
+                style="margin-left: auto;width:100px;">Close
+        </button>
+    </nav>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        My Help Requests
+        <button class="card" style="background: #0b2e13" onclick="location.href = '{{ url_for('add_help_request') }}'">
+            Add help request
+        </button>
+        <br>
+        {% for help_request in help_requests %}
+            <button class="card"
+                    style="margin-bottom: 10px;background:linear-gradient(45deg, rgb(56, 120, 78),rgb(175, 255, 102))">
+                ID: {{ help_request['id'] }} <br>
+                {% if help_request['open'] == 0 %}
+                    Closed
+                {% else %}
+                    Open
+                {% endif %}
+                <br>
+                {{ help_request['description'] }} <br>
+                {{ help_request['timeStamp'] }} <br>
+            </button>
+            <center>
+                {% if help_request['open'] == 0 %}
+                    <a href="{{ url_for('open_help_request', id=help_request['id']) }}">Open</a>
+                {% else %}
+                    <a href="{{ url_for('close_help_request', id=help_request['id']) }}">Close</a>
+                {% endif %}
+            </center>
+            <br>
+
+        {% endfor %}
+    </div>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <span class="text-muted">{{ APP_NAME }} - {{ VERSION }}</span>
+        </div>
+    </footer>
+{% endblock %}

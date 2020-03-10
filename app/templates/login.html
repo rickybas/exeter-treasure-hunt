@@ -8,6 +8,8 @@
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='icon.ico') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/animate.css') }}">
 {% endblock %}
 
 {% block scripts %}
@@ -16,7 +18,7 @@
 
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="navbar-brand"><i class="fa fa-compass" style="color:white;"></i>
+        <div class="navbar-brand animated bounceIn"><i class="fa fa-compass animated bounceIn" style="color:white;"></i>
             <a class="navbar-brand" href="/">ExePlore</a>
         </div>
         <!-- Navbar Mobile View Expander -->
@@ -36,7 +38,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"
-                       onclick="alert('Team: \n- Anthony Bennett \n- Ricky Bassom\n- Adam Fitzgerald\n- Leon Cresdee\n- Louis Beresford\n- Tom Gates.\nStack:\n- Python Flask\n- Jaws MariaDB\n- Heroku\n- Docker\nInfo:\n- Produced for the University of Exeter Year 2 Group Software Engineering Project as Group M.');">About</a>
+                       href="/about">About</a>
                 </li>
             </ul>
         </div>
@@ -45,9 +47,9 @@
 
 {% block content %}
 
-    <form action="{{ url_for('login') }}" method="post" style="padding:10%;border:none">
-        <h2 style="text-align:center;">Log in to ExePlore</h2>
-        <div class="imgcontainer">
+    <form action="{{ url_for('login') }}" method="post" style="padding:10%;border:none;">
+        <h2 class="animated slideInDown" style="text-align:center;">Log in to ExePlore</h2>
+        <div class="imgcontainer animated rotateIn">
             <img src="https://cdn4.iconfinder.com/data/icons/web-pack/64/compass-512.png" alt="Logo" class="Logo"
                  style="width:100px;">
         </div>
@@ -63,7 +65,8 @@
                 <input type="password" name="password" placeholder="Password" id="password" required>
                 <i class="fa fa-key fa-lg fa-fw" aria-hidden="true"></i>
             </div>
-            <label for="consent" style="padding:10px 0px 10px 10px">GDPR consent, <a href="{{ url_for('gdpr_policy') }}">read
+            <label for="consent" style="padding:10px 0px 10px 10px">GDPR consent, <a
+                    href="{{ url_for('gdpr_policy') }}">read
                 our policy</a></label>
             <input name="consent" type="checkbox" class="form-check-input" id="consent" value="consent" required>
 
@@ -79,7 +82,7 @@
             <span class="text-muted">ExePlore | </span><span><a style="text-decoration: none;color:#868e96;"
                                                                 href="{{ url_for('gdpr_policy') }}">Terms and Conditions</a></span>
             <br><br>
-            <img src="http://www.exeter.ac.uk/departments/communication/mark-ops/design/visualidentity/logos2/white_logo_vector.png"
+            <img src="https://www.exeter.ac.uk/departments/communication/mark-ops/design/visualidentity/logos2/white_logo_vector.png"
                  style="width:100px;filter:invert(100%)" alt="Ts and Cs image">
         </div>
     </footer>

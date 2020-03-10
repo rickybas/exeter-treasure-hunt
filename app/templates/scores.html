@@ -1,99 +1,104 @@
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/animate.css') }}">
+{% endblock %}
+
 {% block content %}
-    
-<!-- placeholder -->
-<div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                <table class="table dataTable my-0" id="dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Course</th>
-                                            <th>Year</th>
-                                            <th>Cards</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Airi Satou</td>
-                                            <td>Computer Science</td>
-                                            <td>First (BSc)</td>
-                                            <td>5</td>
-                                            
-                            </tr>
-                            <tr>
-                                <td>Angelica Ramos</td>
-                                <td>Computer Science<br></td>
-                                <td>First (BSc)</td>
-                                <td>9</td>
-                                
-                        </tr>
-                        <tr>
-                            <td>Ashton Cox</td>
-                            <td>Computer Science</td>
-                            <td>First (MSc)</td>
-                            <td>13</td>
-                            
-                    </tr>
-                    <tr>
-                        <td>Bradley Greer</td>
-                        <td>Computer Science</td>
-                        <td>Second (BSc)</td>
-                        <td>12</td>
-                        
-                </tr>
-                <tr>
-                    <td>Brenden Wagner</td>
-                    <td>Computer Science with Maths</td>
-                    <td>Second (BSc)</td>
-                    <td>3</td>
-                    
-                    
+
+    <!-- placeholder -->
+    <div class="table-responsive table mt-2 animated slideInUp" id="dataTable" role="grid"
+         aria-describedby="dataTable_info">
+        <table class="table dataTable my-0" id="dataTable">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Year</th>
+                <th>Cards</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Airi Satou</td>
+                <td>Computer Science</td>
+                <td>First (BSc)</td>
+                <td>5</td>
+
+            </tr>
+            <tr>
+                <td>Angelica Ramos</td>
+                <td>Computer Science<br></td>
+                <td>First (BSc)</td>
+                <td>9</td>
+
+            </tr>
+            <tr>
+                <td>Ashton Cox</td>
+                <td>Computer Science</td>
+                <td>First (MSc)</td>
+                <td>13</td>
+
+            </tr>
+            <tr>
+                <td>Bradley Greer</td>
+                <td>Computer Science</td>
+                <td>Second (BSc)</td>
+                <td>12</td>
+
+            </tr>
+            <tr>
+                <td>Brenden Wagner</td>
+                <td>Computer Science with Maths</td>
+                <td>Second (BSc)</td>
+                <td>3</td>
+
+
             </tr>
             <tr>
                 <td>Brielle Williamson</td>
                 <td>Computer Science</td>
                 <td>First (MSc)</td>
                 <td>10</td>
-                
-                
+
+
             </tr>
             <tr>
                 <td>Bruno Nash<br></td>
                 <td>Computer Science</td>
                 <td>First (BSc)</td>
                 <td>0</td>
-                
-                
+
+
             </tr>
             <tr>
                 <td>Caesar Vance</td>
                 <td>Computer Science with Maths</td>
                 <td>First (BSc)</td>
                 <td>7</td>
-                
-                
+
+
             </tr>
             <tr>
                 <td>Cara Stevens</td>
                 <td>Computer Science with Maths</td>
                 <td>First (BSc)</td>
                 <td>10</td>
-                
-                
+
+
             </tr>
             <tr>
                 <td>Cedric Kelly</td>
                 <td>Data Science</td>
                 <td>Second (BSc)</td>
                 <td>1</td>
-                
-                
+
+
             </tr>
             </tbody>
             <tfoot>
-                <tr></tr>
+            <tr></tr>
             </tfoot>
-            </table>
-        </div>
-<!-- end placeholder -->
+        </table>
+    </div>
+    <!-- end placeholder -->
 
 {% endblock %}
