@@ -64,7 +64,7 @@ map.addControl(new mapboxgl.GeolocateControl({
     trackUserLocation: true
 }));
 
-const metersToPixelAtMaxZoom = (meters, latitude) => meters / 0.075 / Math.cos(latitude * Math.PI / 180)
+var metersToPixelAtMaxZoom = (meters, latitude) => meters / 0.075 / Math.cos(latitude * Math.PI / 180)
 
 //Called when map loads
 map.on('load', function(){
@@ -131,6 +131,8 @@ map.on('load', function(){
     });
 });
 
+var cardsjson;
+
 var getJSON = function(url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
@@ -144,18 +146,20 @@ var getJSON = function(url, callback) {
       }
     };
     xhr.send();
+    cardLoad();
 };
 
-var cardsjson;
-getJSON("https://localhost:5000/loadcards", function(error, data){
-        cardsjson = data;
-        });
+function cardLoad() {
+    getJSON("/loadcards", function(error, data){
+    cardsjson = data;
+    });
 
-console.log(cardsjson);
+    console.log(cardsjson);
 
-for (var i = 0; i < cardsjson.length; i++){
-    var cardobj = json[i];
-    new mapboxgl.Marker().seLngLat([cardobj.coordinates[1], cardobj.coordinates[0]]).addTo(map);
+    for (var i = 0; i < cardsjson.length; i++){
+    var cardobj = cardsjson[i];
+    new mapboxgl.Marker().setLngLat([cardobj.coordinates[1], cardobj.coordinates[0]]).addTo(map);
+}
 }
 
 map.flyTo({
