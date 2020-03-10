@@ -31,6 +31,12 @@ BEGIN
         `timeStamp` TIMESTAMP NOT NULL,
         PRIMARY KEY (`id`)
     );
+    CREATE TABLE IF NOT EXISTS `currentGame`(
+        `userid` INT NOT NULL,
+        `lattitude` DECIMAL(10, 8) NOT NULL,
+        `longitude` DECIMAL(11, 8) NOT NULL,
+        PRIMARY KEY(`userid`)
+    );
 END;
 //
 DELIMITER ;
