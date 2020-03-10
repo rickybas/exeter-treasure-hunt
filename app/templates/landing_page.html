@@ -8,8 +8,8 @@
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}" />
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/animate.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/animate.css') }}">
 {% endblock %}
 
 {% block scripts %}
@@ -50,21 +50,25 @@
         <hr>
         <h1 class="animated fadeIn delay-1s">ExePlore Landing Page</h1>
         <hr>
-        <p class="animated fadeIn delay-1s">This is a placeholder, as the landing page will simply contain advertising and flashy promo images, and as such is lowest priority for our SDLC.</p>
-        <button class="btn btn-success footer-btn animated bounceInDown" onclick="location.href='{{ url_for('login') }}';" style="width:65%;padding:30px;font-size:30px;">Play
-            </button>
+        <p class="animated fadeIn delay-1s">This is a placeholder, as the landing page will simply contain advertising
+            and flashy promo images, and as such is lowest priority for our SDLC.</p>
+        <button class="btn btn-success footer-btn animated bounceInDown"
+                onclick="location.href='{{ url_for('login') }}';" style="width:65%;padding:30px;font-size:30px;">Play
+        </button>
 
-            <!-- TEMP TEMP TEMP -->
-            <br><br><br><br><br><br>
-            <button class="btn btn-warning footer-btn animated bounceInUp" onclick="location.href='{{ url_for('admin_login') }}';">Admin WIP
-            </button>
-            <!-- end -->
+        <!-- TEMP TEMP TEMP -->
+        <br><br><br><br><br><br>
+        <button class="btn btn-warning footer-btn animated bounceInUp"
+                onclick="location.href='{{ url_for('admin_login') }}';">Admin WIP
+        </button>
+        <!-- end -->
     </div>
 
     <footer class="footer">
         <div class="container text-center" style="padding:5px">
-            <span class="text-muted">ExePlore {{VERSION}} | </span><span><a style="text-decoration: none;color:#868e96;"
-                                                                href="{{ url_for('gdpr_policy') }}">Terms and Conditions</a></span>
+            <span class="text-muted">ExePlore {{ VERSION }} | </span><span><a
+                style="text-decoration: none;color:#868e96;"
+                href="{{ url_for('gdpr_policy') }}">Terms and Conditions</a></span>
             <br><br>
             <img src="https://www.exeter.ac.uk/departments/communication/mark-ops/design/visualidentity/logos2/white_logo_vector.png"
                  style="width:100px;filter:invert(100%)" alt="Ts and Cs image">

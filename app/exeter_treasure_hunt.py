@@ -318,6 +318,13 @@ def admin_help_requests():
 
     return redirect(url_for('admin_login')), 401
 
+@app.route('/generate-report', methods=['GET'])
+def generate_report():
+    if 'loggedin' in session and session['username'] == "admin":
+        return "report"
+
+    return redirect(url_for('admin_login')), 401
+
 
 # Mail  ----------------------------------------------------------------------------------------------------------------
 

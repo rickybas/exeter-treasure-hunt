@@ -11,7 +11,7 @@
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/custom.css') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}"/>
 </head>
 
 <body id="page-top">
@@ -60,55 +60,19 @@
                                 </form>
                             </div>
                         </li>
-                        <li class="nav-item dropdown no-arrow mx-1" role="presentation">
-                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
-                                                                       data-toggle="dropdown" aria-expanded="false"
-                                                                       href="#"><span
-                                    class="badge badge-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
-                                     role="menu">
-                                    <h6 class="dropdown-header">alerts center</h6>
-                                    <a class="d-flex align-items-center dropdown-item" href="#">
-                                        <div class="mr-3">
-                                            <div class="bg-primary icon-circle"><i
-                                                    class="fas fa-file-alt text-white"></i></div>
-                                        </div>
-                                        <div><span class="small text-gray-500">Timestamp</span>
-                                            <p>Fresher Lunch Intro has completed. Download finished report now.</p>
-                                        </div>
-                                    </a>
-                                    <a class="d-flex align-items-center dropdown-item" href="#">
-                                        <div class="mr-3">
-                                            <div class="bg-success icon-circle"><i class="fas fa-check text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div><span class="small text-gray-500">Timestamp</span>
-                                            <p>Player {{ PLAYERNAME }} has completed Society Treasure Hunt!</p>
-                                        </div>
-                                    </a>
-                                    <a class="d-flex align-items-center dropdown-item" href="#">
-                                        <div class="mr-3">
-                                            <div class="bg-warning icon-circle"><i
-                                                    class="fas fa-exclamation-triangle text-white"></i></div>
-                                        </div>
-                                        <div><span class="small text-gray-500">Timestamp</span>
-                                            <p>Society Treasure Hunt has less than 10% online</p>
-                                        </div>
-                                    </a><a class="text-center dropdown-item small text-gray-500" href="#">Clear
-                                    Alerts</a></div>
-                            </div>
-                        </li>
+
                         <div class="d-none d-sm-block topbar-divider"></div>
                         <li class="nav-item dropdown no-arrow" role="presentation">
                             <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
                                                                        data-toggle="dropdown" aria-expanded="false"
                                                                        href="#"><span
-                                    class="d-none d-lg-inline mr-2 text-gray-600 small">Administrator</span></a>
+                                    class="d-none d-lg-inline mr-2 text-gray-600 small">Admin</span></a>
                                 <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in"
-                                     role="menu"><a class="dropdown-item" role="presentation" href="#"><i
-                                        class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Reset Password</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" role="presentation" href="/logout"><i
+                                     role="menu">
+{#                                    <a class="dropdown-item" role="presentation" href="#"><i#}
+{#                                        class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Reset Password</a>#}
+{#                                    <div class="dropdown-divider"></div>#}
+                                    <a class="dropdown-item" role="presentation" href="{{ url_for('logout') }}"><i
                                             class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a>
                                 </div>
                             </div>
@@ -119,7 +83,7 @@
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
                     <h3 class="text-dark mb-0">Compsci Fresh</h3><a
-                        class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i
+                        class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="{{ url_for('generate_report') }}"><i
                         class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a></div>
                 <div class="row">
                     <div class="col-md-6 col-xl-3 mb-4">
@@ -185,9 +149,11 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col mr-2">
-                                            <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Help Requests</span>
+                                            <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
+                                                <span>Help Requests</span>
                                             </div>
-                                            <div class="text-dark font-weight-bold h5 mb-0"><span>{{ num_of_open_help_requests }}</span></div>
+                                            <div class="text-dark font-weight-bold h5 mb-0">
+                                                <span>{{ num_of_open_help_requests }}</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                                     </div>
