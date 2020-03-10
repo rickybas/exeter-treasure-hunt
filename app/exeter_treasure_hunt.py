@@ -98,6 +98,10 @@ def landing_page():
 def gdpr_policy():
     return render_template('gdpr_policy.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
+@app.route('/about', methods=['GET', 'POST'])
+def about():
+    return render_template('about.html', APP_NAME=APP_NAME, VERSION=VERSION)
+
 
 # Player auth section --------------------------------------------------------------------------------------------------
 
