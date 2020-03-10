@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/animate.css') }}">
 {% endblock %}
 
 {% block scripts %}
@@ -16,7 +17,7 @@
 {% endblock %}
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="navbar-brand"><i class="fa fa-compass" style="color:white;"></i>
+        <div class="navbar-brand animated bounceIn"><i class="fa fa-compass animated bounceIn" style="color:white;"></i>
             <a class="navbar-brand" href="/">ExePlore</a>
         </div>
         <!-- Navbar Mobile View Expander -->
@@ -47,15 +48,15 @@
 {% block content %}
     <div class="container text-center">
         <hr>
-        <h1>ExePlore Landing Page</h1>
+        <h1 class="animated fadeIn delay 1s">ExePlore Landing Page</h1>
         <hr>
-        <p>This is a placeholder, as the landing page will simply contain advertising and flashy promo images, and as such is lowest priority for our SDLC.</p>
-        <button class="btn btn-success footer-btn" onclick="location.href='{{ url_for('login') }}';" style="width:65%;padding:30px;font-size:30px;">Play
+        <p class="animated fadeIn delay 1s">This is a placeholder, as the landing page will simply contain advertising and flashy promo images, and as such is lowest priority for our SDLC.</p>
+        <button class="btn btn-success footer-btn animated bounceInDown" onclick="location.href='{{ url_for('login') }}';" style="width:65%;padding:30px;font-size:30px;">Play
             </button>
 
             <!-- TEMP TEMP TEMP -->
             <br><br><br><br><br><br>
-            <button class="btn btn-warning footer-btn" onclick="location.href='{{ url_for('admin_login') }}';">Admin WIP
+            <button class="btn btn-warning footer-btn animated bounceInUp" onclick="location.href='{{ url_for('admin_login') }}';">Admin WIP
             </button>
             <!-- end -->
     </div>
