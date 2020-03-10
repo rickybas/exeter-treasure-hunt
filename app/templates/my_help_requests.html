@@ -8,7 +8,7 @@
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}"/>
 {% endblock %}
 
 {% block scripts %}
@@ -26,18 +26,20 @@
 
 
 {% block content %}
-    <div class="container" style="padding:50px; padding-top: 100px; padding-bottom:150px">
+    <div class="container">
         My Help Requests
-        <button class="card" style="background: #0b2e13" onclick="location.href = '{{ url_for('add_help_request') }}'">Add help request</button>
+        <button class="card" style="background: #0b2e13" onclick="location.href = '{{ url_for('add_help_request') }}'">
+            Add help request
+        </button>
         <br>
         {% for help_request in help_requests %}
             <button class="card"
                     style="margin-bottom: 10px;background:linear-gradient(45deg, rgb(56, 120, 78),rgb(175, 255, 102))">
                 ID: {{ help_request['id'] }} <br>
                 {% if help_request['open'] == 0 %}
-                Closed
+                    Closed
                 {% else %}
-                Open
+                    Open
                 {% endif %}
                 <br>
                 {{ help_request['description'] }} <br>

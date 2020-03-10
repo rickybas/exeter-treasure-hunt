@@ -1,6 +1,5 @@
-
 {% block styles %}
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/animate.css') }}">
 {% endblock %}
 {% block content %}
     <div class="card-container text-center" style="padding:10%;padding-top:2%">
@@ -41,7 +40,7 @@
                 },
                 function (data, status) {
                     alert(data);
-                    if(data === "Correct") {
+                    if (data === "Correct") {
                         $('#content').load('/cards');
                         $(window).scrollTop(0);
                     }
@@ -51,34 +50,42 @@
     </script>
 
 
-<!-- Card 3D Effect -->
+    <!-- Card 3D Effect -->
 
-<script>
-var card   = document.querySelector('.card');
+    <script>
+        var card = document.querySelector('.card');
 
-// Event handler
-function handleOrientation(event) {
-    var x = event.beta; // -90 to 179
-    var y = event.alpha;  //-90 to 90
-    var z = event.gamma;
+        // Event handler
+        function handleOrientation(event) {
+            var x = event.beta; // -90 to 179
+            var y = event.alpha;  //-90 to 90
+            var z = event.gamma;
 
-    // processing raw values for presentation
-    //limit rotation to prevent card flipping
-    if (x <  -90) { x =  -90};
-    if (x >  179) { x =  179};
-    if (y <  -90) { y =  -90};
-    if (y >  90) { y =  90};
+            // processing raw values for presentation
+            //limit rotation to prevent card flipping
+            if (x < -90) {
+                x = -90
+            }
+            if (x > 179) {
+                x = 179
+            }
+            if (y < -90) {
+                y = -90
+            }
+            if (y > 90) {
+                y = 90
+            }
 
-    //offset for facing forwards then reduce sensitivity
-    x = (x-50)/4
-    y = (y*-1)/3
+            //offset for facing forwards then reduce sensitivity
+            x = (x - 50) / 4;
+            y = (y * -1) / 3;
 
-    card.style.transform = "rotateX(" + x + "deg) rotateY(" + y + "deg)";
+            card.style.transform = "rotateX(" + x + "deg) rotateY(" + y + "deg)";
 
-}
+        }
 
-// Event listener
-window.addEventListener('deviceorientation', handleOrientation);
-</script>
+        // Event listener
+        window.addEventListener('deviceorientation', handleOrientation);
+    </script>
 
 {% endblock %}

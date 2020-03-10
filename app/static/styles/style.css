@@ -170,3 +170,7 @@ a:hover {
     border-radius: 4px;
     padding: 5px;
 }
+
+.container {
+    padding: 100px 50px 100px;
+}
