@@ -16,12 +16,14 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/lcresdee/ck715gk1v03sm1ipi8yo2yu20',
     center: [-3.534516, 50.735770],
     zoom: 20,
-    pitch: 20,
+    pitch: 0,
     maxBounds: bounds,
-    minZoom: 17
+    minZoom: 17,
+    pitchWithRotate: false,
+    dragRotate: false,
+    touchZoomRotate: false
 });
-
-
+map.keyboard.disable();
 //[longitude, latitude]
 var playerpos = [0, 0];
 
@@ -131,32 +133,23 @@ map.on('load', function(){
     });
 });
 
-var getJSON = function(url, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.responseType = 'json';
-    xhr.onload = function() {
-      var status = xhr.status;
-      if (status === 200) {
-        callback(null, xhr.response);
-      } else {
-        callback(status, xhr.response);
-      }
-    };
-    xhr.send();
-};
+map.on('mousedown', function(e){
+    console.log(e.lngLat.wrap());
+});
 
-var cardsjson;
-getJSON("https://localhost:5000/loadcards", function(error, data){
-        cardsjson = data;
-        });
+var mul = 3.14;
+var cardsjson = null;
+$(document).ready(function(){
+    $.getJSON("/loadcards", function(json){
+        for (var i = 0; i < Object.keys(json).length; i++){
+            var cardobj = json[i];
+            new mapboxgl.Marker({anchor: 'bottom', offset: [0, (map.getZoom() * mul) + 20 ]}).setLngLat([cardobj.coordinates[1], cardobj.coordinates[0]]).setPopup(new mapboxgl.Popup({offset: [0, 30]}).setHTML('<h3>'+cardobj.location+'</h3')).addTo(map);
+        }
+        window.cardsjson = [json];
+    })
+});
+console.log(map.version);
 
-console.log(cardsjson);
-
-for (var i = 0; i < cardsjson.length; i++){
-    var cardobj = json[i];
-    new mapboxgl.Marker().seLngLat([cardobj.coordinates[1], cardobj.coordinates[0]]).addTo(map);
-}
 
 map.flyTo({
     center: playerpos
