@@ -9,6 +9,7 @@ from flask_bcrypt import Bcrypt
 from flask_apscheduler import APScheduler
 from flask_mail import Mail
 from flask_debugtoolbar import DebugToolbarExtension
+from flask_talisman import Talisman
 
 from db import db
 
@@ -19,6 +20,8 @@ app = Flask(__name__)
 
 app.secret_key = 'your secret key'
 app.debug = True
+
+Talisman(app, content_security_policy=None) # Create a Talisman for the app. High security :D
 
 # Mail stuff
 app.config.update(
@@ -63,6 +66,15 @@ db = db(mysql, bcrypt, cards_dict)
 
 if not os.path.exists('app/db/progress.csv'):
     with open('app/db/progress.csv', 'w'): pass
+
+# HTTPS redirect --------------------------------------------------------------
+
+@app.before_request
+def before_request():
+    if not request.is_secure and app.env != "development" and app.debug != True:
+        url = request.url.replace("http://", "https://", 1)
+        code = 301
+        return redirect(url, code=code)
 
 
 # Tasks ----------------------------------------------------------------------------------------------------------------
