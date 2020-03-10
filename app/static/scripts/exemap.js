@@ -131,7 +131,32 @@ map.on('load', function(){
     });
 });
 
+var getJSON = function(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'json';
+    xhr.onload = function() {
+      var status = xhr.status;
+      if (status === 200) {
+        callback(null, xhr.response);
+      } else {
+        callback(status, xhr.response);
+      }
+    };
+    xhr.send();
+};
 
+var cardsjson;
+getJSON("https://localhost:5000/loadcards", function(error, data){
+        cardsjson = data;
+        });
+
+console.log(cardsjson);
+
+for (var i = 0; i < cardsjson.length; i++){
+    var cardobj = json[i];
+    new mapboxgl.Marker().seLngLat([cardobj.coordinates[1], cardobj.coordinates[0]]).addTo(map);
+}
 
 map.flyTo({
     center: playerpos

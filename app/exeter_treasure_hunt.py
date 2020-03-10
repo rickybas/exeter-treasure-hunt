@@ -3,7 +3,7 @@ import json
 import MySQLdb.cursors
 from datetime import datetime
 
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, jsonify
 from flask_bootstrap import Bootstrap
 from flask_mysqldb import MySQL
 from flask_bcrypt import Bcrypt
@@ -183,6 +183,13 @@ def cards():
                                cards=cards_dict, won_cards=get_won_cards_by_user(session['username']))
 
     return redirect(url_for('login')), 401
+
+@app.route('/loadcards', methods=['GET'])
+def load_cards():
+    if 'loggedin' in session:
+        return jsonify(cards_dict)    
+    return redirect(url_for('login')), 401
+        
 
 # Admin section --------------------------------------------------------------------------------------------------------
 
