@@ -133,9 +133,7 @@ map.on('load', function(){
     });
 });
 
-map.on('mousedown', function(e){
-    console.log(e.lngLat.wrap());
-});
+
 
 var mul = 3.14;
 var cardsjson = null;
@@ -143,12 +141,16 @@ $(document).ready(function(){
     $.getJSON("/loadcards", function(json){
         for (var i = 0; i < Object.keys(json).length; i++){
             var cardobj = json[i];
-            new mapboxgl.Marker({anchor: 'bottom', offset: [0, (map.getZoom() * mul) + 20 ]}).setLngLat([cardobj.coordinates[1], cardobj.coordinates[0]]).setPopup(new mapboxgl.Popup({offset: [0, 30]}).setHTML('<h3>'+cardobj.location+'</h3')).addTo(map);
+            new mapboxgl.Marker({anchor: 'bottom', offset: [0, (map.getZoom() * mul) + 20 ]}).setLngLat([cardobj.coordinates[1], cardobj.coordinates[0]])
+                .setPopup(new mapboxgl.Popup({offset: [0, 30]})
+                .setHTML('<h3>'+cardobj.location+'</h3><button type="button"
+                         onClick="location.href = \'/card/' + encodeURIComponent(cardobj.location)+'\'"> </button>'))
+                .addTo(map);
         }
         window.cardsjson = [json];
     })
 });
-console.log(map.version);
+
 
 
 map.flyTo({
