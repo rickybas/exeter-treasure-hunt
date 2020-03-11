@@ -7,6 +7,9 @@ An interactive location based treasure hunting game for the Streatham Campus (Un
 ## Link to design
 https://github.com/rickybas/exeter-treasure-hunt/wiki/Design
 
+## Link to users manual
+https://github.com/rickybas/exeter-treasure-hunt/wiki/Users-Manual
+
 ## Setup
 Clone repo:
 
