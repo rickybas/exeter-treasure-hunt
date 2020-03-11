@@ -54,7 +54,7 @@ if __name__ == "__main__":
     for card in cards_dict:
         locations.append(card['location'])
 
-    with open('app/db/users.txt', newline='') as csvfile:
+    with open('app/db/users.csv', newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
 
         for row in list(spamreader) + [["admin"]]:

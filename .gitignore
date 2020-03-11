@@ -2,3 +2,4 @@ __pycache__/
 .idea/
 *.pyc
 app/db/progress.csv
+app/db/user_first_time_passwords.csv

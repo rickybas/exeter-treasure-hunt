@@ -1,4 +1,5 @@
-import csv, bcrypt, mysql.connector
+import csv, bcrypt, mysql.connector, uuid
+import os
 from argparse import ArgumentParser
 from getpass import getpass
 
@@ -7,6 +8,9 @@ Populate database with pre-made usernames and passwords stored in users.txt.
 Used to initially populate database where usernames and passwords that will be given individually to each user. 
 Once the user has logged in they will then be asked to change their password.
 """
+
+def gen_random_password():
+    return uuid.uuid4().hex
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -24,6 +28,13 @@ if __name__ == "__main__":
                         help="admin password for db", required=False, default="")
 
     args = parser.parse_args()
+
+    try:
+        if not os.path.exists('app/db/user_first_time_passwords.csv'):
+                with open('app/db/user_first_time_passwords.csv', 'w'): pass
+    except:
+        if not os.path.exists('db/user_first_time_passwords.csv'):
+            with open('db/user_first_time_passwords.csv', 'w'): pass
 
     # if user hasn't entered a password in command line
     if args.dbpassword == "":
@@ -53,20 +64,28 @@ if __name__ == "__main__":
 
     mycursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", ("admin", hashed_password))
 
-    with open('app/db/users.txt', newline='') as csvfile:
+    with open("app/db/user_first_time_passwords.csv", 'a') as f:
+        f.write("admin" + ',' + str(admin_password) + '\n')
+
+    with open('app/db/users.csv', newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
 
         for row in spamreader:
             username = row[0]
-            password = row[1].encode('utf-8')
+            course = row[1]
+            year = row[2]
+            password = gen_random_password().encode('utf-8')
 
-            print(username, password)
+            with open("app/db/user_first_time_passwords.csv", 'a') as f:
+                f.write(str(username) + ',' + str(password) + '\n')
+
+            print("EMAIL (in production):", username, password)
 
             hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
 
             mycursor = mydb.cursor()
 
-            mycursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
+            mycursor.execute("INSERT INTO users (username, password, course, year) VALUES (%s, %s, %s, %s)", (username, hashed_password, course, year))
 
         mydb.commit()
 

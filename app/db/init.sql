@@ -11,6 +11,8 @@ BEGIN
     (
         `username` VARCHAR(50)  NOT NULL,
         `password` VARCHAR(255) NOT NULL,
+        `course` VARCHAR(100),
+        `year` VARCHAR(50),
         PRIMARY KEY (`username`)
     );
 
