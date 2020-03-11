@@ -127,7 +127,7 @@ def login():
             session['username'] = request.form['username']
             return redirect(url_for('index'))
         else:
-            return render_template('login.html', APP_NAME=APP_NAME, VERSION=VERSION, msg=msg)
+            return render_template('login.html', APP_NAME=APP_NAME, VERSION=VERSION, msg=msg), 401
 
     return render_template('login.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
@@ -135,7 +135,11 @@ def login():
 @app.route('/card/<location>', methods=["GET"])
 def single_card(location):
     if 'loggedin' in session:
-        card = next(item for item in cards_dict if item["location"] == location)
+        try:
+            card = next(item for item in cards_dict if item["location"] == location)
+        except:
+            return "location not found", 404
+
         return render_template('current_card_page.html', APP_NAME=APP_NAME, VERSION=VERSION,
                                username=session['username'],
                                location=card['location'],
@@ -144,7 +148,7 @@ def single_card(location):
                                answers=card['answers'],
                                correctAnswer=card['correctAnswer'])
 
-    return redirect(url_for('login')), 401
+    return redirect(url_for('login'), code=401)
 
 @app.route('/my-help-requests', methods=['GET'])
 def my_help_requests():
@@ -152,20 +156,22 @@ def my_help_requests():
         return render_template("my_help_requests.html", APP_NAME=APP_NAME, VERSION=VERSION,
                                help_requests=db.get_help_requests_by_user(session['username']))
 
-    return redirect(url_for('login')), 401
+    return redirect(url_for('login'))
 
 
 @app.route('/add-help-request', methods=['GET', 'POST'])
 def add_help_request():
-    if request.method == 'POST':
-        if 'description' in request.form and \
-                db.add_help_request(session['username'], request.form['description']):
-            return redirect(url_for('my_help_requests'))
-        else:
-            return render_template('add_help_request.html', APP_NAME=APP_NAME, VERSION=VERSION, msg="Failed to send")
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            if 'description' in request.form and \
+                    db.add_help_request(session['username'], request.form['description']):
+                return redirect(url_for('my_help_requests'))
+            else:
+                return render_template('add_help_request.html', APP_NAME=APP_NAME, VERSION=VERSION, msg="Failed to send")
 
-    return render_template('add_help_request.html', APP_NAME=APP_NAME, VERSION=VERSION)
+        return render_template('add_help_request.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
+    return redirect(url_for('login'))
 
 @app.route('/reset')
 def reset():
@@ -191,7 +197,7 @@ def scores():
     if 'loggedin' in session:
         return render_template('scores.html', APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'])
 
-    return redirect(url_for('login')), 401
+    return redirect(url_for('login'))
 
 
 @app.route('/map')
@@ -199,7 +205,7 @@ def map():
     if 'loggedin' in session:
         return render_template('map.html', APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'])
 
-    return redirect(url_for('login')), 401
+    return redirect(url_for('login'))
 
 
 @app.route('/cards')
@@ -208,13 +214,13 @@ def cards():
         return render_template('cards.html', APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'],
                                cards=cards_dict, won_cards=db.get_won_cards_by_user(session['username']))
 
-    return redirect(url_for('login')), 401
+    return redirect(url_for('login'))
 
 @app.route('/loadcards', methods=['GET'])
 def load_cards():
     if 'loggedin' in session:
         return jsonify(cards_dict)    
-    return redirect(url_for('login')), 401
+    return redirect(url_for('login'))
         
 
 @app.route('/is-answer-correct', methods=["POST"])
@@ -223,7 +229,10 @@ def is_answer_correct():
         location = request.form['location']
         answer = request.form['answer']
 
-        card = next(item for item in cards_dict if item["location"] == location)
+        try:
+            card = next(item for item in cards_dict if item["location"] == location)
+        except:
+            return "location not found", 400
 
         if card["correctAnswer"] == answer:
             if not db.add_won_card(session['username'], location):
@@ -232,7 +241,7 @@ def is_answer_correct():
         else:
             return "Incorrect"
 
-    return redirect(url_for('login')), 401
+    return redirect(url_for('login'))
 
 @app.route('/open-help-request/<id>', methods=["GET"])
 def open_help_request(id):
@@ -242,8 +251,10 @@ def open_help_request(id):
                 return redirect(url_for('admin_help_requests'))
             else:
                 return redirect(url_for('my_help_requests'))
+        else:
+            return "does not exist"
 
-    return redirect(url_for('login')), 401
+    return redirect(url_for('login'))
 
 @app.route('/close-help-request/<id>', methods=["GET"])
 def close_help_request(id):
@@ -253,8 +264,10 @@ def close_help_request(id):
                 return redirect(url_for('admin_help_requests'))
             else:
                 return redirect(url_for('my_help_requests'))
+        else:
+            return "does not exist", 404
 
-    return redirect(url_for('login')), 401
+    return redirect(url_for('login'))
 
 
 # Admin section --------------------------------------------------------------------------------------------------------
@@ -275,7 +288,7 @@ def admin_login():
             return redirect(url_for('admin_index'))
         else:
             return render_template('admin_login.html', APP_NAME=APP_NAME, VERSION=VERSION,
-                                   msg=msg)
+                                   msg=msg), 401
 
     return render_template('admin_login.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
@@ -297,7 +310,7 @@ def admin_index():
                                won_card_distribution=db.won_card_distribution(),
                                top_locations_by_playerbase_ownership=db.top_locations_by_playerbase_ownership())
 
-    return redirect(url_for('admin_login')), 401
+    return redirect(url_for('admin_login'))
 
 
 @app.route('/admin-map', methods=['GET'])
@@ -305,7 +318,7 @@ def admin_map():
     if 'loggedin' in session and session['username'] == "admin":
         return render_template("map_view.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
-    return redirect(url_for('admin_login')), 401
+    return redirect(url_for('admin_login'))
 
 
 @app.route('/admin-users', methods=['GET'])
@@ -313,7 +326,7 @@ def admin_users():
     if 'loggedin' in session and session['username'] == "admin":
         return render_template("user_list.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
-    return redirect(url_for('admin_login')), 401
+    return redirect(url_for('admin_login'))
 
 
 @app.route('/admin-help-requests', methods=['GET'])
@@ -322,14 +335,14 @@ def admin_help_requests():
         return render_template("admin_help_requests.html", APP_NAME=APP_NAME, VERSION=VERSION,
                                help_requests=db.get_all_help_requests())
 
-    return redirect(url_for('admin_login')), 401
+    return redirect(url_for('admin_login'))
 
 @app.route('/generate-report', methods=['GET'])
 def generate_report():
     if 'loggedin' in session and session['username'] == "admin":
         return "report"
 
-    return redirect(url_for('admin_login')), 401
+    return redirect(url_for('admin_login'))
 
 
 # Mail  ----------------------------------------------------------------------------------------------------------------

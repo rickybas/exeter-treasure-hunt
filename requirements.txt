@@ -8,3 +8,4 @@ Flask-APScheduler
 flask-mail
 flask-debugtoolbar
 flask-talisman
+flask-testing

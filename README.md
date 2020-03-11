@@ -29,6 +29,11 @@ Then populate the database with initial hashed and salted passwords and username
 
 *optionally use -p to enter password for user root@localhost*
 
+## Run tests
+
+`python3 app/test_http_reqs.py`
+`python3 app/test_db.py`
+
 ## Or run using docker
 
 ```
