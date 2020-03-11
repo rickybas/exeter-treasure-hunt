@@ -14,7 +14,7 @@ from flask_talisman import Talisman
 from db import db
 
 APP_NAME = "ExePlore"
-VERSION = "0.3-beta"
+VERSION = "0.4-beta"
 
 app = Flask(__name__)
 

@@ -40,7 +40,7 @@
     },
     {
       "location": "Marketplace",
-      "coordinates": [50.735448, -3.533756],
+      "coordinates": [50.735227, -3.533914],
       "image": "/static/card_images/Marketplace.jpg",
       "question": "How many self-check outs are there in the marketplace?",
       "answers": {
@@ -235,7 +235,7 @@
     },
     {
       "location": "Devonshire House",
-      "coordinates": [50.735163, -3.534268],
+      "coordinates": [50.735042, -3.534366],
       "image": "/static/card_images/Devonshire_house.jpg",
       "question": "Which one of these isn’t in Devonshire house?",
       "answers": {
