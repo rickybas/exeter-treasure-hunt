@@ -24,10 +24,11 @@ BEGIN
         PRIMARY KEY (`id`)
     );
     CREATE TABLE IF NOT EXISTS `recentLocationData`(
-        `userid` INT NOT NULL,
+        `username` VARCHAR(50) NOT NULL,
         `lattitude` DECIMAL(10, 8) NOT NULL,
         `longitude` DECIMAL(11, 8) NOT NULL,
-        PRIMARY KEY(`userid`)
+        `timeStamp` VARCHAR(50) NOT NULL,
+        PRIMARY KEY(`username`)
     );
     CREATE TABLE IF NOT EXISTS `userCards`(
         `username` VARCHAR(50) NOT NULL,

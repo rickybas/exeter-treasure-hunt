@@ -205,6 +205,13 @@ def logout():
 def scan_card():
     return render_template('scan_card.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
+@app.route('/log-location/<lat>/<long>', methods=['POST'])
+def log_location(lat, long):
+    if 'loggedin' in session:
+        db.log_location(session['username'], lat, long)
+        return "ok"
+    return "need to login"
+
 
 # AJAX -------------------------------------------------------------------------
 

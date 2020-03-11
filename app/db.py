@@ -456,3 +456,27 @@ class db:
 
         self.mysql.connection.commit()
         return True
+
+    def log_location(self, username, lat, long):
+        """
+
+
+        :param username:
+        :param lat:
+        :param long:
+        :return:
+        """
+        cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        try:
+            cursor.execute('INSERT INTO recentLocationData (username, lattitude, longitude, timeStamp) VALUES (%s, %s, %s, %s)', (username, lat, long, timestamp))
+        except:
+            try:
+                cursor.execute('UPDATE recentLocationData SET lattitude=%s, longitude=%s, timeStamp=%s WHERE username=%s', (lat, long, timestamp, username))
+            except:
+                return False
+
+        self.mysql.connection.commit()
+        return True

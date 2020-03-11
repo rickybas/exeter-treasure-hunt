@@ -99,4 +99,18 @@
 
     <script type="text/javascript" src="{{ url_for('static', filename = 'scripts/footer.js') }}"></script>
 
+    <script>
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(sendPosition);
+        }
+        function sendPosition(position) {
+            $.post("/log-location/" + position.coords.latitude + "/" + position.coords.longitude, function(data, status){
+
+            });
+
+        }
+
+    </script>
+
 {% endblock %}
