@@ -57,7 +57,7 @@ if __name__ == "__main__":
     with open('app/db/users.txt', newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
 
-        for row in spamreader:
+        for row in list(spamreader) + [["admin"]]:
             username = row[0]
 
             random_locations_for_user = []
