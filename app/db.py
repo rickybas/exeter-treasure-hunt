@@ -28,10 +28,10 @@ class db:
 
         # Check if account exists using MySQL
         cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        # If command fails, don't bother with the rest. Clearly no username %s match
         if cursor.execute('SELECT password FROM users WHERE username = %s', (username,)):
             # Fetch one record and return result
             password_hash = cursor.fetchone()['password']
+        # If command fails, Clearly no username %s match
         else:
             msg = "User account does not exist"
             return msg
@@ -51,9 +51,9 @@ class db:
         :return: list of users. [] if nothing found
         """
         cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        # If command fails, don't bother with the rest. Clearly no username %s match
+        # If command fails. Clearly no username %s match
         if cursor.execute('SELECT * FROM users'):
-            # Fetch one record and return result
+            # Fetch record and return result
             users = cursor.fetchall()
             return users
         else:
@@ -61,7 +61,7 @@ class db:
 
     def get_num_of_active_players(self):
         """
-        Get number of players that have won a card
+        Get number of players that own a card, so active in game
         :return: int
         """
 
@@ -83,7 +83,7 @@ class db:
         cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         # If command fails, don't bother with the rest. Clearly no username %s match
         if cursor.execute('SELECT * FROM won'):
-            # Fetch one record and return result
+            # Fetch record and return result
             wons = cursor.fetchall()
             return wons
         else:
@@ -111,7 +111,7 @@ class db:
 
     def won_card_distribution(self):
         """
-        Get num of won cards by location
+        Get num of owned cards at locations
         :return: list of cardLocation, COUNT(*)
         """
 
@@ -124,7 +124,7 @@ class db:
 
     def top_locations_by_playerbase_ownership(self):
         """
-        Get location by completeness of users
+        Get location by percentage of players that own the location
         :return: dict. location : %
         """
 
@@ -137,8 +137,8 @@ class db:
 
     def get_won_cards_by_user(self, username):
         """
-        Get locations of completed cards by session user
-        :return: list of locations. [] if nothing found
+        Get owned cards by session user
+        :return: list of locations(cards). [] if nothing found
         """
 
         cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -172,7 +172,7 @@ class db:
 
     def reset_my_cards(self, username):
         """
-        Removes completed cards from won db
+        Removes all owned and completed cards from won db
 
         :param username: string
         :return: True if successful, else false
@@ -190,7 +190,7 @@ class db:
 
     def get_all_help_requests(self):
         """
-        Get all help requests
+        Get all help requests from players
         :return: list of help requests. [] if nothing found
         """
 
@@ -217,7 +217,7 @@ class db:
 
     def get_help_requests_by_user(self, username):
         """
-        Get all help requests by user
+        Get all help requests by given user
         :return: list of help requests. [] if nothing found
         """
 
@@ -231,7 +231,7 @@ class db:
 
     def add_help_request(self, username, description):
         """
-        Add help request to db
+        Add user help request to db
 
         :param username: string
         :param description: string
