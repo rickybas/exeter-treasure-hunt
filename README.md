@@ -4,6 +4,9 @@
 
 An interactive location based treasure hunting game for the Streatham Campus (University of Exeter)
 
+## Link to design
+https://github.com/rickybas/exeter-treasure-hunt/wiki/Design
+
 ## Setup
 Clone repo:
 
