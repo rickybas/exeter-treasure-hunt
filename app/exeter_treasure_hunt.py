@@ -97,16 +97,16 @@ def do_save_progress_job():
 
 # Static pages ---------------------------------------------------------------------------------------------------------
 
-@app.route('/landing-page', methods=['GET', 'POST'])
+@app.route('/landing-page', methods=['GET'])
 def landing_page():
     return render_template('landing_page.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
 
-@app.route('/gdpr-policy', methods=['GET', 'POST'])
+@app.route('/gdpr-policy', methods=['GET'])
 def gdpr_policy():
     return render_template('gdpr_policy.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
-@app.route('/about', methods=['GET', 'POST'])
+@app.route('/about', methods=['GET'])
 def about():
     return render_template('about.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
@@ -196,6 +196,10 @@ def logout():
     session.pop('username', None)
     # Redirect to login page
     return redirect(url_for('landing_page'))
+
+@app.route('/scan-card', methods=['GET', 'POST'])
+def scan_card():
+    return render_template('scan_card.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
 
 # AJAX -------------------------------------------------------------------------

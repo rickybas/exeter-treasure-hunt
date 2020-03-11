@@ -34,4 +34,4 @@ if __name__ == "__main__":
         app.config['MYSQL_PASSWORD'] = args.dbpassword
 
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=True, use_reloader=True)
+    app.run(host="0.0.0.0", port=port, debug=True, use_reloader=True, ssl_context='adhoc')
