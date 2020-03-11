@@ -3,8 +3,15 @@ sudo: required
 services:
   - docker
 
-install:
-  - docker build -t eth .
+before_install:
+  - docker version
+  - docker-compose version
 
 script:
-  - docker run -d -p 5000:5000 eth
+  - docker-compose build
+  - docker-compose up -d
+  - docker-compose ps
+  - sleep 10
+  - docker-compose exec app python3 app/db/populate_users_database.py -t 3306 -p root -q adminpasswordtest -d db
+  - docker-compose exec app python3 app/test_http_reqs.py -t 3306 -p root -q adminpasswordtest -d db
+  - docker-compose exec app python3 app/test_db.py -t 3306 -p root -q adminpasswordtest -d db

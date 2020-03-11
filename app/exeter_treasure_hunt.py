@@ -59,13 +59,21 @@ app.config.from_object(Config())
 scheduler.init_app(app)
 scheduler.start()
 
-with open('app/db/cards.json', 'r') as f:
-    cards_dict = json.load(f)
+try:
+    with open('app/db/cards.json', 'r') as f:
+        cards_dict = json.load(f)
+except:
+    with open('db/cards.json', 'r') as f:
+        cards_dict = json.load(f)
 
 db = db(mysql, bcrypt, cards_dict)
 
-if not os.path.exists('app/db/progress.csv'):
-    with open('app/db/progress.csv', 'w'): pass
+try:
+    if not os.path.exists('app/db/progress.csv'):
+        with open('app/db/progress.csv', 'w'): pass
+except:
+    if not os.path.exists('db/progress.csv'):
+        with open('db/progress.csv', 'w'): pass
 
 # HTTPS redirect --------------------------------------------------------------
 

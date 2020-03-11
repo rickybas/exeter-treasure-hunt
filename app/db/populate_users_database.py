@@ -18,6 +18,10 @@ if __name__ == "__main__":
                         help="root password for db", required=False, default="")
     parser.add_argument("-n", "--dbname", type=str,
                         help="mysql database name, ie ETH_DATABASE", required=False, default="ETH_DATABASE")
+    parser.add_argument("-t", "--port", type=str,
+                        help="mysql port", required=False, default="3306")
+    parser.add_argument("-q", "--adminpass", type=str,
+                        help="admin password for db", required=False, default="")
 
     args = parser.parse_args()
 
@@ -32,12 +36,17 @@ if __name__ == "__main__":
         host=args.dbhost,
         user=args.dbuser,
         passwd=db_password,
-        port=3306,
+        port=args.port,
         database=args.dbname,
         auth_plugin='mysql_native_password'
     )
 
-    admin_password = getpass("Enter admin password: ").encode('utf-8')
+    # if user hasn't entered a password in command line
+    if args.adminpass == "":
+        admin_password = getpass("Enter admin password: ").encode('utf-8')
+    else:
+        admin_password = args.adminpass.encode('utf-8')
+
     hashed_password = bcrypt.hashpw(admin_password, bcrypt.gensalt())
 
     mycursor = mydb.cursor()

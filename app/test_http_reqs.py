@@ -1,6 +1,5 @@
 import argparse
 import json
-import os
 import sys
 import unittest
 from getpass import getpass
@@ -9,6 +8,7 @@ from flask_testing import TestCase
 
 from exeter_treasure_hunt import app
 
+admin_password = None
 
 class HTTPTest(TestCase):
 
@@ -464,13 +464,17 @@ if __name__ == '__main__':
                         help="root password for db", required=False, default="")
     parser.add_argument("-n", "--dbname", type=str,
                         help="mysql database name, ie ETH_DATABASE", required=False, default="ETH_DATABASE")
+    parser.add_argument("-t", "--port", type=str,
+                        help="mysql port", required=False, default="3306")
+    parser.add_argument("-q", "--adminpass", type=str,
+                        help="admin password for db", required=False, default="")
 
     args = parser.parse_args()
 
     # Database config
     app.config['MYSQL_HOST'] = args.dbhost
     app.config['MYSQL_PASSWORD'] = args.dbpassword
-    app.config['MYSQL_PORT'] = 3306
+    app.config['MYSQL_PORT'] = int(args.port)
     app.config['MYSQL_USER'] = args.dbuser
     app.config['MYSQL_DB'] = args.dbname
 
@@ -480,5 +484,11 @@ if __name__ == '__main__':
         app.config['MYSQL_PASSWORD'] = password
     else:
         app.config['MYSQL_PASSWORD'] = args.dbpassword
+
+    # if user hasn't entered a password in command line
+    if args.adminpass == "":
+        admin_password = getpass("Enter admin password: ").encode('utf-8')
+    else:
+        admin_password = args.adminpass.encode('utf-8')
 
     unittest.main(argv=[sys.argv[0]])
