@@ -28,7 +28,9 @@
                         value="{{ answers['d'] }}">{{ answers['d'] }}</button>
                 <br>
             </div>
-            <div id="qrcode" style="width:100px; height:100px; margin-top:15px;"></div>
+            {% if location in won_cards %}
+                <div id="qrcode" style="width:100px; height:100px; margin-top:15px;"></div>
+            {% endif %}
         </div>
 
 
@@ -36,17 +38,20 @@
 
 
     <script type="text/javascript">
-        var qrcode = new QRCode(document.getElementById("qrcode"), {
-            width: 100,
-            height: 100
-        });
+        {% if location in won_cards %}
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                width: 100,
+                height: 100
+            });
 
-        function makeCode() {
-            var location = '{{ location }}';
-            qrcode.makeCode(location);
-        }
+            function makeCode() {
+                var location = '{{ location }}';
+                qrcode.makeCode(location);
+            }
 
-        makeCode();
+            makeCode();
+        {% endif %}
+
 
         function check(clicked_id) {
             $.post("/is-answer-correct",
@@ -56,7 +61,8 @@
                 },
                 function (data, status) {
                     alert(data);
-                    if (data === "Correct") {
+                    if (data === "Correct, new card given"
+                        || data === "Correct. No more new cards to give, keep answering more" || data === "YOU HAVE WON") {
                         $('#content').load('/cards');
                         $(window).scrollTop(0);
                     }

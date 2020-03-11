@@ -1,4 +1,6 @@
 import csv
+import json
+import random
 from datetime import datetime
 
 import MySQLdb.cursors
@@ -67,14 +69,14 @@ class db:
 
         cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         # If command fails, don't bother with the rest. Clearly no username %s match
-        if cursor.execute('SELECT COUNT(username) FROM won'):
+        if cursor.execute('SELECT COUNT(DISTINCT username) FROM userCards WHERE state="completed"'):
             # Fetch one record and return result
             num_users = cursor.fetchall()
-            return num_users[0]['COUNT(username)']
+            return num_users[0]['COUNT(DISTINCT username)']
         else:
             return 0
 
-    def get_all_won_cards(self):
+    def get_all_owned_cards(self):
         """
         Get completed cards
         :return: list of cards. [] if nothing found
@@ -82,7 +84,17 @@ class db:
 
         cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         # If command fails, don't bother with the rest. Clearly no username %s match
-        if cursor.execute('SELECT * FROM won'):
+        if cursor.execute('SELECT * FROM userCards'):
+            # Fetch one record and return result
+            wons = cursor.fetchall()
+            return wons
+        else:
+            return []
+
+    def get_all_completed_cards(self):
+        cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        # If command fails, don't bother with the rest. Clearly no username %s match
+        if cursor.execute('SELECT * FROM userCards WHERE state="completed"'):
             # Fetch one record and return result
             wons = cursor.fetchall()
             return wons
@@ -95,7 +107,7 @@ class db:
         :return: num between 0 and 100%
         """
 
-        won_cards = self.get_all_won_cards()
+        won_cards = self.get_all_completed_cards()
         users = self.get_all_users()
 
         return (len(won_cards) * 100) / (len(users) * len(self.cards_dict))
@@ -109,14 +121,14 @@ class db:
 
         return progress
 
-    def won_card_distribution(self):
+    def owned_card_distribution(self):
         """
         Get num of won cards by location
         :return: list of cardLocation, COUNT(*)
         """
 
         cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        if cursor.execute('SELECT cardLocation, COUNT(*) FROM won GROUP BY cardLocation'):
+        if cursor.execute('SELECT cardLocation, COUNT(*) FROM userCards GROUP BY cardLocation'):
             distribution = list(cursor.fetchall())
             return distribution
         else:
@@ -128,29 +140,74 @@ class db:
         :return: dict. location : %
         """
 
-        won_cards = self.won_card_distribution()
+        won_cards = self.owned_card_distribution()
         percentage_complete = {}
         for card in won_cards:
             percentage_complete[card['cardLocation']] = (card['COUNT(*)'] * 100) / len(self.get_all_users())
 
         return sorted(percentage_complete.items(), key=lambda x: x[1], reverse=True)
 
-    def get_won_cards_by_user(self, username):
+    def get_owned_cards_by_user(self, username):
         """
         Get locations of completed cards by session user
         :return: list of locations. [] if nothing found
         """
 
         cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        if cursor.execute('SELECT cardLocation FROM won WHERE username = %s', (username,)):
+        if cursor.execute('SELECT cardLocation FROM userCards WHERE username = %s', (username,)):
             locations = [item['cardLocation'] for item in cursor.fetchall()]
             return locations
         else:
             return []
 
+    def get_completed_cards_by_user(self, username):
+        """
+
+        """
+
+        cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        if cursor.execute('SELECT cardLocation, state FROM userCards WHERE username = %s and state="completed"', (username,)):
+            locations = [item['cardLocation'] for item in cursor.fetchall()]
+            return locations
+        else:
+            return []
+
+    def give_user_new_random_card(self, username):
+        locations = []
+        for card in self.cards_dict:
+            locations.append(card['location'])
+
+        user_locations = self.get_owned_cards_by_user(username)
+
+        random_location = random.choice(locations)
+        while random_location in user_locations:
+            random_location = random.choice(locations)
+
+        return self.add_card_to_deck(username, random_location)
+
+    def add_card_to_deck(self, username, location):
+        """
+        Add card to userCards deck
+
+        :param username: string
+        :param location: string card location
+        :return: True if successful, else false
+        """
+
+        cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+        try:
+            cursor.execute('INSERT INTO userCards (username, cardLocation, state) VALUES (%s, %s, "uncompleted")',
+                           (username, location))
+        except:
+            return False
+
+        self.mysql.connection.commit()
+        return True
+
     def add_won_card(self, username, location):
         """
-        Add completed card entry to won db
+        Add completed card entry to usersCards db
 
         :param username: string
         :param location: string card location
@@ -162,8 +219,9 @@ class db:
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         try:
-            cursor.execute('INSERT INTO won (username, cardLocation, timeStamp) VALUES (%s, %s, %s)',
-                           (username, location, timestamp))
+            cursor.execute('UPDATE userCards SET state = "completed", completedTimeStamp = %s '
+                           'WHERE username=%s and cardLocation=%s',
+                           (timestamp, username, location))
         except:
             return False
 
@@ -181,11 +239,36 @@ class db:
         cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
         try:
-            cursor.execute('DELETE FROM won WHERE username=%s', (username,))
+            cursor.execute('DELETE FROM userCards WHERE username=%s', (username,))
         except:
             return False
 
         self.mysql.connection.commit()
+
+        # give 3 new cards
+        try:
+            with open('app/db/cards.json', 'r') as f:
+                cards_dict = json.load(f)
+        except:
+            with open('db/cards.json', 'r') as f:
+                cards_dict = json.load(f)
+        locations = []
+        for card in cards_dict:
+            locations.append(card['location'])
+
+        random_locations_for_user = []
+        for i in range(3):
+            random_location = ""
+            while random_location in random_locations_for_user or random_location == "":
+                random_location = random.choice(locations)
+
+            random_locations_for_user.append(random_location)
+            print(username, random_location)
+
+            cursor.execute("INSERT INTO userCards (username, cardLocation, state) VALUES (%s, %s, 'uncompleted')", (username, random_location))
+
+        self.mysql.connection.commit()
+
         return True
 
     def get_all_help_requests(self):
@@ -333,7 +416,7 @@ class db:
         cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
         try:
-            cursor.execute('DELETE FROM won')
+            cursor.execute('DELETE FROM userCards')
         except:
             return False
 

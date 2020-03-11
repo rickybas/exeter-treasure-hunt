@@ -14,14 +14,6 @@ BEGIN
         PRIMARY KEY (`username`)
     );
 
-    CREATE TABLE IF NOT EXISTS `won`
-    (
-        `username` VARCHAR(50) NOT NULL,
-        `cardLocation` VARCHAR(255) NOT NULL,
-        `timeStamp` TIMESTAMP,
-        PRIMARY KEY (`username`, `cardLocation`)
-    );
-
     CREATE TABLE IF NOT EXISTS `helpRequests`
     (
         `id` int NOT NULL AUTO_INCREMENT,
@@ -31,11 +23,18 @@ BEGIN
         `timeStamp` TIMESTAMP NOT NULL,
         PRIMARY KEY (`id`)
     );
-    CREATE TABLE IF NOT EXISTS `currentGame`(
+    CREATE TABLE IF NOT EXISTS `recentLocationData`(
         `userid` INT NOT NULL,
         `lattitude` DECIMAL(10, 8) NOT NULL,
         `longitude` DECIMAL(11, 8) NOT NULL,
         PRIMARY KEY(`userid`)
+    );
+    CREATE TABLE IF NOT EXISTS `userCards`(
+        `username` VARCHAR(50) NOT NULL,
+        `cardLocation` VARCHAR(255) NOT NULL,
+        `completedTimeStamp` TIMESTAMP,
+        `state` VARCHAR(50) NOT NULL,
+        PRIMARY KEY (`username`, `cardLocation`)
     );
 END;
 //

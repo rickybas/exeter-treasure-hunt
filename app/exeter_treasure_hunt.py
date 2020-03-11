@@ -148,13 +148,17 @@ def single_card(location):
         except:
             return "location not found", 404
 
+        if location not in db.get_owned_cards_by_user(session['username']):
+            return "don't own card"
+
         return render_template('current_card_page.html', APP_NAME=APP_NAME, VERSION=VERSION,
                                username=session['username'],
                                location=card['location'],
                                image=card['image'],
                                question=card['question'],
                                answers=card['answers'],
-                               correctAnswer=card['correctAnswer'])
+                               correctAnswer=card['correctAnswer'],
+                               won_cards=db.get_completed_cards_by_user(session['username']))
 
     return redirect(url_for('login'), code=401)
 
@@ -224,7 +228,9 @@ def map():
 def cards():
     if 'loggedin' in session:
         return render_template('cards.html', APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'],
-                               cards=cards_dict, won_cards=db.get_won_cards_by_user(session['username']))
+                               cards=cards_dict,
+                               owned_cards=db.get_owned_cards_by_user(session['username']),
+                               won_cards=db.get_completed_cards_by_user(session['username']))
 
     return redirect(url_for('login'))
 
@@ -233,7 +239,22 @@ def load_cards():
     if 'loggedin' in session:
         return jsonify(cards_dict)    
     return redirect(url_for('login'))
-        
+
+
+@app.route('/add-card-to-deck/<location>', methods=["GET"])
+def add_card_to_deck(location):
+    if 'loggedin' in session:
+        try:
+            next(item for item in cards_dict if item["location"] == location)
+        except:
+            return "location not found", 400
+
+        if not db.add_card_to_deck(session['username'], location):
+            return "error"
+
+        return "added"
+
+    return redirect(url_for('login'))
 
 @app.route('/is-answer-correct', methods=["POST"])
 def is_answer_correct():
@@ -247,9 +268,22 @@ def is_answer_correct():
             return "location not found", 400
 
         if card["correctAnswer"] == answer:
+            if location in db.get_completed_cards_by_user(session['username']):
+                return "Correct but already won card"
+
             if not db.add_won_card(session['username'], location):
-                return "Already completed card"
-            return "Correct"
+                return "Error"
+
+            if len(db.get_completed_cards_by_user(session['username'])) == len(cards_dict):
+                return "YOU HAVE WON"
+
+            if len(db.get_owned_cards_by_user(session['username'])) == len(cards_dict):
+                return "Correct. No more new cards to give, keep answering more"
+
+            if db.give_user_new_random_card(session['username']):
+                return "Correct, new card given"
+
+            return "Error"
         else:
             return "Incorrect"
 
@@ -308,7 +342,7 @@ def admin_login():
 @app.route('/admin-index', methods=['GET'])
 def admin_index():
     if 'loggedin' in session and session['username'] == "admin":
-        won_cards = db.get_all_won_cards()
+        won_cards = db.get_all_owned_cards()
         users = db.get_all_users()
 
         return render_template("admin_index.html", APP_NAME=APP_NAME, VERSION=VERSION,
@@ -319,7 +353,7 @@ def admin_index():
                                num_of_open_help_requests = db.get_num_of_open_help_requests(),
                                overall_progress=round(db.get_overall_progress(), 2),
                                overall_progress_over_time=db.get_overall_progress_over_time(),
-                               won_card_distribution=db.won_card_distribution(),
+                               won_card_distribution=db.owned_card_distribution(),
                                top_locations_by_playerbase_ownership=db.top_locations_by_playerbase_ownership())
 
     return redirect(url_for('admin_login'))

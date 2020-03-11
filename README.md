@@ -23,6 +23,9 @@ Then populate the database with initial hashed and salted passwords and username
 
 `python3 app/db/populate_users_database.py`
 
+`python3 app/db/populate_user_cards_database.py`
+
+
 ## Running Locally
 
 `python3 app/wsgi.py`
