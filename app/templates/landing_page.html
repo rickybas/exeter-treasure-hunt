@@ -48,21 +48,53 @@
 {% block content %}
     <div class="container text-center">
         <hr>
-        <h1 class="animated fadeIn delay-1s">ExePlore Landing Page</h1>
+        <h1 class="animated fadeIn delay-1s">Welcome to ExePlore</h1>
         <hr>
-        <p class="animated fadeIn delay-1s">This is a placeholder, as the landing page will simply contain advertising
-            and flashy promo images, and as such is lowest priority for our SDLC.</p>
         <button class="btn btn-success footer-btn animated bounceInDown"
                 onclick="location.href='{{ url_for('login') }}';" style="width:65%;padding:30px;font-size:30px;">Play
         </button>
 
         <!-- TEMP TEMP TEMP -->
-        <br><br><br><br><br><br>
+        <br><br><br><br>
         <button class="btn btn-warning footer-btn animated bounceInUp"
                 onclick="location.href='{{ url_for('admin_login') }}';">Admin WIP
         </button>
+        <hr><br>
+        <h1>Explore's key features</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-4">
+              <div class="thumbnail">
+                  <img src="{{ url_for('static', filename='/landing_page_images/map_view.jpg') }}" class="animated fadeIn delay-1s" alt="Lights" style="width:100%"}}>
+                  <div class="caption">
+                    <p id="image_desc">See other players locations</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="thumbnail">
+                  <img src="{{ url_for('static', filename='/landing_page_images/card_view.jpg') }}" class="animated fadeIn delay-1s" style="width:100%" >
+                  <div class="caption">
+                    <p id="image_desc2">Answer questions and trade to get more cards</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="thumbnail">
+                  <img src="{{ url_for('static', filename='/landing_page_images/score_board_view.jpg') }}" class="animated fadeIn delay-1s" alt="Nature" style="width:100%">
+                  <div class="caption">
+                    <p id="image_desc2">Built in score board for you to see your progress</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+        </div>
         <!-- end -->
     </div>
+
+
 
     <footer class="footer">
         <div class="container text-center" style="padding:5px">
