@@ -25,10 +25,10 @@
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
             <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='/';"
-            style="margin-left: 10px;width:120px;">Close
+            style="margin-left: 10px;width:auto;">Close
         </button>
         <button class="float-right btn btn-warning my-2 my-lg-0" onclick="cardResetCheck();"
-        style="margin-left: auto;width: 120px;">Reset my cards
+        style="margin-left: auto;width: auto;">Reset my cards
     </button>
 </li>
 </ul>
@@ -46,7 +46,7 @@
 {% block content %}
     <div class="container">
         My Help Requests
-        <button class="card" style="background: #0b2e13" onclick="location.href = '{{ url_for('add_help_request') }}'">
+        <button class="card" style="background: #0b2e13;margin-top:10px" onclick="location.href = '{{ url_for('add_help_request') }}'">
             Add help request
         </button>
         <br>
