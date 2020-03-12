@@ -34,13 +34,10 @@
             let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
             scanner.addListener('scan', function (content) {
                 var card =(content);
-                alert(card);
-                $.post("/addFromQR",
-                    {
-                        card: card
-                    },
+                $.post("/scan-card/"+card,
                     function (data, status) {
                         alert(data);
+                        location.href = "/";
                     });
             });
 

@@ -201,9 +201,23 @@ def logout():
     # Redirect to login page
     return redirect(url_for('landing_page'))
 
-@app.route('/scan-card', methods=['GET', 'POST'])
-def scan_card():
-    return render_template('scan_card.html', APP_NAME=APP_NAME, VERSION=VERSION)
+@app.route('/scan-card/', defaults={'location': None}, methods=['GET'])
+@app.route('/scan-card/<location>', methods=['POST'])
+
+def scan_card(location):
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            if location in db.get_owned_cards_by_user(session['username']):
+                return "Already got card " + location
+
+            if db.add_card_to_deck(session['username'], location):
+                return location + " added to deck"
+
+            return "not valid card"
+
+        return render_template('scan_card.html', APP_NAME=APP_NAME, VERSION=VERSION)
+
+    return redirect(url_for('login'))
 
 @app.route('/log-location/<lat>/<long>', methods=['POST'])
 def log_location(lat, long):
