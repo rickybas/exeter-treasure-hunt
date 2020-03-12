@@ -87,10 +87,22 @@ def is_game_paused():
 
 @app.before_request
 def before_request():
-    if not request.is_secure and app.env != "development" and app.debug != True:
-        url = request.url.replace("http://", "https://", 1)
-        code = 301
-        return redirect(url, code=code)
+    # if not request.is_secure and app.env != "development" and app.debug != True:
+    #     url = request.url.replace("http://", "https://", 1)
+    #     code = 301
+    #     return redirect(url, code=code)
+    # Should we redirect?
+    criteria = [
+        request.is_secure,
+        app.debug,
+        request.headers.get('X-Forwarded-Proto', 'http') == 'https'
+    ]
+    if not any(criteria):
+        if request.url.startswith('http://'):
+            url = request.url.replace("http://", "https://", 1)
+            code = 301
+            r = redirect(url, code=code)
+            return r
 
 
 # Tasks ----------------------------------------------------------------------------------------------------------------
