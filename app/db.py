@@ -166,7 +166,8 @@ class db:
         """
 
         cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        if cursor.execute('SELECT cardLocation, state FROM userCards WHERE username = %s and state="completed"', (username,)):
+        if cursor.execute('SELECT cardLocation, state FROM userCards WHERE username = %s and state="completed"',
+                          (username,)):
             locations = [item['cardLocation'] for item in cursor.fetchall()]
             return locations
         else:
@@ -265,7 +266,8 @@ class db:
             random_locations_for_user.append(random_location)
             print(username, random_location)
 
-            cursor.execute("INSERT INTO userCards (username, cardLocation, state) VALUES (%s, %s, 'uncompleted')", (username, random_location))
+            cursor.execute("INSERT INTO userCards (username, cardLocation, state) VALUES (%s, %s, 'uncompleted')",
+                           (username, random_location))
 
         self.mysql.connection.commit()
 
@@ -471,10 +473,14 @@ class db:
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         try:
-            cursor.execute('INSERT INTO recentLocationData (username, lattitude, longitude, timeStamp) VALUES (%s, %s, %s, %s)', (username, lat, long, timestamp))
+            cursor.execute(
+                'INSERT INTO recentLocationData (username, lattitude, longitude, timeStamp) VALUES (%s, %s, %s, %s)',
+                (username, lat, long, timestamp))
         except:
             try:
-                cursor.execute('UPDATE recentLocationData SET lattitude=%s, longitude=%s, timeStamp=%s WHERE username=%s', (lat, long, timestamp, username))
+                cursor.execute(
+                    'UPDATE recentLocationData SET lattitude=%s, longitude=%s, timeStamp=%s WHERE username=%s',
+                    (lat, long, timestamp, username))
             except:
                 return False
 

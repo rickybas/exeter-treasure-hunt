@@ -21,7 +21,7 @@ app = Flask(__name__)
 app.secret_key = 'your secret key'
 app.debug = True
 
-Talisman(app, content_security_policy=None) # Create a Talisman for the app. High security :D
+Talisman(app, content_security_policy=None)  # Create a Talisman for the app. High security :D
 
 # Mail stuff
 app.config.update(
@@ -75,6 +75,7 @@ except:
     if not os.path.exists('db/progress.csv'):
         with open('db/progress.csv', 'w'): pass
 
+
 # HTTPS redirect --------------------------------------------------------------
 
 @app.before_request
@@ -106,9 +107,15 @@ def landing_page():
 def gdpr_policy():
     return render_template('gdpr_policy.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
+
 @app.route('/about', methods=['GET'])
 def about():
     return render_template('about.html', APP_NAME=APP_NAME, VERSION=VERSION)
+
+
+@app.route('/user-manual', methods=['GET'])
+def user_manual():
+    return render_template('user_manual.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
 
 # Player auth section --------------------------------------------------------------------------------------------------
@@ -162,6 +169,7 @@ def single_card(location):
 
     return redirect(url_for('login'), code=401)
 
+
 @app.route('/my-help-requests', methods=['GET'])
 def my_help_requests():
     if 'loggedin' in session:
@@ -179,11 +187,13 @@ def add_help_request():
                     db.add_help_request(session['username'], request.form['description']):
                 return redirect(url_for('my_help_requests'))
             else:
-                return render_template('add_help_request.html', APP_NAME=APP_NAME, VERSION=VERSION, msg="Failed to send")
+                return render_template('add_help_request.html', APP_NAME=APP_NAME, VERSION=VERSION,
+                                       msg="Failed to send")
 
         return render_template('add_help_request.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
     return redirect(url_for('login'))
+
 
 @app.route('/reset')
 def reset():
@@ -201,9 +211,9 @@ def logout():
     # Redirect to login page
     return redirect(url_for('landing_page'))
 
+
 @app.route('/scan-card/', defaults={'location': None}, methods=['GET'])
 @app.route('/scan-card/<location>', methods=['POST'])
-
 def scan_card(location):
     if 'loggedin' in session:
         if request.method == 'POST':
@@ -218,6 +228,7 @@ def scan_card(location):
         return render_template('scan_card.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
     return redirect(url_for('login'))
+
 
 @app.route('/log-location/<lat>/<long>', methods=['POST'])
 def log_location(lat, long):
@@ -262,10 +273,11 @@ def cards():
 
     return redirect(url_for('login'))
 
+
 @app.route('/loadcards', methods=['GET'])
 def load_cards():
     if 'loggedin' in session:
-        return jsonify(cards_dict)    
+        return jsonify(cards_dict)
     return redirect(url_for('login'))
 
 
@@ -283,6 +295,7 @@ def add_card_to_deck(location):
         return "added"
 
     return redirect(url_for('login'))
+
 
 @app.route('/is-answer-correct', methods=["POST"])
 def is_answer_correct():
@@ -317,6 +330,7 @@ def is_answer_correct():
 
     return redirect(url_for('login'))
 
+
 @app.route('/open-help-request/<id>', methods=["GET"])
 def open_help_request(id):
     if 'loggedin' in session:
@@ -329,6 +343,7 @@ def open_help_request(id):
             return "does not exist"
 
     return redirect(url_for('login'))
+
 
 @app.route('/close-help-request/<id>', methods=["GET"])
 def close_help_request(id):
@@ -378,7 +393,7 @@ def admin_index():
                                num_won_cards=len(won_cards),
                                num_users=len(users),
                                num_active_users=db.get_num_of_active_players(),
-                               num_of_open_help_requests = db.get_num_of_open_help_requests(),
+                               num_of_open_help_requests=db.get_num_of_open_help_requests(),
                                overall_progress=round(db.get_overall_progress(), 2),
                                overall_progress_over_time=db.get_overall_progress_over_time(),
                                won_card_distribution=db.owned_card_distribution(),
@@ -415,6 +430,7 @@ def admin_help_requests():
                                help_requests=db.get_all_help_requests())
 
     return redirect(url_for('admin_login'))
+
 
 @app.route('/generate-report', methods=['GET'])
 def generate_report():

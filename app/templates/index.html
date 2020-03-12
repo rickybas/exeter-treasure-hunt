@@ -34,7 +34,7 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="alert('FAQ and Help not yet implemented.');">Get Help</a>
+                    <a class="nav-link" href="{{ url_for('user_manual') }}">User manual</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('gdpr_policy') }}">GDPR and Privacy</a>
@@ -65,9 +65,9 @@
         </div>
     </nav>
     <script>
-        function cardResetCheck(){
-            if(confirm("Are you sure you want to reset your cards? By clicking okay you acknowledge your progress will be lost.")){
-                window.location.href='{{ url_for('reset') }}';
+        function cardResetCheck() {
+            if (confirm("Are you sure you want to reset your cards? By clicking okay you acknowledge your progress will be lost.")) {
+                window.location.href = '{{ url_for('reset') }}';
             }
         }
     </script>
@@ -104,8 +104,9 @@
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(sendPosition);
         }
+
         function sendPosition(position) {
-            $.post("/log-location/" + position.coords.latitude + "/" + position.coords.longitude, function(data, status){
+            $.post("/log-location/" + position.coords.latitude + "/" + position.coords.longitude, function (data, status) {
 
             });
 

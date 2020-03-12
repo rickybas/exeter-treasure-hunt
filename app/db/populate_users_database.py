@@ -9,8 +9,10 @@ Used to initially populate database where usernames and passwords that will be g
 Once the user has logged in they will then be asked to change their password.
 """
 
+
 def gen_random_password():
     return uuid.uuid4().hex
+
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -31,7 +33,7 @@ if __name__ == "__main__":
 
     try:
         if not os.path.exists('app/db/user_first_time_passwords.csv'):
-                with open('app/db/user_first_time_passwords.csv', 'w'): pass
+            with open('app/db/user_first_time_passwords.csv', 'w'): pass
     except:
         if not os.path.exists('db/user_first_time_passwords.csv'):
             with open('db/user_first_time_passwords.csv', 'w'): pass
@@ -85,7 +87,7 @@ if __name__ == "__main__":
 
             mycursor = mydb.cursor()
 
-            mycursor.execute("INSERT INTO users (username, password, course, year) VALUES (%s, %s, %s, %s)", (username, hashed_password, course, year))
+            mycursor.execute("INSERT INTO users (username, password, course, year) VALUES (%s, %s, %s, %s)",
+                             (username, hashed_password, course, year))
 
         mydb.commit()
-

@@ -1,0 +1,72 @@
+{% extends "bootstrap/base.html" %}
+
+<!-- {% block html_attribs %} lang="en"{% endblock %} -->
+{% block title %}{{ APP_NAME }} - User manual{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type='text/css'
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}"/>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/">{{ APP_NAME }}</a>
+        <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='/';"
+                style="margin-left: auto;width:100px;">Close
+        </button>
+    </nav>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <br/><br/>
+
+        <h2>Getting Started and Logging in</h2>
+        <p>When a user first loads the landing page they can login in either as a Player, by clicking play, or as a
+            admin by clicking "Admin WP". These will take you through to separate pages as can be seen in the Player and
+            admin Manuel sections. Below the logins you can see key feature of the app. In the top left you can access a
+            FAQ for help and click to display our GDPR and privacy policies.</p>
+
+        <h2>Player Manual</h2>
+        <p>A player will be shown around the app first time of playing by our ExPlore bot.</p>
+
+        <p>Once a user has entered in to the player area they will be able to log in with their given user name and
+            password. After logging in the player will see their location on the map. Along the bottom tab the play can
+            access their own cards, the leader board and the map. In the top right a player can reset their cards (wipe
+            their current progress), they can request help by sending a message to the game master (admin), or they can
+            log out. When logging out game progress will be saved.</p>
+
+        <h2>Playing</h2>
+        <p>A player can see a list of all cards, based on the colour of the card (....enter what each colour means). A
+            player will card start with one card. A play can gain new cards by going to the location of the card and
+            answering the question correctly, or trading with another player using a cards QR code. A player can scan
+            another players QR code via the QR code scanner page. A player has a given time to complete as many cards as
+            possible, which is set by the game master.</p>
+
+        <p>The leaderboard can be used by a player to track all players progress and the map to see other players
+            location.</p>
+
+        <h2>Admin Manual</h2>
+        <p>The admin side is best accessed from a computer. Once the admin has logged they can will see the admin
+            dashboard. Here they can see many stats to related to the current game. An admin can download a report of
+            the game with the generate report button in the top right. Along the left there is a navigation bar. The
+            admin can navigate to the map where a heat map of where players are located is displayed. The Players tab
+            allows the admin to see a list of all players and the players game details. An admin can also response to
+            player help requests by viewing the request and replying.</p>
+
+    </div>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <span class="text-muted">{{ APP_NAME }} - {{ VERSION }}</span>
+        </div>
+    </footer>
+{% endblock %}

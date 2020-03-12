@@ -3,6 +3,7 @@ import json
 from argparse import ArgumentParser
 from getpass import getpass
 import random
+
 """
 
 """
@@ -40,7 +41,6 @@ if __name__ == "__main__":
         auth_plugin='mysql_native_password'
     )
 
-
     mycursor = mydb.cursor()
 
     try:
@@ -70,7 +70,7 @@ if __name__ == "__main__":
                 random_locations_for_user.append(random_location)
                 print(username, random_location)
 
-                mycursor.execute("INSERT INTO userCards (username, cardLocation, state) VALUES (%s, %s, 'uncompleted')", (username, random_location))
+                mycursor.execute("INSERT INTO userCards (username, cardLocation, state) VALUES (%s, %s, 'uncompleted')",
+                                 (username, random_location))
 
         mydb.commit()
-
