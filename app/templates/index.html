@@ -91,10 +91,12 @@
     <script>
 
         if (navigator.geolocation) {
+            console.log("here");
             navigator.geolocation.getCurrentPosition(sendPosition);
         }
 
         function sendPosition(position) {
+            console.log(position);
             $.post("/log-location/" + position.coords.latitude + "/" + position.coords.longitude, function (data, status) {
 
             });

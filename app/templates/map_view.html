@@ -12,6 +12,17 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/custom.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}"/>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -76,20 +87,47 @@
                     </ul>
                 </div>
             </nav>
-            <div class="container-fluid"><img src="{{ url_for('static', filename = 'chrome_2020-03-06_06-30-17.png') }}"
-                                              style="width: 100%;">
-                <div class="text-center" style="padding: 10px;">
-                    <button class="btn btn-primary" type="button">Refresh Data</button>
-                    <div class="btn-group" style="margin: 10px;">
-                        <button class="btn btn-primary" type="button">Map View</button>
-                        <button class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                                aria-expanded="false" type="button"></button>
-                        <div class="dropdown-menu"
-                             role="menu"><a class="dropdown-item" role="presentation" href="#">Heatmap</a><a
-                                class="dropdown-item" role="presentation" href="#">Player View</a><a
-                                class="dropdown-item" role="presentation" href="#">Objectives</a></div>
-                    </div>
+            <div class="container-fluid">
+                <div id="map">
                 </div>
+                <script>
+                    mapboxgl.accessToken = 'pk.eyJ1IjoibGNyZXNkZWUiLCJhIjoiY2s3MTNnbXU3MDJycjNkczF1OHR2YjdmNCJ9.6eD1kNQOyOGLeiGr6udiZw';
+
+                    //Map bounds
+                    var bounds = [
+                        [-3.540540, 50.730483],     //SW coords
+                        [-3.528044, 50.741516]//NE coords
+                    ];
+
+                    var map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/lcresdee/ck715gk1v03sm1ipi8yo2yu20',
+                        center: [-3.534516, 50.735770],
+                        zoom: 20,
+                        maxBounds: bounds,
+                        minZoom: 17,
+                        pitchWithRotate: false,
+                        dragRotate: false
+                    });
+
+
+
+
+                    map.on('load', function(){
+                        var playersjson = "/locations-geojson";
+                        map.addSource('players', {
+                            'type': 'geojson',
+                            'data': playersjson
+                        });
+
+                        map.addLayer({
+                            id: 'players',
+                            source: 'players',
+                            type: 'heatmap'
+                        });
+
+                    });
+                </script>
             </div>
         </div>
         <footer class="bg-white sticky-footer">
