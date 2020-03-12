@@ -18,7 +18,7 @@ var map = new mapboxgl.Map({
     zoom: 20,
     pitch: 0,
     maxBounds: bounds,
-    minZoom: 17,
+    minZoom: 15,
     pitchWithRotate: false,
     dragRotate: false
 });
@@ -30,17 +30,22 @@ var playerpos = [0, 0];
 function setPlayerPos(position){
     playerpos[1] = position.coords.latitude;
     playerpos[0] = position.coords.longitude;
+    map.flyTo({
+        center: playerpos,
+        zoom:17
+    });
 }
 
 function locationError(){
     console.log("ERROR: Cannot get location");
+    alert("Location has not been allowed, or is unsupported by your device.")
 }
 
 function updateGeoLocation(){
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(setPlayerPos, locationError, {timeout:10000});
     } else{
-        console.log("ERROR: Geolocation is not supported by this device or browser!");
+        console.log("ERROR: Geolocation has been blocked or is unsupported!");
     }
 }
 
@@ -122,10 +127,4 @@ $(document).ready(function(){
         }
         window.cardsjson = [json];
     })
-});
-
-
-
-map.flyTo({
-    center: playerpos
 });
