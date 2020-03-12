@@ -442,6 +442,23 @@ class db:
         self.mysql.connection.commit()
         return True
 
+    def reset_users_db_not_admin(self):
+        """
+        Removes all rows from users db apart from admin
+
+        :return: True if successful, else false
+        """
+
+        cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+        try:
+            cursor.execute('DELETE FROM users WHERE username != "admin"')
+        except:
+            return False
+
+        self.mysql.connection.commit()
+        return True
+
     def reset_help_requests_db(self):
         """
         Removes all rows from help requests db
@@ -453,6 +470,23 @@ class db:
 
         try:
             cursor.execute('DELETE FROM helpRequests')
+        except:
+            return False
+
+        self.mysql.connection.commit()
+        return True
+
+    def reset_location_db(self):
+        """
+        Removes all rows from help location db
+
+        :return: True if successful, else false
+        """
+
+        cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+        try:
+            cursor.execute('DELETE FROM recentLocationData')
         except:
             return False
 

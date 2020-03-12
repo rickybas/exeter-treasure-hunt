@@ -12,7 +12,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask_talisman import Talisman
 
 from db import db
-
+from game_functions import GameFunctions
 APP_NAME = "ExePlore"
 VERSION = "0.4-beta"
 
@@ -67,6 +67,8 @@ except:
         cards_dict = json.load(f)
 
 db = db(mysql, bcrypt, cards_dict)
+game_functions = GameFunctions(mysql)
+
 
 try:
     if not os.path.exists('app/db/progress.csv'):
@@ -75,6 +77,10 @@ except:
     if not os.path.exists('db/progress.csv'):
         with open('db/progress.csv', 'w'): pass
 
+
+def is_game_paused():
+    txt = open("app/db/state.txt", 'r').read()
+    return txt == "stopped"
 
 # HTTPS redirect --------------------------------------------------------------
 
@@ -123,9 +129,16 @@ def user_manual():
 @app.route('/', methods=['GET'])
 def index():
     if 'loggedin' in session:
+        if is_game_paused(): return redirect(url_for('game_is_paused'))
         return render_template("index.html", APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'])
 
     return redirect(url_for('landing_page'))
+
+@app.route('/game-is-paused', methods=['GET'])
+def game_is_paused():
+    if not is_game_paused(): return redirect(url_for('index'))
+    return render_template("game_is_paused.html", APP_NAME=APP_NAME, VERSION=VERSION)
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -173,6 +186,7 @@ def single_card(location):
 @app.route('/my-help-requests', methods=['GET'])
 def my_help_requests():
     if 'loggedin' in session:
+        if is_game_paused(): return redirect(url_for('game_is_paused'))
         return render_template("my_help_requests.html", APP_NAME=APP_NAME, VERSION=VERSION,
                                help_requests=db.get_help_requests_by_user(session['username']))
 
@@ -190,6 +204,7 @@ def add_help_request():
                 return render_template('add_help_request.html', APP_NAME=APP_NAME, VERSION=VERSION,
                                        msg="Failed to send")
 
+        if is_game_paused(): return redirect(url_for('game_is_paused'))
         return render_template('add_help_request.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
     return redirect(url_for('login'))
@@ -225,6 +240,7 @@ def scan_card(location):
 
             return "not valid card"
 
+        if is_game_paused(): return redirect(url_for('game_is_paused'))
         return render_template('scan_card.html', APP_NAME=APP_NAME, VERSION=VERSION)
 
     return redirect(url_for('login'))
@@ -334,6 +350,7 @@ def is_answer_correct():
 @app.route('/open-help-request/<id>', methods=["GET"])
 def open_help_request(id):
     if 'loggedin' in session:
+        if is_game_paused(): return redirect(url_for('game_is_paused'))
         if db.open_help_request(session['username'], id):
             if session['username'] == "admin":
                 return redirect(url_for('admin_help_requests'))
@@ -397,7 +414,8 @@ def admin_index():
                                overall_progress=round(db.get_overall_progress(), 2),
                                overall_progress_over_time=db.get_overall_progress_over_time(),
                                won_card_distribution=db.owned_card_distribution(),
-                               top_locations_by_playerbase_ownership=db.top_locations_by_playerbase_ownership())
+                               top_locations_by_playerbase_ownership=db.top_locations_by_playerbase_ownership(),
+                               is_paused = is_game_paused())
 
     return redirect(url_for('admin_login'))
 
@@ -436,6 +454,22 @@ def admin_help_requests():
 def generate_report():
     if 'loggedin' in session and session['username'] == "admin":
         return "report"
+
+    return redirect(url_for('admin_login'))
+
+@app.route('/admin-function/<function>', methods=['GET'])
+def admin_function(function):
+    if 'loggedin' in session and session['username'] == "admin":
+        if function == "stop_game":
+            game_functions.stop_game()
+        elif function == "run_game":
+            game_functions.run_game()
+        elif function=="reset_location_data":
+            db.reset_location_db()
+        elif function=="reset_help_requests":
+            db.reset_help_requests_db()
+
+        return redirect(url_for('admin_index'))
 
     return redirect(url_for('admin_login'))
 
