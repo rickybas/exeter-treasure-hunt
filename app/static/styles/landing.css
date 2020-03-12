@@ -1,0 +1,46 @@
+.btn.active, .btn:active, .btn:focus, .btn:hover {
+  color: #fff;
+  border-color: #003201;
+  background-color: #003201;
+}
+
+#mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+  color: #003201 !important;
+}
+
+.bg-primary {
+  background: #003201;
+  background: linear-gradient(#223727,#003201);
+}
+
+#mainNav .navbar-nav > li > a.active {
+  color: white!important;
+}
+
+#mainNav.navbar-shrink .navbar-nav > li > a, #mainNav.navbar-shrink .navbar-nav > li > a:focus {
+  color: #ccc;
+}
+
+#mainNav.navbar-shrink {
+  background-color: #003201;
+}
+
+@media (max-width: 991px) {
+  #mainNav {
+    background-color: #003201;
+  }
+}
+
+#mainNav .navbar-nav > li > a, #mainNav .navbar-nav > li > a:focus {
+  color: white;
+}
+
+section.features .feature-item i {
+  font-size: 80px;
+  display: block;
+  margin-bottom: 15px;
+  background: linear-gradient(270deg,#3a7a4e,#abfa65);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
