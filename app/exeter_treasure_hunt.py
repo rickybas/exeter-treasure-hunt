@@ -35,8 +35,8 @@ app.config.update(
 
 mail = Mail(app)
 
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-toolbar = DebugToolbarExtension(app)
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+# toolbar = DebugToolbarExtension(app)
 # Consider disabling this in production. Should do it automatically but never know 😕
 
 

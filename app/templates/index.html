@@ -37,6 +37,9 @@
                     <a class="nav-link" href="{{ url_for('user_manual') }}">User manual</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('my_help_requests') }}">My Help Requests</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('gdpr_policy') }}">GDPR and Privacy</a>
                 </li>
                 <li class="nav-item">
@@ -49,28 +52,14 @@
                             onclick="location.href='{{ url_for('logout') }}';"
                             style="margin-left: auto;width:150px;">{{ username }} - Logout
                     </button>
-                    <button class="float-right btn btn-warning my-2 my-lg-0" onclick="cardResetCheck();"
-                            style="margin-left: auto;width: 120px; margin-right: 20px;">Reset my cards
-                    </button>
-                    <button class="float-right btn btn-success my-2 my-lg-0"
-                            onclick="location.href='{{ url_for('my_help_requests') }}'"
-                            style="margin-left: auto;width: 150px; margin-right: 20px;">My help requests
-                    </button>
                     <button class="float-right btn btn-success my-2 my-lg-0"
                             onclick="location.href='{{ url_for('scan_card') }}'"
-                            style="margin-left: auto;width: 150px; margin-right: 20px;">Scan friends card
+                            style="margin-left: auto;width: 40px; margin-right: 20px;"><i class="fa fa-qrcode"></i>
                     </button>
                 </li>
             </ul>
         </div>
     </nav>
-    <script>
-        function cardResetCheck() {
-            if (confirm("Are you sure you want to reset your cards? By clicking okay you acknowledge your progress will be lost.")) {
-                window.location.href = '{{ url_for('reset') }}';
-            }
-        }
-    </script>
 {% endblock %}
 
 

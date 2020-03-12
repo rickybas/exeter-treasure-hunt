@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/animate.css') }}">
 {% endblock %}
 
 {% block scripts %}
@@ -16,14 +17,31 @@
 {% endblock %}
 
 {% block navbar %}
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="/">{{ APP_NAME }}</a>
-        <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='/';"
-                style="margin-left: auto;width:100px;">Close
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="navbar-brand"><i class="fa fa-lg fa-compass animated rotateIn slow delay-1s"
+                                     style="color:white;"></i>
+            <a class="navbar-brand" href="/">ExePlore</a>
+        </div>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <button class="float-right btn btn-success my-2 my-lg-0" onclick="location.href='/';"
+            style="margin-left: 10px;width:120px;">Close
         </button>
-    </nav>
+        <button class="float-right btn btn-warning my-2 my-lg-0" onclick="cardResetCheck();"
+        style="margin-left: auto;width: 120px;">Reset my cards
+    </button>
+</li>
+</ul>
+</nav>
 {% endblock %}
 
+    <script>
+        function cardResetCheck() {
+            if (confirm("Are you sure you want to reset your cards? By clicking okay you acknowledge your progress will be lost.")) {
+                window.location.href = '{{ url_for('reset') }}';
+            }
+        }
+    </script>
 
 {% block content %}
     <div class="container">
@@ -58,8 +76,12 @@
     </div>
 
     <footer class="footer">
-        <div class="container text-center">
-            <span class="text-muted">{{ APP_NAME }} - {{ VERSION }}</span>
+        <div class="container text-center" style="padding:5px">
+            <span class="text-muted">ExePlore | </span><span><a style="text-decoration: none;color:#868e96;"
+                                                                href="{{ url_for('gdpr_policy') }}">Terms and Conditions</a></span>
+            <br><br>
+            <img src="https://www.exeter.ac.uk/departments/communication/mark-ops/design/visualidentity/logos2/white_logo_vector.png"
+                 style="width:100px;filter:invert(100%)" alt="University of Exeter">
         </div>
     </footer>
 {% endblock %}
