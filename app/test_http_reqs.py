@@ -59,8 +59,8 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.get('/')
 
@@ -75,14 +75,14 @@ class HTTPTest(TestCase):
 
     def test_login_page_post_login_successful(self):
         response = self.client.post('/login', follow_redirects=True,
-                                    data = dict(username="William", password="William494", consent="consent"))
+                                    data = dict(username="admin", password=admin_password, consent="consent"))
 
         self.assertEqual(response.status_code, 200)
         self.assert_template_used('index.html')
 
     def test_login_page_post_login_unsuccessful(self):
         response = self.client.post('/login', follow_redirects=True,
-                                    data = dict(username="William", password="blah", consent="consent"))
+                                    data = dict(username="admin", password="blah", consent="consent"))
 
         self.assertEqual(response.status_code, 401)
         self.assert_template_used('login.html')
@@ -94,6 +94,7 @@ class HTTPTest(TestCase):
         self.assert_template_used('login.html')
 
     def test_card_page_with_session(self):
+        # user doesn't own card
         with open('app/db/cards.json', 'r') as f:
             cards_dict = json.load(f)
 
@@ -105,20 +106,19 @@ class HTTPTest(TestCase):
             with app.test_client() as c:
                 with c.session_transaction() as sess:
                     sess['loggedin'] = True
-                    sess['username'] = "William"
-                    sess['password'] = "William494"
+                    sess['username'] = "admin"
+                    sess['password'] = admin_password
 
                 response = c.get('/card/' + location)
 
             self.assertEqual(response.status_code, 200)
-            self.assert_template_used('current_card_page.html')
 
         # location name not found
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.get('/card/' + "randomlocationname")
 
@@ -135,8 +135,8 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.get('/my-help-requests')
 
@@ -153,8 +153,8 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.get('/add-help-request')
 
@@ -165,8 +165,8 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.post('/add-help-request',
                               data = dict(description="blah"), follow_redirects=True)
@@ -178,8 +178,8 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.post('/add-help-request',
                               data = dict())
@@ -199,8 +199,8 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.get('/scores')
 
@@ -217,8 +217,8 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.get('/map')
 
@@ -235,8 +235,8 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.get('/cards')
 
@@ -253,8 +253,8 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.get('/loadcards')
 
@@ -276,20 +276,20 @@ class HTTPTest(TestCase):
             with app.test_client() as c:
                 with c.session_transaction() as sess:
                     sess['loggedin'] = True
-                    sess['username'] = "William"
-                    sess['password'] = "William494"
+                    sess['username'] = "admin"
+                    sess['password'] = admin_password
 
                 response = c.post('/is-answer-correct', data = dict(location=card['location'], answer=card['correctAnswer']))
 
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(b'Correct', response.data)
+            self.assertTrue(b'Correct' in response.data or response.data == b'YOU HAVE WON')
 
         # location not found
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.post('/is-answer-correct', data = dict(location="Library", answer="b"))
 
@@ -300,8 +300,8 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.post('/is-answer-correct', data = dict(location="The Library", answer="a"))
 
@@ -312,70 +312,70 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.post('/is-answer-correct', data = dict(location="The Library", answer="b"))
             response = c.post('/is-answer-correct', data = dict(location="The Library", answer="b"))
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(b'Already completed card', response.data)
+        self.assertEqual(b'Correct but already won card', response.data)
 
-    # IN PROGRESS
-    # def test_open_help_request_page_without_session(self):
-    #     response = self.client.get('/open-help-request/0', follow_redirects=True)
-    #
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assert_template_used('login.html')
-    #
-    # def test_open_help_request_page_with_session(self):
-    #     # no help reqs
-    #     with app.test_client() as c:
-    #         with c.session_transaction() as sess:
-    #             sess['loggedin'] = True
-    #             sess['username'] = "William"
-    #             sess['password'] = "William494"
-    #
-    #         response = c.get('/open-help-request/0', follow_redirects=True)
-    #
-    #     self.assertEqual(response.status_code, 404)
-    #     self.assertEqual( b'does not exist', response.data)
-    #
-    #     # a single help req
-    #     with app.test_client() as c:
-    #         with c.session_transaction() as sess:
-    #             sess['loggedin'] = True
-    #             sess['username'] = "William"
-    #             sess['password'] = "William494"
-    #
-    #         response = c.post('/add-help-request',
-    #                           data = dict(description="blah"), follow_redirects=True)
-    #
-    #         response = c.get('/open-help-request/0', follow_redirects=True)
-    #
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assert_template_used('my_help_requests.html')
-    #
-    #     # can't test admin user because dynamic password
-    #
-    # def test_close_help_request_page_without_session(self):
-    #     response = self.client.get('/close-help-request/0', follow_redirects=True)
-    #
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assert_template_used('login.html')
-    #
-    # def test_close_help_request_page_with_session(self):
-    #     # regular user
-    #     with app.test_client() as c:
-    #         with c.session_transaction() as sess:
-    #             sess['loggedin'] = True
-    #             sess['username'] = "William"
-    #             sess['password'] = "William494"
-    #
-    #         response = c.get('/close-help-requests/0', follow_redirects=True)
-    #
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assert_template_used('my_help_requests.html')
+    # # IN PROGRESS
+    # # def test_open_help_request_page_without_session(self):
+    # #     response = self.client.get('/open-help-request/0', follow_redirects=True)
+    # #
+    # #     self.assertEqual(response.status_code, 200)
+    # #     self.assert_template_used('login.html')
+    # #
+    # # def test_open_help_request_page_with_session(self):
+    # #     # no help reqs
+    # #     with app.test_client() as c:
+    # #         with c.session_transaction() as sess:
+    # #             sess['loggedin'] = True
+    # #             sess['username'] = "admin"
+    # #             sess['password'] = admin_password
+    # #
+    # #         response = c.get('/open-help-request/0', follow_redirects=True)
+    # #
+    # #     self.assertEqual(response.status_code, 404)
+    # #     self.assertEqual( b'does not exist', response.data)
+    # #
+    # #     # a single help req
+    # #     with app.test_client() as c:
+    # #         with c.session_transaction() as sess:
+    # #             sess['loggedin'] = True
+    # #             sess['username'] = "admin"
+    # #             sess['password'] = admin_password
+    # #
+    # #         response = c.post('/add-help-request',
+    # #                           data = dict(description="blah"), follow_redirects=True)
+    # #
+    # #         response = c.get('/open-help-request/0', follow_redirects=True)
+    # #
+    # #     self.assertEqual(response.status_code, 200)
+    # #     self.assert_template_used('my_help_requests.html')
+    # #
+    # #     # can't test admin user because dynamic password
+    # #
+    # # def test_close_help_request_page_without_session(self):
+    # #     response = self.client.get('/close-help-request/0', follow_redirects=True)
+    # #
+    # #     self.assertEqual(response.status_code, 200)
+    # #     self.assert_template_used('login.html')
+    # #
+    # # def test_close_help_request_page_with_session(self):
+    # #     # regular user
+    # #     with app.test_client() as c:
+    # #         with c.session_transaction() as sess:
+    # #             sess['loggedin'] = True
+    # #             sess['username'] = "admin"
+    # #             sess['password'] = admin_password
+    # #
+    # #         response = c.get('/close-help-requests/0', follow_redirects=True)
+    # #
+    # #     self.assertEqual(response.status_code, 200)
+    # #     self.assert_template_used('my_help_requests.html')
 
     def test_admin_index_page_without_session(self):
         response = self.client.get('/admin-index', follow_redirects=True)
@@ -434,8 +434,8 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.get('/logout', follow_redirects=True)
 
@@ -446,8 +446,8 @@ class HTTPTest(TestCase):
         with app.test_client() as c:
             with c.session_transaction() as sess:
                 sess['loggedin'] = True
-                sess['username'] = "William"
-                sess['password'] = "William494"
+                sess['username'] = "admin"
+                sess['password'] = admin_password
 
             response = c.get('/reset', follow_redirects=True)
 

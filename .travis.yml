@@ -11,7 +11,7 @@ script:
   - docker-compose build
   - docker-compose up -d
   - docker-compose ps
-  - sleep 10
+  - sleep 20
   - docker-compose exec app python3 app/db/populate_users_database.py -t 3306 -p root -q adminpasswordtest -d db
   - docker-compose exec app python3 app/db/populate_user_cards_database.py -t 3306 -p root -q adminpasswordtest -d db
   - docker-compose exec app python3 app/test_http_reqs.py -t 3306 -p root -q adminpasswordtest -d db
