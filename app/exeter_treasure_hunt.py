@@ -218,7 +218,14 @@ def log_location(lat, long):
 @app.route('/scores')
 def scores():
     if 'loggedin' in session:
-        return render_template('scores.html', APP_NAME=APP_NAME, VERSION=VERSION, username=session['username'])
+        users = db.get_all_users()
+        scores_dict = {}
+
+        for user in users:
+            scores_dict[user['username']] = len(db.get_completed_cards_by_user(user['username']))
+
+        return render_template('scores.html', APP_NAME=APP_NAME, VERSION=VERSION,
+                               username=session['username'], users=db.get_all_users(), scores=scores_dict)
 
     return redirect(url_for('login'))
 
@@ -377,7 +384,12 @@ def admin_map():
 @app.route('/admin-users', methods=['GET'])
 def admin_users():
     if 'loggedin' in session and session['username'] == "admin":
-        return render_template("user_list.html", APP_NAME=APP_NAME, VERSION=VERSION)
+        users = db.get_all_users()
+        scores_dict = {}
+
+        for user in users:
+            scores_dict[user['username']] = len(db.get_completed_cards_by_user(user['username']))
+        return render_template("user_list.html", APP_NAME=APP_NAME, VERSION=VERSION, scores=scores_dict, users=users)
 
     return redirect(url_for('admin_login'))
 

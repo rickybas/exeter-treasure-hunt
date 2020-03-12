@@ -27,10 +27,12 @@
 
 {% block content %}
     <div class="container">
-        Help Requests
+        <h1>Help Requests</h1>
+    <br/>
+        {% if help_requests|length==0 %} No help requests at the moment {% endif %}
         {% for help_request in help_requests %}
             <button class="card"
-                    onclick="location.href='mailto:someone@example.com?Subject=Help request ID: {{ help_request['id'] }}'"
+                    onclick="location.href='mailto:{{ help_request['username'] }}@exeter.ac.uk?Subject=Help request ID: {{ help_request['id'] }}'"
                     style="margin-bottom: 10px;background:linear-gradient(45deg, rgb(56, 120, 78),rgb(175, 255, 102))">
                 {{ help_request['id'] }} <br>
                 {{ help_request['username'] }} <br>

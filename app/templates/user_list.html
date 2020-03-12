@@ -82,299 +82,32 @@
                     <div class="card-header py-3">
                         <p class="text-primary m-0 font-weight-bold">Player List</p>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 text-nowrap">
-                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Show&nbsp;<select
-                                        class="form-control form-control-sm custom-select custom-select-sm">
-                                    <option value="10" selected="">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>&nbsp;</label></div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input
-                                        type="search" class="form-control form-control-sm" aria-controls="dataTable"
-                                        placeholder="Search"></label></div>
-                            </div>
-                        </div>
-                        <div class="table-responsive table mt-2" id="dataTable" role="grid"
-                             aria-describedby="dataTable_info">
-                            <table class="table dataTable my-0" id="dataTable">
-                                <thead>
+                    <div class="table-responsive table mt-2 animated slideInUp" id="dataTable" role="grid"
+                         aria-describedby="dataTable_info">
+                        <table class="table dataTable my-0" id="dataTable">
+                            <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Course</th>
+                                <th>Year</th>
+                                <th>Cards completed</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in users %}
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Course</th>
-                                    <th>Year</th>
-                                    <th>Cards</th>
-                                    <th>Last Login</th>
-                                    <th>Active</th>
-                                    <th></th>
+                                    <td>{{ user['username' ]}}</td>
+                                    <td>{{ user['course'] }}</td>
+                                    <td>{{user['year']}}</td>
+                                    <td>{{ scores[user['username']] }}</td>
+
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Airi Satou</td>
-                                    <td>Computer Science</td>
-                                    <td>First (BSc)</td>
-                                    <td>5</td>
-                                    <td>2008/11/28</td>
-                                    <td><i class="far fa-check-circle"
-                                           style="font-size: 22px;color: rgb(0,228,23);"></i></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-                                                Actions
-                                            </button>
-                                            <button class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                            <div
-                                                    class="dropdown-menu" role="menu"><a class="dropdown-item"
-                                                                                         role="presentation" href="#">Remove
-                                                User</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Cards</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Password</a></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Angelica Ramos</td>
-                                    <td>Computer Science<br></td>
-                                    <td>First (BSc)</td>
-                                    <td>9</td>
-                                    <td>2009/10/09<br></td>
-                                    <td><i class="far fa-check-circle"
-                                           style="font-size: 22px;color: rgb(0,228,23);"></i></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-                                                Actions
-                                            </button>
-                                            <button class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                            <div
-                                                    class="dropdown-menu" role="menu"><a class="dropdown-item"
-                                                                                         role="presentation" href="#">Remove
-                                                User</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Cards</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Password</a></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Ashton Cox</td>
-                                    <td>Computer Science</td>
-                                    <td>First (MSc)</td>
-                                    <td>13</td>
-                                    <td>2009/01/12<br></td>
-                                    <td><i class="far fa-check-circle"
-                                           style="font-size: 22px;color: rgb(0,228,23);"></i></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-                                                Actions
-                                            </button>
-                                            <button class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                            <div
-                                                    class="dropdown-menu" role="menu"><a class="dropdown-item"
-                                                                                         role="presentation" href="#">Remove
-                                                User</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Cards</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Password</a></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Bradley Greer</td>
-                                    <td>Computer Science</td>
-                                    <td>Second (BSc)</td>
-                                    <td>12</td>
-                                    <td>2012/10/13<br></td>
-                                    <td><i class="far fa-check-circle"
-                                           style="font-size: 22px;color: rgb(0,228,23);"></i></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-                                                Actions
-                                            </button>
-                                            <button class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                            <div
-                                                    class="dropdown-menu" role="menu"><a class="dropdown-item"
-                                                                                         role="presentation" href="#">Remove
-                                                User</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Cards</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Password</a></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Brenden Wagner</td>
-                                    <td>Computer Science with Maths</td>
-                                    <td>Second (BSc)</td>
-                                    <td>3</td>
-                                    <td>2011/06/07<br></td>
-                                    <td><i class="far fa-times-circle"
-                                           style="font-size: 22px;color: rgb(193,12,0);"></i></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-                                                Actions
-                                            </button>
-                                            <button class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                            <div
-                                                    class="dropdown-menu" role="menu"><a class="dropdown-item"
-                                                                                         role="presentation" href="#">Remove
-                                                User</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Cards</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Password</a></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Brielle Williamson</td>
-                                    <td>Computer Science</td>
-                                    <td>First (MSc)</td>
-                                    <td>10</td>
-                                    <td>2012/12/02<br></td>
-                                    <td><i class="far fa-times-circle"
-                                           style="font-size: 22px;color: rgb(193,12,0);"></i></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-                                                Actions
-                                            </button>
-                                            <button class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                            <div class="dropdown-menu"
-                                                 role="menu"><a class="dropdown-item" role="presentation" href="#">Remove
-                                                User</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Cards</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Password</a></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Bruno Nash<br></td>
-                                    <td>Computer Science</td>
-                                    <td>First (BSc)</td>
-                                    <td>0</td>
-                                    <td>Never</td>
-                                    <td><i class="far fa-times-circle"
-                                           style="font-size: 22px;color: rgb(193,12,0);"></i></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-                                                Actions
-                                            </button>
-                                            <button class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                            <div class="dropdown-menu"
-                                                 role="menu"><a class="dropdown-item" role="presentation" href="#">Remove
-                                                User</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Cards</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Password</a></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Caesar Vance</td>
-                                    <td>Computer Science with Maths</td>
-                                    <td>First (BSc)</td>
-                                    <td>7</td>
-                                    <td>2011/12/12<br></td>
-                                    <td><i class="far fa-times-circle"
-                                           style="font-size: 22px;color: rgb(193,12,0);"></i></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-                                                Actions
-                                            </button>
-                                            <button class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                            <div class="dropdown-menu"
-                                                 role="menu"><a class="dropdown-item" role="presentation" href="#">Remove
-                                                User</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Cards</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Password</a></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Cara Stevens</td>
-                                    <td>Computer Science with Maths</td>
-                                    <td>First (BSc)</td>
-                                    <td>10</td>
-                                    <td>2011/12/06<br></td>
-                                    <td><i class="far fa-check-circle"
-                                           style="font-size: 22px;color: rgb(0,228,23);"></i></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-                                                Actions
-                                            </button>
-                                            <button class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                            <div class="dropdown-menu"
-                                                 role="menu"><a class="dropdown-item" role="presentation" href="#">Remove
-                                                User</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Cards</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Password</a></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Cedric Kelly</td>
-                                    <td>Data Science</td>
-                                    <td>Second (BSc)</td>
-                                    <td>1</td>
-                                    <td>2012/03/29<br></td>
-                                    <td><i class="far fa-times-circle"
-                                           style="font-size: 22px;color: rgb(193,12,0);"></i></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-                                                Actions
-                                            </button>
-                                            <button class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                            <div class="dropdown-menu"
-                                                 role="menu"><a class="dropdown-item" role="presentation" href="#">Remove
-                                                User</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Cards</a><a class="dropdown-item" role="presentation" href="#">Reset
-                                                Password</a></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr></tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 align-self-center">
-                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing
-                                    1 to 10 of 27</p>
-                            </div>
-                            <div class="col-md-6">
-                                <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                    <ul class="pagination">
-                                        <li class="page-item disabled"><a class="page-link" href="#"
-                                                                          aria-label="Previous"><span
-                                                aria-hidden="true">«</span></a></li>
-                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span
-                                                aria-hidden="true">»</span></a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr></tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
             </div>
