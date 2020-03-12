@@ -174,3 +174,9 @@ a:hover {
 .container {
     padding: 100px 50px 100px;
 }
+
+
+/* mapbox bugfix */
+.mapboxgl-marker {
+  position: fixed !important;
+}
