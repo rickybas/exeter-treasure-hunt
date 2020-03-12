@@ -14,12 +14,12 @@ from flask_talisman import Talisman
 from db import db
 from game_functions import GameFunctions
 APP_NAME = "ExePlore"
-VERSION = "0.4-beta"
+VERSION = "1.0-release"
 
 app = Flask(__name__)
 
-app.secret_key = 'your secret key'
-app.debug = True
+app.secret_key = 'UniversityOfEXEter123456789VerySecurehaha'
+# app.debug = True
 
 Talisman(app, content_security_policy=None)  # Create a Talisman for the app. High security :D
 
