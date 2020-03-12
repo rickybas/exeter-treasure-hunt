@@ -1,109 +1,142 @@
-{% extends "bootstrap/base.html" %}
+<!DOCTYPE html>
+<html>
 
-<!-- {% block html_attribs %} lang="en"{% endblock %} -->
-{% block title %}{{ APP_NAME }} - Landing page{% endblock %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Home - ExePlore</title>
+    <meta name="description" content="ExePlore - An exciting and novel way to aid students in discovering new friends, lecturers, and locations on campus">
+    <link rel="stylesheet" href="static/styles/landing.min.css">
+    <link rel="stylesheet" href="static/styles/bootstrap.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli">
+    <link rel="stylesheet" href="static/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="static/fonts/line-awesome.min.css">
+    <link rel="stylesheet" href="static/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="static/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="/static/styles/landing.css">
+</head>
 
-{% block styles %}
-    <link rel="stylesheet" type='text/css'
-          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.css') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/animate.css') }}">
-{% endblock %}
-
-{% block scripts %}
-    {{ super() }}
-{% endblock %}
-{% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="navbar-brand animated bounceIn"><i class="fa fa-compass animated bounceIn" style="color:white;"></i>
-            <a class="navbar-brand" href="/">ExePlore</a>
-        </div>
-        <!-- Navbar Mobile View Expander -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
-                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="width:60px;">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Navbar Items -->
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('user_manual') }}">User manual</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('gdpr_policy') }}">GDPR and Privacy</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"
-                       href="/about">About</a>
-                </li>
-            </ul>
+<body id="page-top">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top" style="font-family: 'Cabin Sketch', cursive;color: white;"><i class="far fa-compass"></i>&nbsp;ExePlore</a><button data-toggle="collapse" data-target="#navbarResponsive" class="navbar-toggler float-right" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation" style="color: white;"><i class="fa fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#download">play</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#features">Features</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#contact">about</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
-{% endblock %}
-
-
-{% block content %}
-    <div class="container text-center">
-        <hr>
-        <h1 class="animated fadeIn delay-1s">Welcome to ExePlore</h1>
-        <hr>
-        <button class="btn btn-success footer-btn animated bounceInDown"
-                onclick="location.href='{{ url_for('login') }}';" style="width:65%;padding:30px;font-size:30px;">Play
-        </button>
-
-        <!-- TEMP TEMP TEMP -->
-        <br><br><br><br>
-        <button class="btn btn-warning footer-btn animated bounceInUp"
-                onclick="location.href='{{ url_for('admin_login') }}';">Admin WIP
-        </button>
-        <hr><br>
-        <h1>Explore's key features</h1>
-        <hr>
-        <div class="row">
-            <div class="col-md-4">
-              <div class="thumbnail">
-                  <img src="{{ url_for('static', filename='/landing_page_images/map_view.jpg') }}" class="animated fadeIn delay-1s" alt="Lights" style="width:100%"}}>
-                  <div class="caption">
-                    <p id="image_desc">See other players locations</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="thumbnail">
-                  <img src="{{ url_for('static', filename='/landing_page_images/card_view.jpg') }}" class="animated fadeIn delay-1s" style="width:100%" >
-                  <div class="caption">
-                    <p id="image_desc2">Answer questions and trade to get more cards</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="thumbnail">
-                  <img src="{{ url_for('static', filename='/landing_page_images/score_board_view.jpg') }}" class="animated fadeIn delay-1s" alt="Nature" style="width:100%">
-                  <div class="caption">
-                    <p id="image_desc2">Built in score board for you to see your progress</p>
-                  </div>
-                </a>
-              </div>
+    <header class="masthead" style="background: linear-gradient(92deg, rgba(168, 168, 168, 0.04) 0%, rgba(168, 168, 168, 0.04) 25%,rgba(92, 92, 92, 0.04) 25%, rgba(92, 92, 92, 0.04) 50%,rgba(25, 25, 25, 0.04) 50%, rgba(25, 25, 25, 0.04) 75%,rgba(50, 50, 50, 0.04) 75%, rgba(50, 50, 50, 0.04) 100%),linear-gradient(255deg, rgba(139, 139, 139, 0.04) 0%, rgba(139, 139, 139, 0.04) 25%,rgba(204, 204, 204, 0.04) 25%, rgba(204, 204, 204, 0.04) 50%,rgba(211, 211, 211, 0.04) 50%, rgba(211, 211, 211, 0.04) 75%,rgba(65, 65, 65, 0.04) 75%, rgba(65, 65, 65, 0.04) 100%),linear-gradient(331deg, rgba(21, 21, 21, 0.04) 0%, rgba(21, 21, 21, 0.04) 25%,rgba(63, 63, 63, 0.04) 25%, rgba(63, 63, 63, 0.04) 50%,rgba(243, 243, 243, 0.04) 50%, rgba(243, 243, 243, 0.04) 75%,rgba(191, 191, 191, 0.04) 75%, rgba(191, 191, 191, 0.04) 100%),linear-gradient(199deg, rgba(165, 165, 165, 0.04) 0%, rgba(165, 165, 165, 0.04) 25%,rgba(236, 236, 236, 0.04) 25%, rgba(236, 236, 236, 0.04) 50%,rgba(102, 102, 102, 0.04) 50%, rgba(102, 102, 102, 0.04) 75%,rgba(159, 159, 159, 0.04) 75%, rgba(159, 159, 159, 0.04) 100%),linear-gradient(302deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.04) 25%,rgba(7, 7, 7, 0.04) 25%, rgba(7, 7, 7, 0.04) 50%,rgba(249, 249, 249, 0.04) 50%, rgba(249, 249, 249, 0.04) 75%,rgba(199, 199, 199, 0.04) 75%, rgba(199, 199, 199, 0.04) 100%),linear-gradient(90deg, rgb(41, 207, 59),rgb(94, 168, 92));height: 100%;">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-7 my-auto">
+                    <div class="mx-auto header-content">
+                        <h1 class="mb-5">ExePlore is an exciting and novel way to aid students in discovering new friends, lecturers, and locations on campus</h1><a class="btn btn-xl js-scroll-trigger btn-outline-success" style="color: white;border-color: white;" role="button" href="#download">Log in and play!</a></div>
+                </div>
+                <div class="col-lg-5 my-auto">
+                    <div class="device-container">
+                        <div class="device-mockup iphone6_plus portrait white">
+                            <div class="device" style="background-image: url('/static/landing_page_images/Mockup.png');">
+                                <div class="button"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iphone-mockup"></div>
+                </div>
             </div>
         </div>
-        <!-- end -->
-    </div>
-
-
-
-    <footer class="footer">
-        <div class="container text-center" style="padding:5px">
-            <span class="text-muted">ExePlore {{ VERSION }} | </span><span><a
-                style="text-decoration: none;color:#868e96;"
-                href="{{ url_for('gdpr_policy') }}">Terms and Conditions</a></span>
-            <br><br>
-            <img src="https://www.exeter.ac.uk/departments/communication/mark-ops/design/visualidentity/logos2/white_logo_vector.png"
-                 style="width:100px;filter:invert(100%)" alt="Ts and Cs image">
+    </header>
+    <section id="download" class="download text-center bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <h2 class="section-heading" style="color: white;">Discover what all the buzz is about!</h2>
+                    <p style="color: #ddd;">Our app is available on any internet-enabled mobile device! Sign in with the account provided by your university to get started!</p>
+                    <div class="badges"><button class="btn btn-primary btn-success" type="button">Play</button></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-heading text-center">
+                <h2>Fun and Interactive Features&nbsp;</h2>
+                <p class="text-muted">Here are a few things you can do with ExePlore!</p>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 my-auto">
+                    <div class="device-container">
+                        <div class="device-mockup iphone6_plus portrait white">
+                            <div class="device" style="background-image: url('/static/landing_page_images/CardView.png');"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 my-auto">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="feature-item"><i class="icon-screen-smartphone text-primary"></i>
+                                    <h3>Login Anywhere Anytime</h3>
+                                    <p class="text-muted">Put an image, video, animation, or anything else in the screen!</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="feature-item"><i class="icon-camera text-primary"></i>
+                                    <h3>Trade with Students</h3>
+                                    <p class="text-muted">Use QR codes to trade cards and find new people nearby</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="feature-item"><i class="la la-lightbulb-o text-primary"></i>
+                                    <h3>Learn about campus</h3>
+                                    <p class="text-muted">Learn about the rich and extensive heritage of your campus</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="feature-item"><i class="icon-flag text-primary"></i>
+                                    <h3>Compete with Friends</h3>
+                                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="cta" style="background-image:url('static/landing_page_images/stock_photo_lol.jpg');">
+        <div class="cta-content">
+            <div class="container">
+                <h2>Find friends, cool places, and meet professors</h2><a class="btn btn-xl js-scroll-trigger btn-outline-success" style="color: white;border-color: white;" role="button" href="#contact">Let's Get Started!</a></div>
+        </div>
+        <div class="overlay"></div>
+    </section>
+    <section id="contact" class="contact bg-primary">
+        <div class="container">
+            <h2><span style="color: rgb(255,255,255);">Here at&nbsp;</span><i class="fa fa-compass" style="color: rgb(255,255,255);"></i><span style="color: rgb(255,255,255);">ExePlore, we're a small team.<br>&nbsp;Find out more&nbsp;<a href="/about" style="color: green;">here</a>.</span></h2>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <p>©&nbsp;ExePlore 2020. All Rights Reserved.</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="/gdpr-policy">GDPR and Privacy</a></li>
+                <li class="list-inline-item"><a href="/user-manual">User Manual</a></li>
+                <li class="list-inline-item"><a href="/about">About</a></li>
+            </ul>
         </div>
     </footer>
-{% endblock %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="static/scripts/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="static/scripts/new-age.js"></script>
+</body>
+
+</html>
