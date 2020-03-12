@@ -83,7 +83,7 @@
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
                     <h3 class="text-dark mb-0">Compsci Fresh</h3><a
-                        class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="{{ url_for('generate_report') }}"><i
+                        class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#" onclick="window.print()"><i
                         class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a></div>
                 <div class="row">
                     <div class="col-md-6 col-xl-3 mb-4">
@@ -294,54 +294,60 @@
                         {#                        </div>#}
                         <div class="col">
                             <div class="row">
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card text-white bg-primary shadow">
-                                        <div class="card-body">
-                                            <p class="m-0">Startup</p>
-                                            <p class="text-white-50 small m-0">Setup Tables for Fresh Start</p>
-                                        </div>
+                                <div class="col-lg-6 mb-4" >
+                                    <div class="card text-white bg-success shadow">
+                                        <a href="{{ url_for('admin_function', function='reset_location_data') }}">
+                                            <div class="card-body">
+                                                <p class="m-0">Reset location data</p>
+                                                <p class="text-white-50 small m-0">Remove all location data from db</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <div class="card text-white bg-success shadow">
-                                        <div class="card-body">
-                                            <p class="m-0">New Game</p>
-                                            <p class="text-white-50 small m-0">Create Users and Game</p>
-                                        </div>
+                                        <a href="{{ url_for('admin_function', function='reset_help_requests') }}">
+                                            <div class="card-body">
+                                                <p class="m-0">Reset help requests db</p>
+                                                <p class="text-white-50 small m-0">Reset</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <div class="card text-white bg-info shadow">
-                                        <div class="card-body">
-                                            <p class="m-0">Resume Game</p>
-                                            <p class="text-white-50 small m-0">Allow Logins Again</p>
-                                        </div>
+                                        <a href="{% if is_paused %}{{ url_for('admin_function', function='run_game') }}{% else %}{{ url_for('admin_function', function='stop_game') }}{% endif %}">
+                                            <div class="card-body">
+                                                <p class="m-0">{% if is_paused %} Un-pause game {% else %} Pause game {% endif %}</p>
+                                                <p class="text-white-50 small m-0">Pause or un-pause game</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card text-white bg-warning shadow">
-                                        <div class="card-body">
-                                            <p class="m-0">Pause Game</p>
-                                            <p class="text-white-50 small m-0">Log Everyone Out</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card text-white bg-danger shadow">
-                                        <div class="card-body">
-                                            <p class="m-0">End Game</p>
-                                            <p class="text-white-50 small m-0">Finalise Leaderboards</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card text-white bg-secondary shadow">
-                                        <div class="card-body">
-                                            <p class="m-0">Shutdown</p>
-                                            <p class="text-white-50 small m-0">Delete All Users</p>
-                                        </div>
-                                    </div>
-                                </div>
+{#                                <div class="col-lg-6 mb-4">#}
+{#                                    <div class="card text-white bg-warning shadow">#}
+{#                                        <div class="card-body">#}
+{#                                            <p class="m-0">Pause Game</p>#}
+{#                                            <p class="text-white-50 small m-0">Log Everyone Out</p>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-lg-6 mb-4">#}
+{#                                    <div class="card text-white bg-danger shadow">#}
+{#                                        <div class="card-body">#}
+{#                                            <p class="m-0">End Game</p>#}
+{#                                            <p class="text-white-50 small m-0">Finalise Leaderboards</p>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-lg-6 mb-4">#}
+{#                                    <div class="card text-white bg-secondary shadow">#}
+{#                                        <div class="card-body">#}
+{#                                            <p class="m-0">Shutdown</p>#}
+{#                                            <p class="text-white-50 small m-0">Delete All Users</p>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
                             </div>
                         </div>
                     </div>
