@@ -20,8 +20,7 @@ var map = new mapboxgl.Map({
     maxBounds: bounds,
     minZoom: 17,
     pitchWithRotate: false,
-    dragRotate: false,
-    touchZoomRotate: false
+    dragRotate: false
 });
 map.keyboard.disable();
 //[longitude, latitude]
