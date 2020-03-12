@@ -13,6 +13,7 @@ from flask_talisman import Talisman
 
 from db import db
 from game_functions import GameFunctions
+
 APP_NAME = "ExePlore"
 VERSION = "1.0-release"
 
@@ -69,7 +70,6 @@ except:
 db = db(mysql, bcrypt, cards_dict)
 game_functions = GameFunctions(mysql)
 
-
 try:
     if not os.path.exists('app/db/progress.csv'):
         with open('app/db/progress.csv', 'w'): pass
@@ -81,6 +81,7 @@ except:
 def is_game_paused():
     txt = open("app/db/state.txt", 'r').read()
     return txt == "stopped"
+
 
 # HTTPS redirect --------------------------------------------------------------
 
@@ -134,11 +135,11 @@ def index():
 
     return redirect(url_for('landing_page'))
 
+
 @app.route('/game-is-paused', methods=['GET'])
 def game_is_paused():
     if not is_game_paused(): return redirect(url_for('index'))
     return render_template("game_is_paused.html", APP_NAME=APP_NAME, VERSION=VERSION)
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -375,6 +376,32 @@ def close_help_request(id):
 
     return redirect(url_for('login'))
 
+@app.route('/locations-geojson', methods=['GET'])
+def locations_geojson():
+    if 'loggedin' in session:
+        data = db.get_all_recent_locations()
+        features = []
+        for location in data:
+            features.append("""{
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          """ + str(location['lattitude']) + """,
+          """ + str(location['longitude']) + """
+        ]
+      }
+    },""")
+        features[-1] = features[-1][:-1] # remove last comma
+        json = """{
+  "type": "FeatureCollection",
+  "features": [""" + ''.join(str(i) for i in features) + """  ]
+}"""
+
+        return json
+
+    return "login", 401
 
 # Admin section --------------------------------------------------------------------------------------------------------
 
@@ -415,7 +442,7 @@ def admin_index():
                                overall_progress_over_time=db.get_overall_progress_over_time(),
                                won_card_distribution=db.owned_card_distribution(),
                                top_locations_by_playerbase_ownership=db.top_locations_by_playerbase_ownership(),
-                               is_paused = is_game_paused())
+                               is_paused=is_game_paused())
 
     return redirect(url_for('admin_login'))
 
@@ -426,7 +453,6 @@ def admin_map():
         return render_template("map_view.html", APP_NAME=APP_NAME, VERSION=VERSION)
 
     return redirect(url_for('admin_login'))
-
 
 @app.route('/admin-users', methods=['GET'])
 def admin_users():
@@ -457,6 +483,7 @@ def generate_report():
 
     return redirect(url_for('admin_login'))
 
+
 @app.route('/admin-function/<function>', methods=['GET'])
 def admin_function(function):
     if 'loggedin' in session and session['username'] == "admin":
@@ -464,9 +491,9 @@ def admin_function(function):
             game_functions.stop_game()
         elif function == "run_game":
             game_functions.run_game()
-        elif function=="reset_location_data":
+        elif function == "reset_location_data":
             db.reset_location_db()
-        elif function=="reset_help_requests":
+        elif function == "reset_help_requests":
             db.reset_help_requests_db()
 
         return redirect(url_for('admin_index'))

@@ -61,6 +61,20 @@ class db:
         else:
             return []
 
+    def get_all_recent_locations(self):
+        """
+        Get all recent locations
+        :return: list of users. [] if nothing found
+        """
+        cursor = self.mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        # If command fails, don't bother with the rest. Clearly no username %s match
+        if cursor.execute('SELECT * FROM recentLocationData'):
+            # Fetch one record and return result
+            users = cursor.fetchall()
+            return users
+        else:
+            return []
+
     def get_num_of_active_players(self):
         """
         Get number of players that have won a card

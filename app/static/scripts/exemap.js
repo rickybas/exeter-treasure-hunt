@@ -86,7 +86,7 @@ map.on('load', function(){
         }
         
     });
-    var jsonURL = "/static/scripts/playerlocations.geojson";
+    var jsonURL = "/locations-geojson";
     map.addSource('others', {
 
         'type': 'geojson',
@@ -100,36 +100,11 @@ map.on('load', function(){
             'circle-radius': {
                 stops: [[0,6], [20, 20]],
                 base: 2
-            }, 
+            },
             'circle-color': '#0783ff'
         }
     });
-    map.addSource('start-zone', {
-        'type': 'geojson',
-        'data': {
-            'type': 'Feature',
-            'geometry':{
-                'type': 'Point',
-                'coordinates': [-3.534516, 50.735770]
-            }
-        }
-    });
-    map.addLayer({
-        'id': 'start-zone',
-        'source': 'start-zone',
-        'type': 'circle',
-        'paint': {
-            'circle-color': '#52d1ff',
-            'circle-opacity': 0.4,
-            'circle-stroke-color': '#0a7aa3',
-            'circle-stroke-width': 2,
-            'circle-radius': {
-                stops: [[0,0],
-                        [20, metersToPixelAtMaxZoom(30, -3.534516)]],
-                base: 2
-            }
-        }
-    });
+
 });
 
 
