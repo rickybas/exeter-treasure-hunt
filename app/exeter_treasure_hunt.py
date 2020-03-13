@@ -400,8 +400,8 @@ def locations_geojson():
       "geometry": {
         "type": "Point",
         "coordinates": [
-          """ + str(location['lattitude']) + """,
-          """ + str(location['longitude']) + """
+          """ + str(location['longitude']) + """,
+          """ + str(location['lattitude']) + """
         ]
       }
     },""")
