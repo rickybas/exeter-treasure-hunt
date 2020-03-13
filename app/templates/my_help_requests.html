@@ -35,14 +35,6 @@
 </nav>
 {% endblock %}
 
-    <script>
-        function cardResetCheck() {
-            if (confirm("Are you sure you want to reset your cards? By clicking okay you acknowledge your progress will be lost.")) {
-                window.location.href = '{{ url_for('reset') }}';
-            }
-        }
-    </script>
-
 {% block content %}
     <div class="container">
         My Help Requests
@@ -84,4 +76,12 @@
                  style="width:100px;filter:invert(100%)" alt="University of Exeter">
         </div>
     </footer>
+
+    <script>
+        function cardResetCheck() {
+            if (confirm("Are you sure you want to reset your cards? By clicking okay you acknowledge your progress will be lost.")) {
+                window.location.href = '{{ url_for('reset') }}';
+            }
+        }
+    </script>
 {% endblock %}
