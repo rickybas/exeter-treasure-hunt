@@ -1,5 +1,7 @@
 # exeter-treasure-hunt (ExePlore)
 
+[![Build Status](https://travis-ci.com/rickybas/exeter-treasure-hunt.svg?token=1Qmp7ACzet4TDsEVzALn&branch=master)](https://travis-ci.com/rickybas/exeter-treasure-hunt)
+
 An interactive location based treasure hunting game designed for freshers at the Streatham Campus (University of Exeter).
 
 <img src="https://camo.githubusercontent.com/e3beb78904c249e43c1042997977f738e9be6af8/68747470733a2f2f692e696d6775722e636f6d2f4c4c63413777792e706e67" data-canonical-src="https://camo.githubusercontent.com/e3beb78904c249e43c1042997977f738e9be6af8/68747470733a2f2f692e696d6775722e636f6d2f4c4c63413777792e706e67" width="220" height="400"/> ---- 

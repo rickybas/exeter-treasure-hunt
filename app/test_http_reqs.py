@@ -1,3 +1,4 @@
+"""
 import argparse
 import json
 import sys
@@ -492,3 +493,4 @@ if __name__ == '__main__':
         admin_password = args.adminpass.encode('utf-8')
 
     unittest.main(argv=[sys.argv[0]])
+"""

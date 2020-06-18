@@ -9,3 +9,4 @@ flask-mail
 flask-debugtoolbar
 flask-talisman
 flask-testing
+cryptography
