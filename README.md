@@ -4,11 +4,10 @@
 
 An interactive location based treasure hunting game designed for freshers at the Streatham Campus (University of Exeter).
 
-<img src="https://camo.githubusercontent.com/e3beb78904c249e43c1042997977f738e9be6af8/68747470733a2f2f692e696d6775722e636f6d2f4c4c63413777792e706e67" data-canonical-src="https://camo.githubusercontent.com/e3beb78904c249e43c1042997977f738e9be6af8/68747470733a2f2f692e696d6775722e636f6d2f4c4c63413777792e706e67" width="220" height="400"/> ---- 
-<img src="https://camo.githubusercontent.com/f530779679407cb648300eea929ee74c0daff79a/68747470733a2f2f692e696d6775722e636f6d2f7a7950473066652e706e67" data-canonical-src="https://camo.githubusercontent.com/f530779679407cb648300eea929ee74c0daff79a/68747470733a2f2f692e696d6775722e636f6d2f7a7950473066652e706e67" width="220" height="400" /> ---- 
-<img src="https://camo.githubusercontent.com/7014da1048d1d9ac21c1e8247498fd85b2d2a24c/68747470733a2f2f692e696d6775722e636f6d2f6c5865714770772e706e67" data-canonical-src="https://camo.githubusercontent.com/7014da1048d1d9ac21c1e8247498fd85b2d2a24c/68747470733a2f2f692e696d6775722e636f6d2f6c5865714770772e706e67" width="220"  height="400" />
+<img src="https://i.imgur.com/fWJbXwz.jpg" data-canonical-src="https://i.imgur.com/fWJbXwz.jpg" width="100%" />
+<img src="https://i.imgur.com/oBlAtrC.jpg" data-canonical-src="https://i.imgur.com/oBlAtrC.jpg" width="100%" />
+<img src="https://i.imgur.com/KJMQNUM.gif" data-canonical-src="https://i.imgur.com/KJMQNUM.gif" width="100%" />
 
-![](https://i.imgur.com/M4ochgql.png)
 
 ## Link to design
 https://github.com/rickybas/exeter-treasure-hunt/wiki/Design
