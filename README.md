@@ -5,7 +5,7 @@
 An interactive location based treasure hunting game designed for freshers at the Streatham Campus (University of Exeter).
 
 <img src="https://i.imgur.com/fWJbXwz.jpg" data-canonical-src="https://i.imgur.com/fWJbXwz.jpg" width="100%" />
-<img src="https://i.imgur.com/oBlAtrC.jpg" data-canonical-src="https://i.imgur.com/oBlAtrC.jpg" width="100%" />
+<img src="https://i.imgur.com/MVra5uY.jpg" data-canonical-src="https://i.imgur.com/MVra5uY.jpg" width="100%" />
 <img src="https://i.imgur.com/KJMQNUM.gif" data-canonical-src="https://i.imgur.com/KJMQNUM.gif" width="100%" />
 
 
